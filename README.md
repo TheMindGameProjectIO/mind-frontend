@@ -10,7 +10,7 @@ Examples,
 * `feature/#892-dashboard`
 * `update/#384-card-transition-to-modal`
 
-<br><br><br>
+<br>
 
 ## Core branches
 This project has 3 core branches 
