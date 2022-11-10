@@ -12,4 +12,14 @@ Examples,
 
 <br><br><br>
 
-Example
+## Core branches
+This project has 3 core branches 
+* main (for production)
+* prototype (for prototype)
+* development (for development)
+
+<br>
+
+All branches are merged to `developement` branch.
+After sprint is finished, `development` branch is merged to `prototype`.
+If `prototype` passes all QA tests, it is ready for production and can be merged to `main` branch.
