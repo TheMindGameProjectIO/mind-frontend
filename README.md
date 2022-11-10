@@ -28,6 +28,6 @@ If `prototype` passes all QA tests, it is ready for production and can be merged
 
 ## Merge requests
 
-After work is done, it is pushed to remote repository and merge request if created to `development` branch.
+After work is done, it is pushed to remote repository and merge request is created to `development` branch.
 Description of each merge request should be clear and explain what was done.
 Each merge request has to be reviewed by another developer if possible, and only merged if approved.
