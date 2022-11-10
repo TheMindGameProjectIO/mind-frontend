@@ -20,6 +20,6 @@ This project has 3 core branches
 
 <br>
 
-All branches are merged to `developement` branch.
-After sprint is finished, `development` branch is merged to `prototype`.
-If `prototype` passes all QA tests, it is ready for production and can be merged to `main` branch.
+All branches are merged to `developement` branch. <br>
+After sprint is finished, `development` branch is merged to `prototype`. <br>
+If `prototype` passes all QA tests, it is ready for production and can be merged to `main` branch. <br>
