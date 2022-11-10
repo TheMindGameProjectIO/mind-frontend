@@ -9,3 +9,7 @@ Examples,
 * bugfix/#123-login-header-not-visible
 * feature/#892-dashboard
 * update/#384-card-transition-to-modal
+
+<br><br><br>
+
+Example
