@@ -4,6 +4,7 @@ const SignupPage = () => {
     return (
         <>
             <GameName />
+            <p>Hello</p>
         </>
     );
 }
