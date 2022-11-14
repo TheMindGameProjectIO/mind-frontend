@@ -39,10 +39,7 @@ const LoginPage = () => {
                         <h2> Good to see you again</h2>
                     </div>
                 </div>
-                <form
-                    className='flex flex-col w-screen max-w-[400px] bg-transparent-blue py-8 px-12 rounded-xl'
-                    onSubmit={onSubmit}
-                >
+                <form className='auth' onSubmit={onSubmit}>
                     <div className='text-main-light mb-12'>
                         <h2 className='font-bold text-[3rem]'> Log in </h2>
                         <h3 className='text-white'> New user?
@@ -62,7 +59,7 @@ const LoginPage = () => {
                     </div>
                 </form>
             </div>
-        </div>
+        </div >
     );
 }
 

@@ -6,4 +6,10 @@
     body {
         @apply bg-main-blue;
     }
+
+    form.auth {
+        @apply flex flex-col w-screen max-w-[400px] bg-transparent-blue py-8 px-12 rounded-xl;
+    }
 }
+
+@layer components {}
