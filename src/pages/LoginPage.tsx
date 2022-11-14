@@ -3,17 +3,16 @@ import PageLink from '../components/PageLink';
 import { authRoutes } from '../routes';
 import Input from '../components/ui/Input';
 
-export const GameName = () =>
-{
+export const GameName = () => {
     return (
         <>
-        <h1
-            className = 'text-main-light text-[3rem] md:text-[4rem] font-bold md:max-w-[300px]'
-            style={{
-                mixBlendMode: 'normal',
-                textShadow: '0px 5px 20px rgba(189, 170, 147, 0.5)'
-            }}
-        > The Mind  Game </h1>
+            <h1
+                className='text-main-light text-[2.5rem] md:text-[4rem] font-bold md:max-w-[300px]'
+                style={{
+                    mixBlendMode: 'normal',
+                    textShadow: '0px 5px 20px rgba(189, 170, 147, 0.5)'
+                }}
+            > The Mind  Game </h1>
         </>
     )
 }
@@ -42,11 +41,11 @@ const LoginPage = () => {
         <div className='h-screen flex items-center justify-center'>
             <div className='md:flex gap-12'>
                 <div className='p-6 md:mb-0'>
-                <GameName />
-                <div className='text-main-gray text-[1.5rem] md:text-[2rem] md:max-w-[200px]'>
-                    <h2 className='my-6'> Welcome back</h2>
-                    <h2> Good to see you again</h2>
-                </div>
+                    <GameName />
+                    <div className='text-main-gray text-[1.5rem] md:text-[2rem] md:max-w-[200px]'>
+                        <h2 className='my-6'> Welcome back</h2>
+                        <h2> Good to see you again</h2>
+                    </div>
                 </div>
                 <form className='auth' onSubmit={onSubmit}>
                     <div className='text-main-light mb-12'>
@@ -60,7 +59,7 @@ const LoginPage = () => {
                             </PageLink>
                         </h3>
                     </div>
-                    <Input innerRef={emailRef} placeholder = 'Email' />
+                    <Input innerRef={emailRef} placeholder='Email' />
                     <PasswordInput passwordRef={passwordRef} />
                     <div className='w-full flex flex-col justify-center'>
                         <input className='block w-full bg-main-gray py-2 px-4 rounded-full mt-6 font-bold' type="submit" value='Log in' />
