@@ -1,8 +1,10 @@
+import { GameName } from "./LoginPage";
+
 const SignupPage = () => {
     return (
-        <div>
-
-        </div>
+        <>
+            <GameName />
+        </>
     );
 }
 
