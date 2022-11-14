@@ -3,6 +3,21 @@ import PageLink from '../components/PageLink';
 import { authRoutes } from '../routes';
 import Input from '../components/ui/Input';
 
+export const GameName = () =>
+{
+    return (
+        <>
+        <h1
+                        className='text-main-light text-[3rem] md:text-[4rem] font-bold md:max-w-[300px]'
+                        style={{
+                            mixBlendMode: 'normal',
+                            textShadow: '0px 5px 20px rgba(189, 170, 147, 0.5)'
+                        }}
+                    > The Mind  Game </h1>
+        </>
+    )
+}
+
 const LoginPage = () => {
     const emailRef = useRef<any>();
     const passwordRef = useRef<any>();
@@ -27,13 +42,7 @@ const LoginPage = () => {
         <div className='h-screen flex items-center justify-center'>
             <div className='md:flex gap-12'>
                 <div className='p-6 md:mb-0'>
-                    <h1
-                        className='text-main-light text-[3rem] md:text-[4rem] font-bold md:max-w-[300px]'
-                        style={{
-                            mixBlendMode: 'normal',
-                            textShadow: '0px 5px 20px rgba(189, 170, 147, 0.5)'
-                        }}
-                    > The Mind  Game </h1>
+                <GameName />
                     <div className='text-main-gray text-[1.5rem] md:text-[2rem] md:max-w-[200px]'>
                         <h2 className='my-6'> Welcome back</h2>
                         <h2> Good to see you again</h2>
