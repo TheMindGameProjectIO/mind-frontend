@@ -39,8 +39,8 @@ const LoginPage = () => {
     }
 
     return (
-        <div className='h-screen flex items-center justify-center'>
-            <div className='md:flex gap-12'>
+        <div className='h-screen flex items-center justify-center bg-center bg-cover bg-mind-game-background'>
+           <div className='md:flex gap-12'>
                 <div className='p-6 md:mb-0'>
                 <GameName />
                 <div className='text-main-gray text-[1.5rem] md:text-[2rem] md:max-w-[200px]'>

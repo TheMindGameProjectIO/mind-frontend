@@ -20,7 +20,7 @@ const SignupPage = () => {
 
     return (
         <>
-        <div className = 'h-screen flex items-center justify-center'>
+        <div className = 'h-screen flex items-center justify-center bg-center bg-cover bg-mind-game-background'>
             <div className = 'md:flex gap-12'>
                 <div className = 'p-6 md:mb-0'>
                 <GameName />
