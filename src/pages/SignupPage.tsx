@@ -24,9 +24,11 @@ const SignupPage = () => {
             <div className = 'md:flex gap-12'>
                 <div className = 'p-6 md:mb-0'>
                 <GameName />
-                    <div className = 'text-main-gray text-[1.5rem] md:text-[2rem] md:max-w-[200px]'>
-                        <h2 className = 'leading-10.5'> Create an account and spend <br /> quality time with your friends </h2>
-                    </div>
+                
+                <div className = 'text-main-gray text-[1.5rem] md:text-[2rem] md:max-w-[200px]'>
+                    <h2 className = 'leading-10.5'> Create an account and spend <br /> quality time with your friends </h2>
+                </div>
+
                 </div>
                 <form
                     className='flex flex-col w-screen max-w-[400px] bg-transparent-blue py-8 px-12 rounded-xl'
@@ -43,6 +45,27 @@ const SignupPage = () => {
                             </PageLink>
                         </h3>
                     </div>
+                    
+                    <PageLink // ! Authentication via google
+                    to = {authRoutes.google}
+                    className = 'flex-row'
+                    >
+                        <div className = "">
+                            <img src = "" alt = "Google icon" />
+                            <p>Continue with Google</p>
+                        </div>
+                    </PageLink>
+
+                    <PageLink // ! Authentication via facebook
+                    to = {authRoutes.facebook}
+                    className = 'flex-col'
+                    >
+                        <div className = "">
+                            <img src = "" alt = "facebook icon" />
+                            <p>Continue with Facebook</p> 
+                        </div>
+                    </PageLink>
+
                     <Input innerRef = {emailRef} placeholder = 'Email' />
                     <Input innerRef = {usernameRef} placeholder = 'Username' className = 'mt-3' />
                     <Input innerRef = {passwordRef} placeholder = 'Password' className = 'mt-7' />
