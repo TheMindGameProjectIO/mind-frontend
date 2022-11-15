@@ -17,7 +17,6 @@ module.exports = {
       },
       backgroundImage: {
         'mind-game-background': "url('/src/img/mind-game-background.png')",
-        
       },
       screens: {
         'sm': '640px',

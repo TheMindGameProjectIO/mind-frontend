@@ -2,18 +2,22 @@ import { MouseEvent, useRef, useState, MutableRefObject, FC } from 'react';
 import PageLink from '../components/PageLink';
 import { authRoutes } from '../routes';
 import Input from '../components/ui/Input';
+import { isEmail, isNotEmpty, length } from '../validators';
+import { login, MINIMAL_PASSWORD_LENGTH } from '../api';
+import InputError from '../components/ui/InputError';
+import { AxiosError } from 'axios';
+import Loader from '../components/Loader';
 
-export const GameName = () =>
-{
+export const GameName = () => {
     return (
         <>
-        <h1
-            className = 'text-main-light text-[3rem] md:text-[4rem] font-bold md:max-w-[300px]'
-            style={{
-                mixBlendMode: 'normal',
-                textShadow: '0px 5px 20px rgba(189, 170, 147, 0.5)'
-            }}
-        > The Mind  Game </h1>
+            <h1
+                className='text-main-light text-[2.5rem] md:text-[4rem] font-bold md:max-w-[300px]'
+                style={{
+                    mixBlendMode: 'normal',
+                    textShadow: '0px 5px 20px rgba(189, 170, 147, 0.5)'
+                }}
+            > The Mind  Game </h1>
         </>
     )
 }
@@ -21,37 +25,62 @@ export const GameName = () =>
 const LoginPage = () => {
     const emailRef = useRef<any>();
     const passwordRef = useRef<any>();
+    const [error, setError] = useState<string>('no error');
+    const [requestLoading, setRequestLoading] = useState<boolean>(false);
 
-    const onSubmit = (event: MouseEvent<HTMLFormElement>) => {
+    const onSubmit = async (event: MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const email = emailRef.current?.value;
         const password = passwordRef.current?.value;
 
-        console.log(email);
-        console.log(password);
+        if (!isNotEmpty(email)) {
+            setError('empty email');
+            return;
+        }
 
-        // Validation happens here
-        // TODO: implement validation
+        if (!isEmail(email)) {
+            setError('invalid email');
+            return;
+        }
 
-        // Sending request happens here if validation was proceeded
-        // TODO: implement sending request with axios   
+        if (!isNotEmpty(password)) {
+            setError('empty password');
+            return;
+        }
+
+        if (!length(password, { min: MINIMAL_PASSWORD_LENGTH })) {
+            setError("password's length");
+            return;
+        }
+
+        setError('no error');
+        try {
+            setRequestLoading(true);
+            const accessToken = await login({ email, password });
+            console.log(accessToken);
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                if (error.response?.status == 401) { // TODO: change 401 to other exception status
+                    setError('invalid credentials');
+                }
+            }
+        } finally {
+            setRequestLoading(false);
+        }
     }
 
     return (
         <div className='h-screen flex items-center justify-center bg-center bg-cover bg-mind-game-background'>
            <div className='md:flex gap-12'>
                 <div className='p-6 md:mb-0'>
-                <GameName />
-                <div className='text-main-gray text-[1.5rem] md:text-[2rem] md:max-w-[200px]'>
-                    <h2 className='my-6'> Welcome back</h2>
-                    <h2> Good to see you again</h2>
+                    <GameName />
+                    <div className='text-main-gray text-[1.5rem] md:text-[2rem] md:max-w-[200px]'>
+                        <h2 className='my-6'> Welcome back</h2>
+                        <h2> Good to see you again</h2>
+                    </div>
                 </div>
-                </div>
-                <form
-                    className='flex flex-col w-screen max-w-[400px] bg-transparent-blue py-8 px-12 rounded-xl'
-                    onSubmit={onSubmit}
-                >
+                <form className='auth' onSubmit={onSubmit}>
                     <div className='text-main-light mb-12'>
                         <h2 className='font-bold text-[3rem]'> Log in </h2>
                         <h3 className='text-white'> New user?
@@ -63,15 +92,31 @@ const LoginPage = () => {
                             </PageLink>
                         </h3>
                     </div>
-                    <Input innerRef={emailRef} placeholder = 'Email' />
+
+                    {/* //? Authentication via Google */}
+                    {/* //? Authentication via Facebook */}
+
+                    {/* Input boxes */}
+
+                    <Input innerRef={emailRef} placeholder='Email' />
+                    {error == 'invalid credentials' ? <InputError> Email or password is wrong </InputError> : null}
+                    {error == 'empty email' ? <InputError> Please provide email </InputError> : null}
+                    {error == 'invalid email' ? <InputError> Entered email is invalid </InputError> : null}
+
                     <PasswordInput passwordRef={passwordRef} />
+                    {error == 'empty password' ? <InputError> Please provide password </InputError> : null}
+                    {error == "password's length" ? <InputError> Password's length must contain at least {MINIMAL_PASSWORD_LENGTH} characters </InputError> : null}
+                    
                     <div className='w-full flex flex-col justify-center'>
-                        <input className='block w-full bg-main-gray py-2 px-4 rounded-full mt-6 font-bold' type="submit" value='Log in' />
+                        <div className='flex items-center'>
+                            <input className={`block w-full bg-main-gray py-2 px-4 rounded-full mt-6 font-bold ${requestLoading ? 'opacity-50 cursor-not-allowed' : ''}`} type="submit" value='Log in' />
+                            {requestLoading ? <Loader scale='0.5' className='relative top-2' /> : null}
+                        </div>
                         <PageLink className='text-white text-center' to={authRoutes.forgotPassword}> Forgot Password? </PageLink>
                     </div>
                 </form>
             </div>
-        </div>
+        </div >
     );
 }
 
@@ -85,7 +130,7 @@ const PasswordInput: FC<IPasswordInputProps> = ({ passwordRef }) => {
     return (
         <>
             <Input className='mt-3' innerRef={passwordRef} placeholder='Password' hideValue={passwordHidden} />
-            <button className='text-start text-white' onClick={() => setPasswordHidden(!passwordHidden)}> {passwordHidden ? 'Show' : 'Hide'} password </button>
+            <div className='text-start text-white' onClick={() => setPasswordHidden(!passwordHidden)}> {passwordHidden ? 'Show' : 'Hide'} password </div>
         </>
     )
 }

@@ -1,0 +1,17 @@
+@import url(./loader.css);
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-main-blue;
+    }
+
+    form.auth {
+        @apply flex flex-col w-screen max-w-[400px] bg-transparent-blue py-8 px-12 rounded-xl;
+    }
+}
+
+@layer components {}
