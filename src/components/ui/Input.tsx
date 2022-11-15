@@ -20,11 +20,12 @@ export default function Input<OutputType>({ className, placeholder, innerRef, tr
 
     return (
         <input
+
             type={hideValue ? 'password' : 'text'}
             ref={innerRef}
             placeholder={placeholder}
             onChange={onChange}
-            className={`bg-main-gray text-input outline-none placeholder-input p-3 w-full ${className}`}
+            className={`rounded-[6px] bg-main-gray text-input outline-none placeholder-input p-3 w-full ${className}`}
         />
     );
 }
