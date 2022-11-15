@@ -1,5 +1,4 @@
-import { MouseEvent, useRef, useState, MutableRefObject, FC } from "react";
-import { Link } from "react-router-dom";
+import { MouseEvent, useRef, useState } from "react";
 import { GameName } from "./LoginPage";
 import { authRoutes } from "../routes";
 import { isEmail, isNotEmpty, length } from "../validators"
@@ -7,6 +6,9 @@ import PageLink from "../components/PageLink";
 import Input from "../components/ui/Input";
 import { MINIMAL_PASSWORD_LENGTH } from "../api";
 import InputError from "../components/ui/InputError";
+import Loader from '../components/Loader';
+import { AxiosError } from 'axios';
+import { signup } from "../api/signup";
 
 const SignupPage = () => {
     const emailRef = useRef<any>();
@@ -15,8 +17,9 @@ const SignupPage = () => {
     const repeatPasswordRef = useRef<any>();
 
     const [error, setError] = useState<string>("no error");
+    const [loading, setloading] = useState<boolean>(false);
 
-    const onSubmit = (event: MouseEvent<HTMLFormElement>) => {
+    const onSubmit = async (event: MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const email = emailRef.current?.value;
@@ -79,7 +82,26 @@ const SignupPage = () => {
         setError("no error");
 
         // Sending request happens here if validation was proceeded
-        // TODO: implement sending request with axios   
+        // TODO: implement sending request with axios
+        
+        try
+        {
+            setloading(true);
+            const accessToken = await signup({ email, username, password });
+            console.log(accessToken);
+        }
+        catch (error)
+        {
+            if (error instanceof AxiosError) {
+                if (error.response?.status == 401) { // TODO: Awaiting Mahammad for this problem
+                    setError('invalid credentials');
+                }
+            }
+        }
+        finally
+        {
+            setloading(false);
+        }
     }
 
     return (
@@ -130,7 +152,10 @@ const SignupPage = () => {
                     {error === "wrong repeatPassword" ? <InputError> The rewritten password is incorrect </InputError> : null}
 
                     <div className='w-full flex flex-col justify-center'>
-                        <input className='block w-full bg-main-gray py-2 px-4 rounded-full mt-6 font-bold' type="submit" value='Create account' />
+                        <div className='flex items-center'>
+                            <input className = {`block w-full bg-main-gray py-2 px-4 rounded-full mt-6 font-bold ${loading ? "opacity-50 cursor-not-allowed" : ''}`} type="submit" value='Create account' />
+                            {loading ? <Loader scale = '0.5' className = 'relative top-2' /> : null}
+                        </div>
                     </div>
                 </form>
             </div>
