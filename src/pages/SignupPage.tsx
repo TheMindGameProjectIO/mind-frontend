@@ -3,7 +3,7 @@ import { authRoutes } from "../routes";
 import { isEmail, isNotEmpty, length } from "../validators"
 import { MINIMAL_PASSWORD_LENGTH, MINIMAL_USERNAME_LENGTH } from "../api";
 import { AxiosError } from 'axios';
-import { signup, TSignUpData } from "../api/signup";
+import { signup, TSignUpData } from "../api";
 import { NavigateFunction, useNavigate } from "react-router";
 import useLoading from "../hooks/useLoading";
 import InputError from "../components/ui/InputError";
@@ -87,11 +87,12 @@ const SignupPage = () => {
         }
 
         setError("no error");
-
-        const confirmPassword: string = repeatPassword;
-        const nickname: string = username;
-
-        await signupRequest({ email, password, confirmPassword, nickname });
+        await signupRequest({
+            email,
+            password,
+            confirmPassword: repeatPassword,
+            nickname: username
+        });
     }
 
     return (
