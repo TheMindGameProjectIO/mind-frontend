@@ -4,7 +4,7 @@ import { authRoutes } from "../routes";
 import { isEmail, isNotEmpty, length } from "../validators"
 import PageLink from "../components/PageLink";
 import Input from "../components/ui/Input";
-import { MINIMAL_PASSWORD_LENGTH } from "../api";
+import { MINIMAL_PASSWORD_LENGTH, MINIMAL_USERNAME_LENGTH } from "../api";
 import InputError from "../components/ui/InputError";
 import Loader from '../components/Loader';
 import { AxiosError } from 'axios';
@@ -47,7 +47,7 @@ const SignupPage = () => {
             return;
         }
 
-        if (!length(username, {min: MINIMAL_PASSWORD_LENGTH}))
+        if (!length(username, {min: MINIMAL_USERNAME_LENGTH}))
         {
             setError("short username");
             return;
@@ -84,18 +84,19 @@ const SignupPage = () => {
         // Sending request happens here if validation was proceeded
         // TODO: implement sending request with axios
         
+        const confirmPassword: string = repeatPassword;
+        const nickname: string = username;
+
         try
         {
             setloading(true);
-            const accessToken = await signup({ email, username, password });
-            console.log(accessToken);
+            const accessToken = await signup({ email, password, confirmPassword, nickname });
         }
         catch (error)
         {
             if (error instanceof AxiosError) {
-                if (error.response?.status == 401) { // TODO: Awaiting Mahammad for this problem
-                    setError('invalid credentials');
-                }
+                if (error.response?.status == 409)
+                    setError("email exists");
             }
         }
         finally
@@ -138,6 +139,7 @@ const SignupPage = () => {
                     <Input innerRef = {emailRef} placeholder = 'Email' />
                     {error === "empty email" ? <InputError> Please, provide an email </InputError> : null}
                     {error === "not email" ? <InputError> Please, provide a valid email </InputError> : null}
+                    {error === "email exists" ? <InputError> This email already exists. Provide another email. </InputError> : null}
 
                     <Input innerRef = {usernameRef} placeholder = 'Username' className = 'mt-3' />
                     {error === "empty username" ? <InputError> Please, create a username </InputError> : null}

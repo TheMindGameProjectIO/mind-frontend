@@ -3,9 +3,10 @@ import { API_BASE_URL } from './config'
 
 type TSignUpData = 
 {
-    email: string,
-    username: string,
-    password: string
+    email: string;
+    password: string;
+    confirmPassword: string;
+    nickname: string;
 }
 
 export const signup = async (data: TSignUpData) =>
