@@ -20,7 +20,7 @@ module.exports = {
         'transparent-blue': 'rgba(55, 69, 92, 0.75)'
       },
       backgroundImage: {
-        'mind-game-background': "url('/src/img/mind-game-background.png')",
+        'mind-game-background': "url('/src/assets/img/mind-game-background.png')",
       },
       screens: {
         'sm': '640px',
