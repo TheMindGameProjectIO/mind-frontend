@@ -80,9 +80,6 @@ const SignupPage = () => {
         }
 
         setError("no error");
-
-        // Sending request happens here if validation was proceeded
-        // TODO: implement sending request with axios
         
         const confirmPassword: string = repeatPassword;
         const nickname: string = username;
