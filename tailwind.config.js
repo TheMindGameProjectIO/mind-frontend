@@ -5,6 +5,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'audiowide': "Audiowide",
+        'play': "Play"
+      },
       maxWidth: {
         main: '1400px'
       },
