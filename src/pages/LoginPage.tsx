@@ -1,32 +1,33 @@
 import { MouseEvent, useRef, useState, MutableRefObject, FC } from 'react';
-import PageLink from '../components/PageLink';
 import { authRoutes } from '../routes';
-import Input from '../components/ui/Input';
 import { isEmail, isNotEmpty, length } from '../validators';
-import { login, MINIMAL_PASSWORD_LENGTH } from '../api';
-import InputError from '../components/ui/InputError';
+import { login, MINIMAL_PASSWORD_LENGTH, TLoginData } from '../api';
 import { AxiosError } from 'axios';
 import Loader from '../components/Loader';
-
-export const GameName = () => {
-    return (
-        <>
-            <h1
-                className='font-audiowide text-main-light text-[2.5rem] md:text-[3.7rem] md:max-w-[300px] mb-8'
-                style={{
-                    mixBlendMode: 'normal',
-                    textShadow: '0px 5px 20px rgba(189, 170, 147, 0.5)'
-                }}
-            > The Mind  Game </h1>
-        </>
-    )
-}
+import InputError from '../components/ui/InputError';
+import useLoading from '../hooks/useLoading';
+import Input from '../components/ui/Input';
+import PageLink from '../components/PageLink';
+import GameTitle from '../components/ui/GameTitle';
 
 const LoginPage = () => {
     const emailRef = useRef<any>();
     const passwordRef = useRef<any>();
     const [error, setError] = useState<string>('no error');
-    const [requestLoading, setRequestLoading] = useState<boolean>(false);
+
+    const [loginRequest, requestLoading] = useLoading({
+        callback: async (data: TLoginData) => {
+            const response = await login(data);
+            // TODO: add stroing access token in localStorage
+        },
+        onError: (error: any) => {
+            if (error instanceof AxiosError) {
+                if (error.response?.status == 401) { // TODO: change 401 to other exception status
+                    setError('invalid credentials');
+                }
+            }
+        }
+    });
 
     const onSubmit = async (event: MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -55,26 +56,14 @@ const LoginPage = () => {
         }
 
         setError('no error');
-        try {
-            setRequestLoading(true);
-            const accessToken = await login({ email, password });
-            console.log(accessToken);
-        } catch (error) {
-            if (error instanceof AxiosError) {
-                if (error.response?.status == 401) { // TODO: change 401 to other exception status
-                    setError('invalid credentials');
-                }
-            }
-        } finally {
-            setRequestLoading(false);
-        }
+        await loginRequest({ email, password });
     }
 
     return (
         <div className='h-screen flex items-center justify-center bg-center bg-cover bg-mind-game-background font-play'>
-           <div className='md:flex gap-12'>
+            <div className='md:flex gap-12'>
                 <div className='p-6 md:mb-0'>
-                    <GameName />
+                    <GameTitle />
                     <div className='text-main-gray text-[1.5rem] md:text-[2rem] md:max-w-[200px]'>
                         <h2 className='my-6'> Welcome back</h2>
                         <h2> Good to see you again</h2>
@@ -98,15 +87,15 @@ const LoginPage = () => {
 
                     {/* Input boxes */}
 
-                    <Input innerRef={emailRef} placeholder='Email' />
                     {error == 'invalid credentials' ? <InputError> Email or password is wrong </InputError> : null}
+                    <Input innerRef={emailRef} placeholder='Email' />
                     {error == 'empty email' ? <InputError> Please provide email </InputError> : null}
                     {error == 'invalid email' ? <InputError> Entered email is invalid </InputError> : null}
 
                     <PasswordInput passwordRef={passwordRef} />
                     {error == 'empty password' ? <InputError> Please provide password </InputError> : null}
                     {error == "password's length" ? <InputError> Password's length must contain at least {MINIMAL_PASSWORD_LENGTH} characters </InputError> : null}
-                    
+
                     <div className='w-full flex flex-col justify-center'>
                         <div className='flex items-center'>
                             <input className={`block w-full bg-main-gray py-2 px-4 rounded-full mt-6 font-bold ${requestLoading ? 'opacity-50 cursor-not-allowed' : ''}`} type="submit" value='Log in' />
