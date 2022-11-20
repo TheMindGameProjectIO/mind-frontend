@@ -16,14 +16,14 @@ module.exports = {
         'main-blue': '#071122',
         'main-light': '#F2D8BA',
         'main-gray': '#A0A7B1',
+        'almost-black': '#020914',
         input: '#37455C',
         'transparent-blue': 'rgba(55, 69, 92, 0.75)'
       },
       backgroundImage: {
         'mind-game-background': "url('/src/assets/img/mind-game-background.png')",
-        'about-us-background': "url('/src/assets/img/aboutusbg.svg')",
+        'about-game-background': "url('/src/assets/img/aboutgamebg.svg')",
         'contact-us-background': "url('/src/assets/img/contactusbg.svg')",
-        'mind-game-background': "url('/src/assets/img/mind-game-background.png')",
       },
       screens: {
         'sm': '640px',

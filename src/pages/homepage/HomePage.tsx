@@ -1,6 +1,6 @@
 import Layout from "../../components/layout/Layout";
 import AuthOpportunity from "./AuthOpportunity";
-import AboutUs from "./AboutUs";
+import AboutUs from "./AboutGame";
 import ContactUs from "./ContactUs"
 
 const HomePage = () => {
