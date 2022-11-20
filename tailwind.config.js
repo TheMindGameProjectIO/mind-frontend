@@ -5,6 +5,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      dropShadow:
+      {
+        '3xl': '0px 5px 5px rgba(189, 170, 147, 0.5)'
+      },
       fontFamily: {
         'audiowide': "Audiowide",
         'play': "Play"
@@ -17,6 +21,7 @@ module.exports = {
         'main-light': '#F2D8BA',
         'main-gray': '#A0A7B1',
         'almost-black': '#020914',
+        'cr-gray': '#9DA3AD',
         input: '#37455C',
         'transparent-blue': 'rgba(55, 69, 92, 0.75)'
       },
