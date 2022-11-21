@@ -2,17 +2,17 @@ import BgImage from "../../assets/img/mind-game-book.png"
 
 const AboutGame = () =>
 {
-    const ruleClass: string = "mb-5 text-center"
+    const ruleClass: string = "mb-5 text-center text-[0.7rem] md:text-[1rem]"
 
     return (
-    <div className = "bg-cover bg-about-game-background flex flex-row pl-28 pr-36 font-play">
+    <div className = "bg-cover bg-about-game-background flex flex-col md:flex-row font-play">
         {/* //?  FIXME: There is a small gap between this page and "AuthOpportunity" page */}
-        {/* //! TODO: Make this part responsive for mobile! */}
+        {/* //! FIXME: Background image is terrible when decreasing in size*/}
         
-        <img src = { BgImage } alt = "An image of a book" />
+        <img src = { BgImage } alt = "An image of a book" className = "order-last md:order-first self-center w-full max-w-max" />
 
         <div className = "flex flex-col">
-            <h1 className = 'text-main-blue text-[4rem] font-bold ml-14 mt-10'> About the game </h1>
+            <h1 className = 'text-main-blue text-[3rem] md:text-[4rem] text-center font-bold md:ml-14 mt-10'> About the game </h1>
 
             <p className = {ruleClass}> The deck contains cards numbered 1-100, and during the game you try to
             complete 12, 10 or 8 levels of play with 2, 3 or 4 players. In a level, each
