@@ -22,7 +22,8 @@ module.exports = {
         'main-gray': '#A0A7B1',
         'almost-black': '#020914',
         'cr-gray': '#9DA3AD',
-        input: '#37455C',
+        'input': '#37455C',
+        'placeholder-color': '#4d5667',
         'transparent-blue': 'rgba(55, 69, 92, 0.75)'
       },
       backgroundImage: {

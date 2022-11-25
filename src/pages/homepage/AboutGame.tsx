@@ -5,13 +5,13 @@ const AboutGame = () =>
     const ruleClass: string = "mb-5 text-center text-[0.7rem] md:text-[1rem]"
 
     return (
-    <div className = "bg-cover bg-about-game-background flex flex-col md:flex-row font-play">
-        {/* //?  FIXME: There is a small gap between this page and "AuthOpportunity" page */}
-        {/* //! FIXME: Background image is terrible when decreasing in size*/}
-        
+    <div className = "bg-cover bg-center bg-about-game-background flex flex-col md:flex-row font-play">
+        {/* //! FIXME: Background image is terrible when decreasing in size! */}
+        {/* //! FIXME: Because of rabbits in the background image, some part of the text is not seen! */}
+
         <img src = { BgImage } alt = "An image of a book" className = "order-last md:order-first self-center w-full max-w-max" />
 
-        <div className = "flex flex-col">
+        <div className = "flex flex-col pr-4">
             <h1 className = 'text-main-blue text-[3rem] md:text-[4rem] text-center font-bold md:ml-14 mt-10'> About the game </h1>
 
             <p className = {ruleClass}> The deck contains cards numbered 1-100, and during the game you try to
