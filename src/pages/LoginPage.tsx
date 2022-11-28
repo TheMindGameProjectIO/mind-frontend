@@ -18,11 +18,11 @@ const LoginPage = () => {
     const [loginRequest, requestLoading] = useLoading({
         callback: async (data: TLoginData) => {
             const response = await login(data);
-            // TODO: add stroing access token in localStorage
+            // TODO: save access token in local storage
         },
         onError: (error: any) => {
             if (error instanceof AxiosError) {
-                if (error.response?.status == 401) { // TODO: change 401 to other exception status
+                if (error.response?.status == 404 || error.response?.status == 400) {
                     setError('invalid credentials');
                 }
             }
@@ -88,7 +88,7 @@ const LoginPage = () => {
                     {/* Input boxes */}
 
                     {error == 'invalid credentials' ? <InputError> Email or password is wrong </InputError> : null}
-                    <Input innerRef={emailRef} placeholder='Email' />
+                    <Input<string> ref={emailRef} placeholder='Email' />
                     {error == 'empty email' ? <InputError> Please provide email </InputError> : null}
                     {error == 'invalid email' ? <InputError> Entered email is invalid </InputError> : null}
 
@@ -98,7 +98,7 @@ const LoginPage = () => {
 
                     <div className='w-full flex flex-col justify-center'>
                         <div className='flex items-center'>
-                            <input className={`block w-full bg-main-gray py-2 px-4 rounded-full mt-6 font-bold ${requestLoading ? 'opacity-50 cursor-not-allowed' : ''}`} type="submit" value='Log in' />
+                            <button disabled={requestLoading} className={`block w-full bg-main-gray py-2 px-4 rounded-full mt-6 font-bold ${requestLoading ? 'opacity-50 cursor-not-allowed' : ''}`} type="submit"> Log in </button>
                             {requestLoading ? <Loader scale='0.5' className='relative top-2' /> : null}
                         </div>
                         <PageLink className='text-white text-center' to={authRoutes.forgotPassword}> Forgot Password? </PageLink>
@@ -118,7 +118,7 @@ const PasswordInput: FC<IPasswordInputProps> = ({ passwordRef }) => {
 
     return (
         <>
-            <Input className='mt-3' innerRef={passwordRef} placeholder='Password' hideValue={passwordHidden} />
+            <Input<string> className='mt-3' ref={passwordRef} placeholder='Password' hideValue={passwordHidden} />
             <div className='text-start text-white' onClick={() => setPasswordHidden(!passwordHidden)}> {passwordHidden ? 'Show' : 'Hide'} password </div>
         </>
     )

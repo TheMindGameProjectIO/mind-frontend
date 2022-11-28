@@ -126,26 +126,26 @@ const SignupPage = () => {
                     {/* //? Authentication via Facebook */}
 
                     {/* Input boxes */}
-                    <Input innerRef={emailRef} placeholder='Email' />
+                    <Input<string> ref={emailRef} placeholder='Email' />
                     {error === "empty email" ? <InputError> Please, provide an email </InputError> : null}
                     {error === "not email" ? <InputError> Please, provide a valid email </InputError> : null}
                     {error === "email exists" ? <InputError> This email already exists. Provide another email. </InputError> : null}
 
-                    <Input innerRef={usernameRef} placeholder='Username' className='mt-3' />
+                    <Input<string> ref={usernameRef} placeholder='Username' className='mt-3' />
                     {error === "empty username" ? <InputError> Please, create a username </InputError> : null}
                     {error === "short username" ? <InputError> Username must contain at least 3 characters </InputError> : null}
 
-                    <Input innerRef={passwordRef} placeholder='Password' className='mt-7' hideValue={true} />
+                    <Input<string> ref={passwordRef} placeholder='Password' className='mt-7' hideValue={true} />
                     {error === "empty password" ? <InputError> Please, create a password </InputError> : null}
                     {error === "short password" ? <InputError> Password must contain at least 6 characters </InputError> : null}
 
-                    <Input innerRef={repeatPasswordRef} placeholder='Repeat Password' className='mt-3' hideValue={true} />
+                    <Input<string> ref={repeatPasswordRef} placeholder='Repeat Password' className='mt-3' hideValue={true} />
                     {error === "empty repeatPassword" ? <InputError> Please, rewrite the password </InputError> : null}
                     {error === "wrong repeatPassword" ? <InputError> The rewritten password is incorrect </InputError> : null}
 
                     <div className='w-full flex flex-col justify-center'>
                         <div className='flex items-center'>
-                            <input className={`block w-full bg-main-gray py-2 px-4 rounded-full mt-6 font-bold ${requestLoading ? "opacity-50 cursor-not-allowed" : ''}`} type="submit" value='Create account' />
+                            <button className={`block w-full bg-main-gray py-2 px-4 rounded-full mt-6 font-bold ${requestLoading ? "opacity-50 cursor-not-allowed" : ''}`} type="submit"> Create account </button>
                             {requestLoading ? <Loader scale='0.5' className='relative top-2' /> : null}
                         </div>
                     </div>
