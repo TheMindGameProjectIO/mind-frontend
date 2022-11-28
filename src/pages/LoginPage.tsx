@@ -9,6 +9,7 @@ import useLoading from '../hooks/useLoading';
 import Input from '../components/ui/Input';
 import PageLink from '../components/PageLink';
 import GameTitle from '../components/ui/GameTitle';
+import Copyright from '../components/ui/Copyright';
 
 const LoginPage = () => {
     const emailRef = useRef<any>();
@@ -101,11 +102,10 @@ const LoginPage = () => {
                             <button disabled={requestLoading} className={`block w-full bg-main-gray py-2 px-4 rounded-full mt-6 font-bold ${requestLoading ? 'opacity-50 cursor-not-allowed' : ''}`} type="submit"> Log in </button>
                             {requestLoading ? <Loader scale='0.5' className='relative top-2' /> : null}
                         </div>
-                        <PageLink className='text-white text-center' to={authRoutes.forgotPassword}> Forgot Password? </PageLink>
                     </div>
                 </form>
             </div>
-        </div >
+        </div>
     );
 }
 

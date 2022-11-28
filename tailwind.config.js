@@ -5,6 +5,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      dropShadow:
+      {
+        '3xl': '0px 5px 5px rgba(189, 170, 147, 0.5)'
+      },
       fontFamily: {
         'audiowide': "Audiowide",
         'play': "Play"
@@ -18,10 +22,16 @@ module.exports = {
         'main-gray': '#A0A7B1',
         'input': '#37455C',
         "little-white": "#CDD1D6",
+        'almost-black': '#020914',
+        'cr-gray': '#9DA3AD',
+        'input': '#37455C',
+        'placeholder-color': '#4d5667',
         'transparent-blue': 'rgba(55, 69, 92, 0.75)'
       },
       backgroundImage: {
         'mind-game-background': "url('/src/assets/img/mind-game-background.png')",
+        'about-game-background': "url('/src/assets/img/aboutgamebg.svg')",
+        'contact-us-background': "url('/src/assets/img/contactusbg.svg')",
       },
       screens: {
         'sm': '640px',

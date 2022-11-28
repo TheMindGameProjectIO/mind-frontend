@@ -10,7 +10,7 @@ const Layout: FC<ILayoutProps> = ({ children, header = true }) => {
         <div>
             {header ? <></> : null}
             <div className='flex justify-center'>
-                <main className='w-full max-w-main p-6'>
+                <main className='w-full max-w-main px-6'>
                     {children}
                 </main>
             </div>

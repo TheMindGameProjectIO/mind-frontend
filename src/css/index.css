@@ -16,6 +16,10 @@
     form.forgotPassword {
         @apply flex flex-col w-screen max-w-[400px] bg-transparent-blue py-8 px-3 rounded-xl;
     }
+
+    form.contactus {
+        @apply flex flex-col w-screen max-w-[400px] py-3 px-9
+    }
 }
 
 @layer components {}
