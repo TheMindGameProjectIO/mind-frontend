@@ -16,7 +16,8 @@ module.exports = {
         'main-blue': '#071122',
         'main-light': '#F2D8BA',
         'main-gray': '#A0A7B1',
-        input: '#37455C',
+        'input': '#37455C',
+        "little-white": "#CDD1D6",
         'transparent-blue': 'rgba(55, 69, 92, 0.75)'
       },
       backgroundImage: {
