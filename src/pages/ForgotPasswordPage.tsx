@@ -33,7 +33,6 @@ const ForgotPasswordPage = () => {
     return (
         <div>
             ForgotPasswordPage
-            <Copyright />
         </div>
     );
 }

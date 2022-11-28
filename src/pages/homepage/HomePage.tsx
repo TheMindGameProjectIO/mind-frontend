@@ -10,7 +10,6 @@ const HomePage = () => {
             <AuthOpportunity />
             <AboutUs />
             <ContactUs />
-            <Copyright />
         </Layout>
     );
 }

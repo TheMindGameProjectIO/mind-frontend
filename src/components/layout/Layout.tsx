@@ -1,4 +1,5 @@
 import { FC, ReactNode } from 'react';
+import Copyright from '../../components/ui/Copyright';
 
 interface ILayoutProps {
     children: ReactNode;
@@ -14,6 +15,7 @@ const Layout: FC<ILayoutProps> = ({ children, header = true }) => {
                     {children}
                 </main>
             </div>
+            <Copyright />
         </div>
     );
 }
