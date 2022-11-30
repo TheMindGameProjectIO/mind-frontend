@@ -8,6 +8,12 @@ export type TLoginData = {
 
 export const login = async (data: TLoginData) => {
     const url = API_BASE_URL + '/auth/login';
-    const response = await axios.post(url, data);
+    const response = await axios.post(url, data, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+        }
+    });
     return response;
 }
