@@ -19,7 +19,7 @@ const LoginPage = () => {
     const [loginRequest, requestLoading] = useLoading({
         callback: async (data: TLoginData) => {
             const response = await login(data);
-            // TODO: save access token in local storage
+
         },
         onError: (error: any) => {
             if (error instanceof AxiosError) {
@@ -103,6 +103,7 @@ const LoginPage = () => {
                             {requestLoading ? <Loader scale='0.5' className='relative top-2' /> : null}
                         </div>
                     </div>
+                    <PageLink className='text-white text-center p-2' to={authRoutes.forgotPassword}> Forgot password? </PageLink>
                 </form>
             </div>
         </div>
