@@ -40,9 +40,9 @@ const defaultState: IState = {
 export const SocketContext = createContext<ISocketContext>(defaultContext);
 
 const SocketProvider: FC<Props> = ({ children }) => {
-    const [{ 
+    const [{
         // add your states here
-        isConnected 
+        isConnected
     }, dispatch] = useReducer((state: IState, newState: Partial<IState>) => ({ ...state, ...newState }), defaultState);
 
     useEffect(() => {
