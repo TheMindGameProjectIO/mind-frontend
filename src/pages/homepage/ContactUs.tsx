@@ -1,7 +1,11 @@
+import { AxiosError } from "axios";
 import { MouseEvent, useRef, useState } from "react";
+import Loader from "../../components/Loader";
 import Input from "../../components/ui/Input";
 import InputError from "../../components/ui/InputError";
+import useLoading from "../../hooks/useLoading";
 import { isEmail, isNotEmpty, length } from "../../validators"
+import { contactus, TContactUsData } from "../../api";
 
 const ContactUs = () => {
     const firstNameRef = useRef<any>();
@@ -9,9 +13,19 @@ const ContactUs = () => {
     const emailRef = useRef<any>();
     const messageRef = useRef<any>();
 
-    const [error, setError] = useState("no error");
-
+    const [error, setError] = useState<string>("no error");
     const inputClassName: string = "bg-main-light rounded-[18px] my-2";
+
+    const [contactUsRequest, requestLoading] = useLoading({
+        callback: async (data: TContactUsData) => {
+            await contactus(data);
+        },
+        onError: (error: any) => {
+            if (error instanceof AxiosError) {
+                setError("something is wrong");
+            }
+        }
+    })
 
     const onSubmit = async (event: MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -46,7 +60,12 @@ const ContactUs = () => {
             return;
         }
 
-        {/* // TODO: Connect it with the backend */ }
+        await contactUsRequest({
+            firstname: firstName,
+            lastname: lastName,
+            email,
+            message
+        });
     }
 
     return (
@@ -78,11 +97,14 @@ const ContactUs = () => {
 
                         <textarea className={inputClassName + " resize-none w-full placeholder-placeholder-color pt-2 pl-2 h-20"} placeholder="Your message" ref={messageRef} />
 
-                        {/* //? FIXME: This text is closer to the Submit button, rather than to the text area. */}
                         {error === "empty message" ? <InputError> Please, provide a message </InputError> : null}
 
+                        {error === "something is wrong" ? <InputError> Something went wrong, please try again later. </InputError> : null}
 
-                        <input className={`block w-full bg-main-gray py-2 px-4 rounded-full font-bold`} type="submit" value='Submit' />
+                        <div className='flex items-center'>
+                            <button className={`block w-full bg-main-gray py-2 px-4 rounded-full mt-6 font-bold ${requestLoading ? "opacity-50 cursor-not-allowed" : ''}`} type="submit"> Submit </button>
+                            {requestLoading ? <Loader scale='0.5' className='relative top-2' /> : null}
+                        </div>
                     </div>
                 </form>
             </div>
