@@ -22,4 +22,12 @@
     }
 }
 
-@layer components {}
+@layer utilities {
+    .full-screen {
+        @apply w-full h-screen;
+    }
+
+    .center-content {
+        @apply flex items-center justify-center;
+    }
+}
