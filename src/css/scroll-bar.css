@@ -1,0 +1,9 @@
+.curstom-scrollbar::-webkit-scrollbar {
+  background-color: transparent;
+  width: 10px;
+}
+
+.curstom-scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background-color: #9da3ad;
+}

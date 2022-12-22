@@ -26,9 +26,14 @@ module.exports = {
         "transparent-blue": "rgba(55, 69, 92, 0.75)",
 
         "dark-blue": {
-          100: "rgba(8, 17, 32, 0.8)",
-          200: "rgba(8, 17, 32, 0.9)",
-          300: "rgba(8, 17, 32)",
+          300: "rgba(8, 17, 34, 0.5)",
+          400: "rgba(8, 17, 32, 0.8)",
+          500: "rgba(8, 17, 32, 0.9)",
+          600: "rgba(8, 17, 32)",
+        },
+
+        lobby: {
+          board: "rgba(138, 142, 150, 0.2)",
         },
       },
       backgroundImage: {
