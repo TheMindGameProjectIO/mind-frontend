@@ -10,7 +10,7 @@ import LobbiesPage from "./pages/LobbiesPage";
 import AuthLayout from "./components/layout/AuthLayout";
 
 // TODO: This is a temporary solution. We need to create auth store or context and keep this state there.
-export const auth: boolean = false;
+export const auth: boolean = true;
 
 const App = () => {
   return (

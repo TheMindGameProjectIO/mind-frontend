@@ -1,5 +1,11 @@
+import Layout from "../components/layout/Layout";
+
 const LobbiesPage = () => {
-  return <div> Lobbies page </div>;
+  return (
+    <Layout header={true}>
+      <div> Lobbies page </div>
+    </Layout>
+  );
 };
 
 export default LobbiesPage;
