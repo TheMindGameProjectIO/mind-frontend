@@ -8,6 +8,7 @@ import ValidateRoute from "./components/ValidateRoute";
 import NotFoundPage from "./pages/NotFoundPage";
 import LobbiesPage from "./pages/LobbiesPage";
 import AuthLayout from "./components/layout/AuthLayout";
+import LobbiesLayout from "./components/layout/LobbiesLayout";
 
 // TODO: This is a temporary solution. We need to create auth store or context and keep this state there.
 export const auth: boolean = true;
@@ -32,7 +33,9 @@ const App = () => {
 
         {/* Private routes: only the users that are authorized can get to these routes */}
         <Route element={<ValidateRoute condition={auth} navigate={publicRoutes.error} />}>
-          <Route path={privateRoutes.lobbies} element={<LobbiesPage />} />
+          <Route element={<LobbiesLayout />}>
+            <Route path={privateRoutes.lobbies} element={<LobbiesPage />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
