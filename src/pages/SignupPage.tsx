@@ -11,6 +11,7 @@ import Loader from "../components/Loader";
 import PageLink from "../components/PageLink";
 import Input from "../components/ui/Input";
 import GameTitle from "../components/ui/GameTitle";
+import Button from "../components/ui/Button";
 
 const SignupPage = () => {
   const emailRef = useRef<any>();
@@ -145,14 +146,9 @@ const SignupPage = () => {
 
             <div className="w-full flex flex-col justify-center">
               <div className="flex items-center">
-                <button
-                  className={`block w-full bg-main-gray py-2 px-4 rounded-full mt-6 font-bold ${
-                    requestLoading ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
-                  type="submit"
-                >
+                <Button disabled={requestLoading} type="submit">
                   Create account
-                </button>
+                </Button>
                 {requestLoading ? <Loader scale="0.5" className="relative top-2" /> : null}
               </div>
             </div>

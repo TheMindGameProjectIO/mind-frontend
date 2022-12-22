@@ -10,6 +10,7 @@ import Input from "../components/ui/Input";
 import PageLink from "../components/PageLink";
 import GameTitle from "../components/ui/GameTitle";
 import { NavigateFunction, useNavigate } from "react-router";
+import Button from "../components/ui/Button";
 
 const LoginPage = () => {
   const emailRef = useRef<any>();
@@ -101,15 +102,9 @@ const LoginPage = () => {
 
           <div className="w-full flex flex-col justify-center">
             <div className="flex items-center">
-              <button
-                disabled={requestLoading}
-                className={`block w-full bg-main-gray py-2 px-4 rounded-full mt-6 font-bold ${
-                  requestLoading ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-                type="submit"
-              >
+              <Button disabled={requestLoading} type="submit">
                 Log in
-              </button>
+              </Button>
               {requestLoading ? <Loader scale="0.5" className="relative top-2" /> : null}
             </div>
           </div>

@@ -61,7 +61,6 @@ interface ILobbiesProviderProps {
 
 const LobbiesProvider: FC<ILobbiesProviderProps> = ({ children }) => {
   const [selectedLobbyId, setSelectedLobbyId] = useState<string>("");
-  console.log(selectedLobbyId);
 
   const selectLobby = (id: string) => {
     setSelectedLobbyId(id);
