@@ -3,6 +3,7 @@ import LobbyLink from "../components/LobbyLink";
 import LobbiesProvider, { LobbiesContext } from "../context/LobbiesProvider";
 import { Lobby } from "../types";
 import Button from "../components/ui/Button";
+import { lobbyPagesButton } from "../helpers";
 
 const LobbiesPage = () => {
   const { selectedLobbyId } = useContext(LobbiesContext);
@@ -11,7 +12,7 @@ const LobbiesPage = () => {
     <LobbiesProvider>
       <div className="flex flex-col items-center">
         <LobbiesBoard />
-        <Button className="w-full max-w-[200px] text-dark-blue-600 font-bold py-3"> Join </Button>
+        <Button className={lobbyPagesButton}> Join </Button>
       </div>
     </LobbiesProvider>
   );
