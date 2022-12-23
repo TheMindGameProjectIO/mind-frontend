@@ -128,7 +128,6 @@ const PasswordInput: FC<IPasswordInputProps> = ({ passwordRef }) => {
     <>
       <Input<string> className="mt-3" ref={passwordRef} placeholder="Password" hideValue={passwordHidden} />
       <div className="text-start text-white" onClick={() => setPasswordHidden(!passwordHidden)}>
-        {" "}
         {passwordHidden ? "Show" : "Hide"} password{" "}
       </div>
     </>
