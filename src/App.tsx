@@ -19,7 +19,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public routes: all users can get to these routes */}
+        {/* Public  : all users can get to these routes */}
         <Route element={<BasicLayout header={false} />}>
           <Route path={publicRoutes.index} element={<HomePage />} />
           <Route path="*" element={<Navigate to={publicRoutes.error} />} />
