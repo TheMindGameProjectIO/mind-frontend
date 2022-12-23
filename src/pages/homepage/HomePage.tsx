@@ -6,11 +6,11 @@ import Copyright from "../../components/ui/Copyright";
 
 const HomePage = () => {
   return (
-    <Layout header={false}>
+    <div>
       <AuthOpportunity />
       <AboutUs />
       <ContactUs />
-    </Layout>
+    </div>
   );
 };
 

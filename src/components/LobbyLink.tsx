@@ -22,7 +22,7 @@ const LobbyLink: FC<ILobbyLinkProps> = ({ lobby, selected }) => {
     >
       <img src={Rabbit} alt="Rabbit icon" />
       <div className="flex items-center flex-col">
-        <h3>{name}</h3>
+        <h3 className="text-lg">{name}</h3>
         <p className="text-cr-gray">
           {currentPlayers}/{maxPlayers} Players
         </p>

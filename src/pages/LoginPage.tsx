@@ -1,5 +1,5 @@
 import { MouseEvent, useRef, useState, MutableRefObject, FC } from "react";
-import { authRoutes } from "../routes";
+import { authRoutes, privateRoutes } from "../routes";
 import { isEmail, isNotEmpty, length } from "../validators";
 import { ACCESS_TOKEN_KEY, login, MINIMAL_PASSWORD_LENGTH, TLoginData } from "../api";
 import { AxiosError } from "axios";
@@ -11,18 +11,24 @@ import PageLink from "../components/PageLink";
 import GameTitle from "../components/ui/GameTitle";
 import { NavigateFunction, useNavigate } from "react-router";
 import Button from "../components/ui/Button";
+import { useAppDispatch } from "../redux/hooks";
+import { authorize } from "../redux/slices/authSlice";
 
 const LoginPage = () => {
   const emailRef = useRef<any>();
   const passwordRef = useRef<any>();
   const navigate: NavigateFunction = useNavigate();
   const [error, setError] = useState<string>("no error");
+  const dispatch = useAppDispatch();
 
   const [loginRequest, requestLoading] = useLoading({
     callback: async (data: TLoginData) => {
       const response = await login(data);
-      localStorage.setItem(ACCESS_TOKEN_KEY, response.headers.authorization as string);
-      // TODO: add navigation to the lobbies page
+      const token = response.headers.authorization as string;
+      localStorage.setItem(ACCESS_TOKEN_KEY, token);
+
+      dispatch(authorize());
+      navigate(privateRoutes.lobbies);
     },
     onError: (error: any) => {
       if (error instanceof AxiosError) {
