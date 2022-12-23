@@ -1,5 +1,5 @@
 import { createContext, useState, FC, ReactNode } from "react";
-import { Lobby } from "../../types";
+import { Lobby } from "../types";
 
 // TODO: Remove this when we have a real API
 const serverLobbies: Lobby[] = [

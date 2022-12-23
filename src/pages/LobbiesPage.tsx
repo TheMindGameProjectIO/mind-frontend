@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import LobbyLink from "../components/LobbyLink";
-import LobbiesProvider, { LobbiesContext } from "../assets/context/LobbiesProvider";
+import LobbiesProvider, { LobbiesContext } from "../context/LobbiesProvider";
 import { Lobby } from "../types";
 import Button from "../components/ui/Button";
 
