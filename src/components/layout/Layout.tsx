@@ -1,5 +1,4 @@
 import { FC, ReactNode, createContext } from "react";
-import Copyright from "../../components/ui/Copyright";
 import Header from "./Header";
 
 interface ILayoutProps {
