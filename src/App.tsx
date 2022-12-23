@@ -12,6 +12,8 @@ import LobbiesLayout from "./components/layout/LobbiesLayout";
 import { useAppSelector } from "./redux/hooks";
 import { selectIsAuth } from "./redux/slices/authSlice";
 import BasicLayout from "./components/layout/BasicLayout";
+import LobbiesTitleProvider from "./context/LobbiesTitleProvider";
+import CreateLobbyPage from "./pages/CreateLobbyPage";
 
 const App = () => {
   const isAuth = useAppSelector(selectIsAuth);
@@ -37,8 +39,16 @@ const App = () => {
 
         {/* Private routes: only the users that are authorized can get to these routes */}
         <Route element={<ValidateRoute condition={isAuth} navigate={publicRoutes.error} />}>
-          <Route element={<LobbiesLayout />}>
-            <Route path={privateRoutes.lobbies} element={<LobbiesPage />} />
+          <Route
+            path={privateRoutes.lobbiesRoutes.index}
+            element={
+              <LobbiesTitleProvider>
+                <LobbiesLayout />
+              </LobbiesTitleProvider>
+            }
+          >
+            <Route index path={privateRoutes.lobbiesRoutes.list()} element={<LobbiesPage />} />
+            <Route path={privateRoutes.lobbiesRoutes.create()} element={<CreateLobbyPage />} />
           </Route>
         </Route>
       </Routes>

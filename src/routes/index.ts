@@ -12,7 +12,15 @@ export const authRoutes = {
 };
 
 export const privateRoutes = {
-  lobbies: "/lobbies",
+  lobbiesRoutes: {
+    index: "/lobbies",
+    list() {
+      return `${this.index}/list`;
+    },
+    create() {
+      return `${this.index}/create`;
+    },
+  },
 };
 
 export const publicRoutes = {

@@ -28,7 +28,7 @@ const LoginPage = () => {
       localStorage.setItem(ACCESS_TOKEN_KEY, token);
 
       dispatch(authorize());
-      navigate(privateRoutes.lobbies);
+      navigate(privateRoutes.lobbiesRoutes.list());
     },
     onError: (error: any) => {
       if (error instanceof AxiosError) {
