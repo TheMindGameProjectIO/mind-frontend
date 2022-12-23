@@ -1,17 +1,37 @@
 import Button from "../components/ui/Button";
-import { FC } from "react";
-import Input from "../components/ui/Input";
-import { ligthInputClassName, lobbyPagesButton } from "../helpers";
+import { useState, useRef } from "react";
+import { lobbyPagesButton } from "../helpers";
+import SwitchField from "../components/ui/Field/SwitchField";
 import InputField from "../components/ui/Field/InputField";
 
 const CreateLobbyPage = () => {
+  const [gameMode, setGameMode] = useState(false);
+  const lobbyNameRef = useRef<any>();
+  const playersNumberRef = useRef<any>();
+
   return (
-    <div className="flex center-content flex-col">
-      <form className="flex gap-24">
-        <InputField label="Enter a lobby name" placeholder="my lobby" />
-        <InputField label="Enter a lobby name" placeholder="my lobby" />
+    <div className="center-content flex-col">
+      <form className="flex flex-col gap-3 lg:flex-row lg:gap-24 lg:py-4 py-12 px-12 lg:px-4">
+        <InputField<string> label="Enter a lobby name" placeholder="my lobby" innerRef={lobbyNameRef} />
+        <InputField<number>
+          label="Number of players"
+          placeholder="2-4"
+          transform={(value: string) => parseInt(value)}
+          innerRef={playersNumberRef}
+        />
+        <SwitchField
+          label="Game mode"
+          checked={gameMode}
+          onChange={() => setGameMode(!gameMode)}
+          placeholders={{
+            on: "Public",
+            off: "Private",
+          }}
+        />
       </form>
-      <Button className={lobbyPagesButton}>Create Lobby</Button>
+      <Button className={lobbyPagesButton} type="submit">
+        Create Lobby
+      </Button>
     </div>
   );
 };

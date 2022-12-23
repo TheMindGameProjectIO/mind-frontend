@@ -3,18 +3,17 @@ import { FC } from "react";
 import Input from "../Input";
 import { ligthInputClassName } from "../../../helpers";
 
-interface IInputFieldProps {
+interface IInputFieldProps<T> {
   label: string;
   placeholder: string;
   innerRef?: any;
+  transform?: (value: string) => T;
 }
 
-const InputField: FC<IInputFieldProps> = ({ label, placeholder, innerRef }) => {
+export default function InputField<T>({ label, placeholder, innerRef, transform }: IInputFieldProps<T>) {
   return (
     <Field label={label}>
-      <Input<string> placeholder={placeholder} className={ligthInputClassName} ref={innerRef} />
+      <Input<T> placeholder={placeholder} className={ligthInputClassName} ref={innerRef} transform={transform} />
     </Field>
   );
-};
-
-export default InputField;
+}
