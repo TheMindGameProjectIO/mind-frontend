@@ -1,15 +1,30 @@
 export const authRoutes = {
-    index: '/auth',
-    signup: '/auth/signup',
-    forgotPassword: '/auth/forgot-password',
-    google: '/auth/google', // FIXME: Delete them after connecting real google authentication
-    facebook: '/auth/facebook', // FIXME: Delete them after connecting real google authentication
-}
+  index: "/auth",
+  forgotPassword() {
+    return `${this.index}/forgot-password`;
+  },
+  login() {
+    return `${this.index}/login`;
+  },
+  signup() {
+    return `${this.index}/signup`;
+  },
+};
 
 export const privateRoutes = {
-    game: '/game/:roomId'
-}
+  lobbiesRoutes: {
+    index: "/lobbies",
+    list() {
+      return `${this.index}/list`;
+    },
+    create() {
+      return `${this.index}/create`;
+    },
+  },
+  game: "/game/:gameId",
+};
 
 export const publicRoutes = {
-    index: '/'
-}
+  index: "/",
+  error: "/error",
+};
