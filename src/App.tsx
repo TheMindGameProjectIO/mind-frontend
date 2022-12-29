@@ -12,7 +12,7 @@ import LobbiesLayout from "./components/layout/LobbiesLayout";
 import { useAppSelector } from "./redux/hooks";
 import { selectIsAuth } from "./redux/slices/authSlice";
 import BasicLayout from "./components/layout/BasicLayout";
-import LobbiesTitleProvider from "./context/LobbiesTitleProvider";
+import LobbiesTitleProvider from "./contexts/LobbiesTitleProvider";
 import CreateLobbyPage from "./pages/CreateLobbyPage";
 import GamePage from "./pages/GamePage";
 
