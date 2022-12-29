@@ -14,6 +14,7 @@ import { selectIsAuth } from "./redux/slices/authSlice";
 import BasicLayout from "./components/layout/BasicLayout";
 import LobbiesTitleProvider from "./context/LobbiesTitleProvider";
 import CreateLobbyPage from "./pages/CreateLobbyPage";
+import LobbyPage from "./pages/LobbyPage";
 
 const App = () => {
   const isAuth = useAppSelector(selectIsAuth);
@@ -49,6 +50,8 @@ const App = () => {
           >
             <Route index path={privateRoutes.lobbiesRoutes.list()} element={<LobbiesPage />} />
             <Route path={privateRoutes.lobbiesRoutes.create()} element={<CreateLobbyPage />} />
+            <Route path={privateRoutes.lobbiesRoutes.lobby()} element={<LobbyPage />}
+            />
           </Route>
         </Route>
       </Routes>

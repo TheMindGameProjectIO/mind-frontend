@@ -20,10 +20,13 @@ module.exports = {
         input: "#37455C",
         "little-white": "#CDD1D6",
         "almost-black": "#020914",
-        "cr-gray": "#9DA3AD",
+        "cr-gray": "#9DA4AD",
+        "added-gray": "#243756",
         input: "#37455C",
         "placeholder-color": "#4d5667",
         "transparent-blue": "rgba(55, 69, 92, 0.75)",
+        "lighter-blue": "#34455a",
+        "u-list-gray": "#c9cacc",
 
         "dark-blue": {
           300: "rgba(8, 17, 34, 0.5)",
