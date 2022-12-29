@@ -3,11 +3,22 @@ import { useState, useRef } from "react";
 import { lobbyPagesButton } from "../helpers";
 import SwitchField from "../components/ui/Field/SwitchField";
 import InputField from "../components/ui/Field/InputField";
+import { useEffect, useContext } from "react";
+import { LobbiesTitleContext } from "../context/LobbiesTitleProvider";
 
 const CreateLobbyPage = () => {
   const [gameMode, setGameMode] = useState(false);
+  const { changeTitle } = useContext(LobbiesTitleContext);
   const lobbyNameRef = useRef<any>();
   const playersNumberRef = useRef<any>();
+
+  useEffect(() => {
+    changeTitle("Create a lobby");
+
+    return () => {
+      changeTitle("Public lobbies");
+    };
+  }, []);
 
   return (
     <div className="center-content flex-col">
