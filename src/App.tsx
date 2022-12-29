@@ -50,8 +50,7 @@ const App = () => {
           >
             <Route index path={privateRoutes.lobbiesRoutes.list()} element={<LobbiesPage />} />
             <Route path={privateRoutes.lobbiesRoutes.create()} element={<CreateLobbyPage />} />
-            <Route path={privateRoutes.lobbiesRoutes.lobby()} element={<LobbyPage />}
-            />
+            <Route path={privateRoutes.lobbiesRoutes.lobby()} element={<LobbyPage />} />
           </Route>
         </Route>
       </Routes>
