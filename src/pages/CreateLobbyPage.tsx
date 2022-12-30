@@ -4,7 +4,7 @@ import { lobbyPagesButton } from "../helpers";
 import SwitchField from "../components/ui/Field/SwitchField";
 import InputField from "../components/ui/Field/InputField";
 import { useEffect, useContext } from "react";
-import { LobbiesTitleContext } from "../context/LobbiesTitleProvider";
+import { LobbiesTitleContext } from "../contexts/LobbiesTitleProvider";
 
 const CreateLobbyPage = () => {
   const [gameMode, setGameMode] = useState(false);

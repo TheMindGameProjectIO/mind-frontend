@@ -24,6 +24,7 @@ export const privateRoutes = {
       return `${this.index}/lobby`;
     }
   },
+  game: "/game/:gameId",
 };
 
 export const publicRoutes = {

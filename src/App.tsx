@@ -12,14 +12,13 @@ import LobbiesLayout from "./components/layout/LobbiesLayout";
 import { useAppSelector } from "./redux/hooks";
 import { selectIsAuth } from "./redux/slices/authSlice";
 import BasicLayout from "./components/layout/BasicLayout";
-import LobbiesTitleProvider from "./context/LobbiesTitleProvider";
+import LobbiesTitleProvider from "./contexts/LobbiesTitleProvider";
 import CreateLobbyPage from "./pages/CreateLobbyPage";
+import GamePage from "./pages/GamePage";
 import LobbyPage from "./pages/LobbyPage";
-import { API_BASE_URL } from "./api";
 
 const App = () => {
   const isAuth = useAppSelector(selectIsAuth);
-  console.log(API_BASE_URL);
 
   return (
     <BrowserRouter>
@@ -32,27 +31,16 @@ const App = () => {
         </Route>
 
         {/* Auth routes: only the users that are not authorized can get to these routes */}
-        <Route
-          element={
-            <ValidateRoute condition={!isAuth} navigate={publicRoutes.error} />
-          }
-        >
+        <Route element={<ValidateRoute condition={!isAuth} navigate={publicRoutes.error} />}>
           <Route path={authRoutes.index} element={<AuthLayout />}>
             <Route index path={authRoutes.login()} element={<LoginPage />} />
             <Route path={authRoutes.signup()} element={<SignupPage />} />
-            <Route
-              path={authRoutes.forgotPassword()}
-              element={<ForgotPasswordPage />}
-            />
+            <Route path={authRoutes.forgotPassword()} element={<ForgotPasswordPage />} />
           </Route>
         </Route>
 
         {/* Private routes: only the users that are authorized can get to these routes */}
-        <Route
-          element={
-            <ValidateRoute condition={isAuth} navigate={publicRoutes.error} />
-          }
-        >
+        <Route element={<ValidateRoute condition={isAuth} navigate={publicRoutes.error} />}>
           <Route
             path={privateRoutes.lobbiesRoutes.index}
             element={
@@ -61,21 +49,12 @@ const App = () => {
               </LobbiesTitleProvider>
             }
           >
-            <Route
-              index
-              path={privateRoutes.lobbiesRoutes.list()}
-              element={<LobbiesPage />}
-            />
-            <Route
-              path={privateRoutes.lobbiesRoutes.create()}
-              element={<CreateLobbyPage />}
-            />
-            <Route
-              path={privateRoutes.lobbiesRoutes.lobby()}
-              element={<LobbyPage />}
-            />
+            <Route index path={privateRoutes.lobbiesRoutes.list()} element={<LobbiesPage />} />
+            <Route path={privateRoutes.lobbiesRoutes.create()} element={<CreateLobbyPage />} />
+            <Route path={privateRoutes.lobbiesRoutes.lobby()} element={<LobbyPage />} />
           </Route>
         </Route>
+        <Route path={privateRoutes.game} element={<GamePage />} />
       </Routes>
     </BrowserRouter>
   );

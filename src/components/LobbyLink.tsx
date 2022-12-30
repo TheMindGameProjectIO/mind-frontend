@@ -2,7 +2,7 @@ import { Rabbit } from "../assets/svg";
 import { FC } from "react";
 import { Lobby } from "../types";
 import { useContext } from "react";
-import { LobbiesContext } from "../context/LobbiesProvider";
+import { LobbiesContext } from "../contexts/LobbiesProvider";
 
 interface ILobbyLinkProps {
   lobby: Lobby;

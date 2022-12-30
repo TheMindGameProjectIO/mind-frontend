@@ -1,7 +1,7 @@
 import { Outlet } from "react-router";
 import Layout from "./Layout";
 import { useContext } from "react";
-import { LobbiesTitleContext } from "../../context/LobbiesTitleProvider";
+import { LobbiesTitleContext } from "../../contexts/LobbiesTitleProvider";
 
 const LobbiesLayout = () => {
   const { title } = useContext(LobbiesTitleContext);

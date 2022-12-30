@@ -48,3 +48,9 @@
     @apply w-full h-screen;
   }
 }
+
+@layer components {
+  .card-side-number {
+    @apply text-white absolute font-bold text-xl;
+  }
+}

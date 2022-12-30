@@ -4,7 +4,7 @@ import Regular_Rabbit from "../assets/img/regular-rabbit.png";
 import { Rabbit } from "../assets/svg";
 import { FC, useState, memo, useEffect, useContext } from "react";
 import { useNavigate } from "react-router";
-import { LobbiesTitleContext } from "../context/LobbiesTitleProvider";
+import { LobbiesTitleContext } from "../contexts/LobbiesTitleProvider";
 
 const serverPlayers = [
   { id: 1, name: "MT" },
