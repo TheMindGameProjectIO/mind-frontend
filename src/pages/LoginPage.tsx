@@ -1,7 +1,8 @@
 import { MouseEvent, useRef, useState, MutableRefObject, FC } from "react";
 import { authRoutes } from "../routes";
 import { isEmail, isNotEmpty, length } from "../validators";
-import { ACCESS_TOKEN_KEY, MINIMAL_PASSWORD_LENGTH, AuthController, TLoginData } from "../api";
+import { ACCESS_TOKEN_KEY, AuthController, TLoginData } from "../api";
+import { Validations } from "../enums";
 import { AxiosError } from "axios";
 import Loader from "../components/Loader";
 import InputError from "../components/ui/InputError";
@@ -64,7 +65,7 @@ const LoginPage = () => {
       return;
     }
 
-    if (!length(password, { min: MINIMAL_PASSWORD_LENGTH })) {
+    if (!length(password, { min: Validations.MINIMAL_PASSWORD_LENGTH })) {
       setError("password's length");
       return;
     }

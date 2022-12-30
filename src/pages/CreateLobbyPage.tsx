@@ -1,7 +1,6 @@
 import Button from "../components/ui/Button";
 import { useState, useRef } from "react";
 import { lobbyPagesButton } from "../helpers";
-import SwitchField from "../components/ui/Field/SwitchField";
 import InputField from "../components/ui/Field/InputField";
 import { useEffect, useContext } from "react";
 import { LobbiesTitleContext } from "../contexts/LobbiesTitleProvider";
@@ -27,17 +26,10 @@ const CreateLobbyPage = () => {
         <InputField<number>
           label="Number of players"
           placeholder="2-4"
-          transform={(value: string) => parseInt(value)}
-          innerRef={playersNumberRef}
-        />
-        <SwitchField
-          label="Game mode"
-          checked={gameMode}
-          onChange={() => setGameMode(!gameMode)}
-          placeholders={{
-            on: "Public",
-            off: "Private",
+          transform={(value: string) => {
+            return parseInt(value);
           }}
+          innerRef={playersNumberRef}
         />
       </form>
       <Button className={lobbyPagesButton} type="submit">

@@ -1,7 +1,7 @@
 import { MouseEvent, useRef, useState } from "react";
 import { authRoutes } from "../routes";
 import { isEmail, isNotEmpty, length } from "../validators";
-import { MINIMAL_PASSWORD_LENGTH, MINIMAL_USERNAME_LENGTH } from "../api";
+import { Validations } from "../enums";
 import { AxiosError } from "axios";
 import { AuthController, TSignUpData } from "../api";
 import { NavigateFunction, useNavigate } from "react-router";
@@ -58,7 +58,7 @@ const SignupPage = () => {
       return;
     }
 
-    if (!length(username, { min: MINIMAL_USERNAME_LENGTH })) {
+    if (!length(username, { min: Validations.MINIMAL_USERNAME_LENGTH })) {
       setError("short username");
       return;
     }
@@ -69,7 +69,7 @@ const SignupPage = () => {
       return;
     }
 
-    if (!length(password, { min: MINIMAL_PASSWORD_LENGTH })) {
+    if (!length(password, { min: Validations.MINIMAL_PASSWORD_LENGTH })) {
       setError("short password");
       return;
     }
