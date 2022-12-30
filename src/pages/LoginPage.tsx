@@ -1,5 +1,5 @@
 import { MouseEvent, useRef, useState, MutableRefObject, FC } from "react";
-import { authRoutes, privateRoutes } from "../routes";
+import { authRoutes } from "../routes";
 import { isEmail, isNotEmpty, length } from "../validators";
 import { ACCESS_TOKEN_KEY, login, MINIMAL_PASSWORD_LENGTH, TLoginData } from "../api";
 import { AxiosError } from "axios";
@@ -28,13 +28,17 @@ const LoginPage = () => {
       localStorage.setItem(ACCESS_TOKEN_KEY, token);
 
       dispatch(authorize());
-      navigate(privateRoutes.lobbiesRoutes.list());
+      navigate(-1);
     },
     onError: (error: any) => {
       if (error instanceof AxiosError) {
         if (error.response?.status == 404 || error.response?.status == 400) {
+          console.log(error);
           setError("invalid credentials");
+          return;
         }
+
+        setError("server errror");
       }
     },
   });
@@ -96,6 +100,7 @@ const LoginPage = () => {
           {/* Input boxes */}
 
           {error == "invalid credentials" ? <InputError> Email or password is wrong </InputError> : null}
+          {error == "server error" ? <InputError> Something went wrong </InputError> : null}
           <Input<string> ref={emailRef} placeholder="Email" />
           {error == "empty email" ? <InputError> Please provide email </InputError> : null}
           {error == "invalid email" ? <InputError> Entered email is invalid </InputError> : null}
