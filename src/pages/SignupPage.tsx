@@ -134,11 +134,15 @@ const SignupPage = () => {
 
             <Input<string> ref={usernameRef} placeholder="Username" className="mt-3" />
             {error === "empty username" ? <InputError> Please, create a username </InputError> : null}
-            {error === "short username" ? <InputError> Username must contain at least 3 characters </InputError> : null}
+            {error === "short username" ? (
+              <InputError> Username must contain at least {Validations.MINIMAL_USERNAME_LENGTH} characters </InputError>
+            ) : null}
 
             <Input<string> ref={passwordRef} placeholder="Password" className="mt-7" hideValue={true} />
             {error === "empty password" ? <InputError> Please, create a password </InputError> : null}
-            {error === "short password" ? <InputError> Password must contain at least 6 characters </InputError> : null}
+            {error === "short password" ? (
+              <InputError> Password must contain at least {Validations.MINIMAL_PASSWORD_LENGTH} characters </InputError>
+            ) : null}
 
             <Input<string> ref={repeatPasswordRef} placeholder="Repeat Password" className="mt-3" hideValue={true} />
             {error === "empty repeatPassword" ? <InputError> Please, rewrite the password </InputError> : null}

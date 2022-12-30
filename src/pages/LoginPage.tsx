@@ -109,7 +109,9 @@ const LoginPage = () => {
           <PasswordInput passwordRef={passwordRef} />
           {error == "empty password" ? <InputError> Please provide password </InputError> : null}
           {error == "password's length" ? (
-            <InputError> Password's length must contain at least {MINIMAL_PASSWORD_LENGTH} characters </InputError>
+            <InputError>
+              Password's length must contain at least {Validations.MINIMAL_PASSWORD_LENGTH} characters
+            </InputError>
           ) : null}
 
           <div className="w-full flex flex-col justify-center">
