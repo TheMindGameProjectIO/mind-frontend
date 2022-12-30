@@ -1,7 +1,7 @@
 import { MouseEvent, useRef, useState, MutableRefObject, FC } from "react";
 import { authRoutes } from "../routes";
 import { isEmail, isNotEmpty, length } from "../validators";
-import { ACCESS_TOKEN_KEY, login, MINIMAL_PASSWORD_LENGTH, TLoginData } from "../api";
+import { ACCESS_TOKEN_KEY, MINIMAL_PASSWORD_LENGTH, AuthController, TLoginData } from "../api";
 import { AxiosError } from "axios";
 import Loader from "../components/Loader";
 import InputError from "../components/ui/InputError";
@@ -23,7 +23,7 @@ const LoginPage = () => {
 
   const [loginRequest, requestLoading] = useLoading({
     callback: async (data: TLoginData) => {
-      const response = await login(data);
+      const response = await AuthController.login(data);
       const token = response.headers.authorization as string;
       localStorage.setItem(ACCESS_TOKEN_KEY, token);
 

@@ -3,7 +3,7 @@ import { authRoutes } from "../routes";
 import { isEmail, isNotEmpty, length } from "../validators";
 import { MINIMAL_PASSWORD_LENGTH, MINIMAL_USERNAME_LENGTH } from "../api";
 import { AxiosError } from "axios";
-import { signup, TSignUpData } from "../api";
+import { AuthController, TSignUpData } from "../api";
 import { NavigateFunction, useNavigate } from "react-router";
 import useLoading from "../hooks/useLoading";
 import InputError from "../components/ui/InputError";
@@ -23,7 +23,7 @@ const SignupPage = () => {
   const [error, setError] = useState<string>("no error");
   const [signupRequest, requestLoading] = useLoading({
     callback: async (data: TSignUpData) => {
-      await signup(data);
+      await AuthController.signup(data);
       navigate(authRoutes.index);
     },
     onError: (error: any) => {
