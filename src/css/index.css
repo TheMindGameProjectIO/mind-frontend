@@ -1,0 +1,50 @@
+@import url(./loader.css);
+@import url(./scroll-bar.css);
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+@layer base {
+  body {
+    @apply bg-main-blue text-white;
+  }
+
+  form.auth {
+    @apply flex flex-col w-screen max-w-[400px] bg-transparent-blue py-8 px-12 rounded-xl;
+  }
+
+  form.forgotPassword {
+    @apply flex flex-col w-screen max-w-[400px] bg-transparent-blue py-8 px-3 rounded-xl;
+  }
+
+  form.contactus {
+    @apply flex flex-col w-screen max-w-[400px] py-3 px-9;
+  }
+
+  h1 {
+    @apply text-3xl font-bold;
+  }
+
+  h2 {
+    @apply text-2xl font-bold;
+  }
+
+  h3 {
+    @apply text-xl font-bold;
+  }
+}
+
+@layer utilities {
+  .center-content {
+    @apply flex justify-center items-center;
+  }
+
+  .full-screen {
+    @apply w-full h-screen;
+  }
+}
