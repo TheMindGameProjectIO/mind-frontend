@@ -15,6 +15,7 @@ import BasicLayout from "./components/layout/BasicLayout";
 import LobbiesTitleProvider from "./contexts/LobbiesTitleProvider";
 import CreateLobbyPage from "./pages/CreateLobbyPage";
 import GamePage from "./pages/GamePage";
+import LobbyPage from "./pages/LobbyPage";
 
 const App = () => {
   const isAuth = useAppSelector(selectIsAuth);
@@ -50,6 +51,7 @@ const App = () => {
           >
             <Route index path={privateRoutes.lobbiesRoutes.list()} element={<LobbiesPage />} />
             <Route path={privateRoutes.lobbiesRoutes.create()} element={<CreateLobbyPage />} />
+            <Route path={privateRoutes.lobbiesRoutes.lobby()} element={<LobbyPage />} />
           </Route>
         </Route>
         <Route path={privateRoutes.game} element={<GamePage />} />

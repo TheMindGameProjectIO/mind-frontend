@@ -20,6 +20,9 @@ export const privateRoutes = {
     create() {
       return `${this.index}/create`;
     },
+    lobby() {
+      return `${this.index}/lobby`;
+    }
   },
   game: "/game/:gameId",
 };
