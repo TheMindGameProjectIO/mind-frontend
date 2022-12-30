@@ -22,7 +22,7 @@ export const privateRoutes = {
     },
     lobby() {
       return `${this.index}/lobby`;
-    }
+    },
   },
   game: "/game/:gameId",
 };
