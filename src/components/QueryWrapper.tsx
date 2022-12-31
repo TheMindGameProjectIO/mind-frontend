@@ -5,12 +5,12 @@ import ServerError from "./ServerErrror";
 
 interface IQueryWrapperProps {
   children: ReactNode;
-  queryKey: any[];
+  queryKey: any[] | string;
   queryFn: () => Promise<any>;
 }
 
-export type TQueryContext = {
-  data: any;
+export type TQueryContext<T = any> = {
+  data: T;
   error: any;
 };
 export const QueryContext = createContext<TQueryContext>({ data: null, error: null });

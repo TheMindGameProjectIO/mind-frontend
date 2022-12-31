@@ -11,6 +11,8 @@ import { publicRoutes } from "../routes";
 import PageLoader from "../components/PageLoader";
 import QueryWrapper, { QueryContext, TQueryContext } from "../components/QueryWrapper";
 import { Lobby } from "../types";
+import { useAppSelector } from "../redux/hooks";
+import { selectUser } from "../redux/slices/userSlice";
 
 type TLobbyPageParams = {
   id: string;
@@ -33,18 +35,16 @@ const LobbyPage = () => {
   );
 };
 
-type TLobbyContext = {
-  data: Lobby;
-};
-
 const LobbyPageContent = () => {
-  const { data: lobby } = useContext<TQueryContext & TLobbyContext>(QueryContext);
-  const currentUserId = "6381210914eadb628a6031fb";
+  const { data: lobby } = useContext<TQueryContext<Lobby>>(QueryContext);
+  const user = useAppSelector(selectUser);
+
   // TODO: notify server to join lobby
 
   const [players, setPlayers] = useState(serverPlayers);
   const navigate = useNavigate();
   const { changeTitle } = useContext(LobbiesTitleContext);
+  const currentUserId = user.id;
 
   useEffect(() => {
     changeTitle("Lobby");

@@ -27,7 +27,7 @@ privateApi.interceptors.request.use(
     const jwtToken = localStorage.getItem(ACCESS_TOKEN_KEY);
     if (jwtToken) {
       if (config.headers) {
-        (config.headers as unknown as AuthHeaders).Authorization = `Bearer ${jwtToken}`;
+        (config.headers as unknown as AuthHeaders).Authorization = jwtToken;
       }
     }
 

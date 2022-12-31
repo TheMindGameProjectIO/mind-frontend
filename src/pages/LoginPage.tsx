@@ -35,7 +35,6 @@ const LoginPage = () => {
     onError: (error: any) => {
       if (error instanceof AxiosError) {
         if (error.response?.status == 404 || error.response?.status == 400) {
-          console.log(error);
           setError("invalid credentials");
           return;
         }

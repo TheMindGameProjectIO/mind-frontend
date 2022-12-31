@@ -16,6 +16,7 @@ import CreateLobbyPage from "./pages/CreateLobbyPage";
 import GamePage from "./pages/GamePage";
 import LobbyPage from "./pages/LobbyPage";
 import { QueryClientProvider, QueryClient } from "react-query";
+import UserLayout from "./components/layout/UserLayout";
 
 const queryClient = new QueryClient();
 
@@ -43,18 +44,20 @@ const App = () => {
             {/* Private routes: only the users that are authorized can get to these routes */}
           </Route>
           <Route element={<ValidateRoute condition={isAuth} navigate={publicRoutes.error} />}>
-            <Route
-              path={privateRoutes.lobbiesRoutes.index}
-              element={
-                <LobbiesTitleProvider>
-                  <LobbiesLayout />
-                </LobbiesTitleProvider>
-              }
-            >
-              <Route path={privateRoutes.lobbiesRoutes.create()} element={<CreateLobbyPage />} />
-              <Route path={privateRoutes.lobbiesRoutes.lobby() + ":id"} element={<LobbyPage />} />
+            <Route element={<UserLayout />}>
+              <Route
+                path={privateRoutes.lobbiesRoutes.index}
+                element={
+                  <LobbiesTitleProvider>
+                    <LobbiesLayout />
+                  </LobbiesTitleProvider>
+                }
+              >
+                <Route path={privateRoutes.lobbiesRoutes.create()} element={<CreateLobbyPage />} />
+                <Route path={privateRoutes.lobbiesRoutes.lobby() + ":id"} element={<LobbyPage />} />
+              </Route>
+              <Route path={privateRoutes.game} element={<GamePage />} />
             </Route>
-            <Route path={privateRoutes.game} element={<GamePage />} />
           </Route>
         </Routes>
       </BrowserRouter>

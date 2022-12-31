@@ -17,7 +17,7 @@ export class LobbiesController {
     const url = "/game/room/create";
     const response = await privateApi.post(url, data);
 
-    const { id } = response.data;
-    return id;
+    const { _id } = response.data.room;
+    return _id;
   }
 }
