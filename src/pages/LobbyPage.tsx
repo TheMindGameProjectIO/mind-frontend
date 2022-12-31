@@ -3,9 +3,10 @@ import { lobbyPagesButton } from "../helpers";
 import Regular_Rabbit from "../assets/img/regular-rabbit.png";
 import { Rabbit } from "../assets/svg";
 import { FC, useState, memo, useEffect, useContext } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { LobbiesTitleContext } from "../contexts/LobbiesTitleProvider";
 import { useQuery } from "react-query/types/react";
+import { LobbiesController } from "../api";
 
 const serverPlayers = [
   { id: 1, name: "MT" },
@@ -14,7 +15,8 @@ const serverPlayers = [
 ];
 
 const LobbyPage = () => {
-  // const {} = useQuery("lobby", LobbiesCon);
+  // const { id } = useParams();
+  // const { data: lobby, isLoading, isError } = useQuery(["lobby", id], () => LobbiesController.getOne(id));
   const currentUserId = 1;
 
   const [players, setPlayers] = useState(serverPlayers);
