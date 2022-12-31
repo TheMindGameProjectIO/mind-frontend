@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosHeaders } from "axios";
+axios.defaults.headers.common["ngrok-skip-browser-warning"] = (import.meta as any).env.VITE_APP_DEV_CONNECTON_HEADER;
 
-export const API_BASE_URL = (import.meta as any).env.VITE_APP_API_BASE_URL;
+const API_BASE_URL = (import.meta as any).env.VITE_APP_API_BASE_URL;
 export const ACCESS_TOKEN_KEY = "RJWPOASXZ";
 
 const headers = {

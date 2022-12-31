@@ -1,7 +1,8 @@
 import { io } from "socket.io-client";
 import { ISocket } from "./types";
 
-export const connection: ISocket = io("http://localhost:3000");
+const SOCKET_URL = (import.meta as any).env.VITE_APP_SOCKET_URL;
+export const connection: ISocket = io(SOCKET_URL);
 
 /**
  * @experimental SHOULD NOT BE USED YET

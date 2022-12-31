@@ -40,6 +40,7 @@ type TLobbyContext = {
 const LobbyPageContent = () => {
   const { data: lobby } = useContext<TQueryContext & TLobbyContext>(QueryContext);
   const currentUserId = "6381210914eadb628a6031fb";
+  // TODO: notify server to join lobby
 
   const [players, setPlayers] = useState(serverPlayers);
   const navigate = useNavigate();
