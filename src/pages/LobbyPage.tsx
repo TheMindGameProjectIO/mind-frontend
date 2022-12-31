@@ -5,6 +5,7 @@ import { Rabbit } from "../assets/svg";
 import { FC, useState, memo, useEffect, useContext } from "react";
 import { useNavigate } from "react-router";
 import { LobbiesTitleContext } from "../contexts/LobbiesTitleProvider";
+import { useQuery } from "react-query/types/react";
 
 const serverPlayers = [
   { id: 1, name: "MT" },
@@ -13,6 +14,9 @@ const serverPlayers = [
 ];
 
 const LobbyPage = () => {
+  // const {} = useQuery("lobby", LobbiesCon);
+  const currentUserId = 1;
+
   const [players, setPlayers] = useState(serverPlayers);
   const isAuthor = true;
   const navigate = useNavigate();

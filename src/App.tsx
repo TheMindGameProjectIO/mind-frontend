@@ -16,47 +16,52 @@ import LobbiesTitleProvider from "./contexts/LobbiesTitleProvider";
 import CreateLobbyPage from "./pages/CreateLobbyPage";
 import GamePage from "./pages/GamePage";
 import LobbyPage from "./pages/LobbyPage";
+import { QueryClientProvider, QueryClient } from "react-query";
+
+const queryClient = new QueryClient();
 
 const App = () => {
   const isAuth = useAppSelector(selectIsAuth);
 
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public  : all users can get to these routes */}
-        <Route element={<BasicLayout header={false} />}>
-          <Route path={publicRoutes.index} element={<HomePage />} />
-          <Route path="*" element={<Navigate to={publicRoutes.error} />} />
-          <Route path={publicRoutes.error} element={<NotFoundPage />} />
-        </Route>
-
-        {/* Auth routes: only the users that are not authorized can get to these routes */}
-        <Route element={<ValidateRoute condition={!isAuth} navigate={publicRoutes.error} />}>
-          <Route path={authRoutes.index} element={<AuthLayout />}>
-            <Route index path={authRoutes.login()} element={<LoginPage />} />
-            <Route path={authRoutes.signup()} element={<SignupPage />} />
-            <Route path={authRoutes.forgotPassword()} element={<ForgotPasswordPage />} />
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Routes>
+          {/* Public  : all users can get to these routes */}
+          <Route element={<BasicLayout header={false} />}>
+            <Route path={publicRoutes.index} element={<HomePage />} />
+            <Route path="*" element={<Navigate to={publicRoutes.error} />} />
+            <Route path={publicRoutes.error} element={<NotFoundPage />} />
           </Route>
-        </Route>
 
-        {/* Private routes: only the users that are authorized can get to these routes */}
-        <Route element={<ValidateRoute condition={isAuth} navigate={publicRoutes.error} />}>
-          <Route
-            path={privateRoutes.lobbiesRoutes.index}
-            element={
-              <LobbiesTitleProvider>
-                <LobbiesLayout />
-              </LobbiesTitleProvider>
-            }
-          >
-            <Route index path={privateRoutes.lobbiesRoutes.list()} element={<LobbiesPage />} />
-            <Route path={privateRoutes.lobbiesRoutes.create()} element={<CreateLobbyPage />} />
-            <Route path={privateRoutes.lobbiesRoutes.lobby()} element={<LobbyPage />} />
+          {/* Auth routes: only the users that are not authorized can get to these routes */}
+          <Route element={<ValidateRoute condition={!isAuth} navigate={publicRoutes.error} />}>
+            <Route path={authRoutes.index} element={<AuthLayout />}>
+              <Route index path={authRoutes.login()} element={<LoginPage />} />
+              <Route path={authRoutes.signup()} element={<SignupPage />} />
+              <Route path={authRoutes.forgotPassword()} element={<ForgotPasswordPage />} />
+            </Route>
           </Route>
-        </Route>
-        <Route path={privateRoutes.game} element={<GamePage />} />
-      </Routes>
-    </BrowserRouter>
+
+          {/* Private routes: only the users that are authorized can get to these routes */}
+          <Route element={<ValidateRoute condition={isAuth} navigate={publicRoutes.error} />}>
+            <Route
+              path={privateRoutes.lobbiesRoutes.index}
+              element={
+                <LobbiesTitleProvider>
+                  <LobbiesLayout />
+                </LobbiesTitleProvider>
+              }
+            >
+              <Route index path={privateRoutes.lobbiesRoutes.list()} element={<LobbiesPage />} />
+              <Route path={privateRoutes.lobbiesRoutes.create()} element={<CreateLobbyPage />} />
+              <Route path={privateRoutes.lobbiesRoutes.lobby()} element={<LobbyPage />} />
+            </Route>
+          </Route>
+          <Route path={privateRoutes.game} element={<GamePage />} />
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 };
 
