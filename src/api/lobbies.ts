@@ -14,8 +14,10 @@ export class LobbiesController {
   }
 
   static async create(data: TCreateLobbyData) {
-    const url = "/game/room";
+    const url = "/game/room/create";
     const response = await privateApi.post(url, data);
-    return response.data;
+
+    const { id } = response.data;
+    return id;
   }
 }

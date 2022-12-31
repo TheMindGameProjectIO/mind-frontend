@@ -10,12 +10,15 @@ import InputError from "../components/ui/InputError";
 import Loader from "../components/Loader";
 import { LobbiesController, TCreateLobbyData } from "../api";
 import { isNotEmpty } from "../validators";
+import { useNavigate } from "react-router";
+import { privateRoutes } from "../routes";
 
 const CreateLobbyPage = () => {
   const { changeTitle } = useContext(LobbiesTitleContext);
   const lobbyNameRef = useRef<any>();
   const playersNumberRef = useRef<any>();
   const [error, setError] = useState<string>("no error");
+  const navigate = useNavigate();
 
   useEffect(() => {
     changeTitle("Create a lobby");
@@ -45,9 +48,10 @@ const CreateLobbyPage = () => {
 
   const [createRequest, requestLoading] = useLoading({
     callback: async (data: TCreateLobbyData) => {
-      await LobbiesController.create(data);
-      // TODO: handle data
+      const lobbyId = await LobbiesController.create(data);
       setError("no error");
+
+      navigate(privateRoutes.lobbiesRoutes.lobby() + lobbyId);
     },
     onError: (error) => {
       setError("server error");

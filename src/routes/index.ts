@@ -21,7 +21,7 @@ export const privateRoutes = {
       return `${this.index}/create`;
     },
     lobby() {
-      return `${this.index}/:id`;
+      return `${this.index}/`;
     },
   },
   game: "/game/:id",

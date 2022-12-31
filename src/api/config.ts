@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosHeaders } from "axios";
+import { authRoutes } from "../routes";
 axios.defaults.headers.common["ngrok-skip-browser-warning"] = (import.meta as any).env.VITE_APP_DEV_CONNECTON_HEADER;
 
 const API_BASE_URL = (import.meta as any).env.VITE_APP_API_BASE_URL;
@@ -23,12 +24,13 @@ type AuthHeaders = AxiosHeaders & { Authorization: string };
 
 privateApi.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-    if (token) {
+    const jwtToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+    if (jwtToken) {
       if (config.headers) {
-        (config.headers as unknown as AuthHeaders).Authorization = `Bearer ${token}`;
+        (config.headers as unknown as AuthHeaders).Authorization = `Bearer ${jwtToken}`;
       }
     }
+
     return config;
   },
   (error) => {
@@ -42,7 +44,7 @@ privateApi.interceptors.response.use(
     if (error instanceof AxiosError) {
       if (error.response?.status === 401) {
         localStorage.clear();
-        window.location.href = "/auth/login";
+        window.location.href = authRoutes.login();
       }
     }
   }
