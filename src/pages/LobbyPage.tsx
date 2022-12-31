@@ -3,11 +3,14 @@ import { lobbyPagesButton } from "../helpers";
 import Regular_Rabbit from "../assets/img/regular-rabbit.png";
 import { Rabbit } from "../assets/svg";
 import { FC, useState, memo, useEffect, useContext } from "react";
-import { Navigate, useNavigate, useParams } from "react-router";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { LobbiesTitleContext } from "../contexts/LobbiesTitleProvider";
 import { useQuery } from "react-query";
 import { LobbiesController } from "../api";
 import { publicRoutes } from "../routes";
+import PageLoader from "../components/PageLoader";
+import QueryWrapper, { QueryContext, TQueryContext } from "../components/QueryWrapper";
+import { Lobby } from "../types";
 
 type TLobbyPageParams = {
   id: string;
@@ -21,21 +24,24 @@ const serverPlayers = [
 
 const LobbyPage = () => {
   const { id } = useParams<TLobbyPageParams>();
-  if (!id || !isNaN(parseInt(id))) return <Navigate to={publicRoutes.error} />;
+  if (!id || !isNaN(Number(id))) return <Navigate to={publicRoutes.error} />;
 
-  return <LobbyPageContent id={id} />;
+  return (
+    <QueryWrapper queryFn={() => LobbiesController.getOne(id)} queryKey={["lobby", id]}>
+      <LobbyPageContent />
+    </QueryWrapper>
+  );
 };
 
-interface ILobbyPageContentProps {
-  id: string;
-}
+type TLobbyContext = {
+  data: Lobby;
+};
 
-const LobbyPageContent: FC<ILobbyPageContentProps> = ({ id }) => {
-  const { data: lobby, isLoading, isError } = useQuery(["lobby", id], () => LobbiesController.getOne(id));
-  const currentUserId = 1;
+const LobbyPageContent = () => {
+  const { data: lobby } = useContext<TQueryContext & TLobbyContext>(QueryContext);
+  const currentUserId = "6381210914eadb628a6031fb";
 
   const [players, setPlayers] = useState(serverPlayers);
-  const isAuthor = true;
   const navigate = useNavigate();
   const { changeTitle } = useContext(LobbiesTitleContext);
 
@@ -46,6 +52,8 @@ const LobbyPageContent: FC<ILobbyPageContentProps> = ({ id }) => {
       changeTitle("Public lobbies");
     };
   }, []);
+
+  const isAuthor = currentUserId === lobby.authorId;
 
   return (
     <div className="center-content flex-col ">
@@ -78,8 +86,10 @@ const LobbyPageContent: FC<ILobbyPageContentProps> = ({ id }) => {
           </div>
 
           <div className="grid mx-4 text-center content-center">
-            <p className="font-bold"> {lobby?.name} </p>
-            <p> {players.length} player </p>
+            <p className="font-bold"> {lobby.name} </p>
+            <p>
+              {players.length} / {lobby.maxPlayersCount}
+            </p>
           </div>
         </div>
       </div>
