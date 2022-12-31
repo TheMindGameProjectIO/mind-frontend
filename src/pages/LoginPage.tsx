@@ -14,6 +14,7 @@ import { NavigateFunction, useNavigate } from "react-router";
 import Button from "../components/ui/Button";
 import { useAppDispatch } from "../redux/hooks";
 import { authorize } from "../redux/slices/authSlice";
+import { set } from "../redux/slices/userSlice";
 
 const LoginPage = () => {
   const emailRef = useRef<any>();
@@ -24,11 +25,11 @@ const LoginPage = () => {
 
   const [loginRequest, requestLoading] = useLoading({
     callback: async (data: TLoginData) => {
-      const response = await AuthController.login(data);
-      const token = response.headers.authorization as string;
-      localStorage.setItem(ACCESS_TOKEN_KEY, token);
+      const { user, jwtToken } = await AuthController.login(data);
+      localStorage.setItem(ACCESS_TOKEN_KEY, jwtToken as string);
 
       dispatch(authorize());
+      dispatch(set(user));
       navigate(-1);
     },
     onError: (error: any) => {

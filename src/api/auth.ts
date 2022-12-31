@@ -1,3 +1,4 @@
+import { userFactory } from "../types";
 import { publicApi, privateApi } from "./config";
 
 export type TLoginData = {
@@ -22,7 +23,9 @@ export class AuthController {
   static async login(data: TLoginData) {
     const url = "/auth/login";
     const response = await publicApi.post(url, data);
-    return response;
+
+    const jwtToken = response.headers.authorization;
+    return { user: userFactory(response.data), jwtToken };
   }
 
   static async me() {
