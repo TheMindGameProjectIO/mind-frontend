@@ -41,7 +41,7 @@ privateApi.interceptors.response.use(
   (error) => {
     if (error instanceof AxiosError) {
       if (error.response?.status === 401) {
-        localStorage.removeItem(ACCESS_TOKEN_KEY);
+        localStorage.clear();
         window.location.href = "/auth/login";
       }
     }
