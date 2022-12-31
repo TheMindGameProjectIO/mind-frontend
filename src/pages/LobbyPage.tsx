@@ -5,14 +5,13 @@ import { Rabbit } from "../assets/svg";
 import { FC, useState, memo, useEffect, useContext } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { LobbiesTitleContext } from "../contexts/LobbiesTitleProvider";
-import { useQuery } from "react-query";
 import { LobbiesController } from "../api";
 import { publicRoutes } from "../routes";
-import PageLoader from "../components/PageLoader";
 import QueryWrapper, { QueryContext, TQueryContext } from "../components/QueryWrapper";
 import { Lobby } from "../types";
 import { useAppSelector } from "../redux/hooks";
 import { selectUser } from "../redux/slices/userSlice";
+import socket from "../utils/socket/socket";
 
 type TLobbyPageParams = {
   id: string;
@@ -45,7 +44,11 @@ const LobbyPageContent = () => {
 
   useEffect(() => {
     LobbiesController.join(lobby.id)
-      .then((gameToken) => {})
+      .then((gameToken) => {
+        if (gameToken) {
+          socket.token = gameToken;
+        }
+      })
       .catch((error) => console.log(error));
   }, []);
 
