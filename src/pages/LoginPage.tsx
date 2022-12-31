@@ -1,7 +1,8 @@
 import { MouseEvent, useRef, useState, MutableRefObject, FC } from "react";
-import { authRoutes, privateRoutes } from "../routes";
+import { authRoutes } from "../routes";
 import { isEmail, isNotEmpty, length } from "../validators";
-import { ACCESS_TOKEN_KEY, login, MINIMAL_PASSWORD_LENGTH, TLoginData } from "../api";
+import { ACCESS_TOKEN_KEY, AuthController, TLoginData } from "../api";
+import { Validations } from "../enums";
 import { AxiosError } from "axios";
 import Loader from "../components/Loader";
 import InputError from "../components/ui/InputError";
@@ -23,18 +24,22 @@ const LoginPage = () => {
 
   const [loginRequest, requestLoading] = useLoading({
     callback: async (data: TLoginData) => {
-      const response = await login(data);
+      const response = await AuthController.login(data);
       const token = response.headers.authorization as string;
       localStorage.setItem(ACCESS_TOKEN_KEY, token);
 
       dispatch(authorize());
-      navigate(privateRoutes.lobbiesRoutes.list());
+      navigate(-1);
     },
     onError: (error: any) => {
       if (error instanceof AxiosError) {
         if (error.response?.status == 404 || error.response?.status == 400) {
+          console.log(error);
           setError("invalid credentials");
+          return;
         }
+
+        setError("server errror");
       }
     },
   });
@@ -60,7 +65,7 @@ const LoginPage = () => {
       return;
     }
 
-    if (!length(password, { min: MINIMAL_PASSWORD_LENGTH })) {
+    if (!length(password, { min: Validations.MINIMAL_PASSWORD_LENGTH })) {
       setError("password's length");
       return;
     }
@@ -96,6 +101,7 @@ const LoginPage = () => {
           {/* Input boxes */}
 
           {error == "invalid credentials" ? <InputError> Email or password is wrong </InputError> : null}
+          {error == "server error" ? <InputError> Something went wrong </InputError> : null}
           <Input<string> ref={emailRef} placeholder="Email" />
           {error == "empty email" ? <InputError> Please provide email </InputError> : null}
           {error == "invalid email" ? <InputError> Entered email is invalid </InputError> : null}
@@ -103,7 +109,9 @@ const LoginPage = () => {
           <PasswordInput passwordRef={passwordRef} />
           {error == "empty password" ? <InputError> Please provide password </InputError> : null}
           {error == "password's length" ? (
-            <InputError> Password's length must contain at least {MINIMAL_PASSWORD_LENGTH} characters </InputError>
+            <InputError>
+              Password's length must contain at least {Validations.MINIMAL_PASSWORD_LENGTH} characters
+            </InputError>
           ) : null}
 
           <div className="w-full flex flex-col justify-center">

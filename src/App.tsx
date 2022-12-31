@@ -41,9 +41,8 @@ const App = () => {
               <Route path={authRoutes.signup()} element={<SignupPage />} />
               <Route path={authRoutes.forgotPassword()} element={<ForgotPasswordPage />} />
             </Route>
+            {/* Private routes: only the users that are authorized can get to these routes */}
           </Route>
-
-          {/* Private routes: only the users that are authorized can get to these routes */}
           <Route element={<ValidateRoute condition={isAuth} navigate={publicRoutes.error} />}>
             <Route
               path={privateRoutes.lobbiesRoutes.index}
@@ -53,12 +52,11 @@ const App = () => {
                 </LobbiesTitleProvider>
               }
             >
-              <Route index path={privateRoutes.lobbiesRoutes.list()} element={<LobbiesPage />} />
               <Route path={privateRoutes.lobbiesRoutes.create()} element={<CreateLobbyPage />} />
               <Route path={privateRoutes.lobbiesRoutes.lobby()} element={<LobbyPage />} />
             </Route>
+            <Route path={privateRoutes.game} element={<GamePage />} />
           </Route>
-          <Route path={privateRoutes.game} element={<GamePage />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

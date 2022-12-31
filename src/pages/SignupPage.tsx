@@ -1,9 +1,9 @@
 import { MouseEvent, useRef, useState } from "react";
 import { authRoutes } from "../routes";
 import { isEmail, isNotEmpty, length } from "../validators";
-import { MINIMAL_PASSWORD_LENGTH, MINIMAL_USERNAME_LENGTH } from "../api";
+import { Validations } from "../enums";
 import { AxiosError } from "axios";
-import { signup, TSignUpData } from "../api";
+import { AuthController, TSignUpData } from "../api";
 import { NavigateFunction, useNavigate } from "react-router";
 import useLoading from "../hooks/useLoading";
 import InputError from "../components/ui/InputError";
@@ -23,7 +23,7 @@ const SignupPage = () => {
   const [error, setError] = useState<string>("no error");
   const [signupRequest, requestLoading] = useLoading({
     callback: async (data: TSignUpData) => {
-      await signup(data);
+      await AuthController.signup(data);
       navigate(authRoutes.index);
     },
     onError: (error: any) => {
@@ -58,7 +58,7 @@ const SignupPage = () => {
       return;
     }
 
-    if (!length(username, { min: MINIMAL_USERNAME_LENGTH })) {
+    if (!length(username, { min: Validations.MINIMAL_USERNAME_LENGTH })) {
       setError("short username");
       return;
     }
@@ -69,7 +69,7 @@ const SignupPage = () => {
       return;
     }
 
-    if (!length(password, { min: MINIMAL_PASSWORD_LENGTH })) {
+    if (!length(password, { min: Validations.MINIMAL_PASSWORD_LENGTH })) {
       setError("short password");
       return;
     }
@@ -134,11 +134,15 @@ const SignupPage = () => {
 
             <Input<string> ref={usernameRef} placeholder="Username" className="mt-3" />
             {error === "empty username" ? <InputError> Please, create a username </InputError> : null}
-            {error === "short username" ? <InputError> Username must contain at least 3 characters </InputError> : null}
+            {error === "short username" ? (
+              <InputError> Username must contain at least {Validations.MINIMAL_USERNAME_LENGTH} characters </InputError>
+            ) : null}
 
             <Input<string> ref={passwordRef} placeholder="Password" className="mt-7" hideValue={true} />
             {error === "empty password" ? <InputError> Please, create a password </InputError> : null}
-            {error === "short password" ? <InputError> Password must contain at least 6 characters </InputError> : null}
+            {error === "short password" ? (
+              <InputError> Password must contain at least {Validations.MINIMAL_PASSWORD_LENGTH} characters </InputError>
+            ) : null}
 
             <Input<string> ref={repeatPasswordRef} placeholder="Repeat Password" className="mt-3" hideValue={true} />
             {error === "empty repeatPassword" ? <InputError> Please, rewrite the password </InputError> : null}

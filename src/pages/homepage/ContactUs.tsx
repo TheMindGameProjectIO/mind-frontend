@@ -5,7 +5,7 @@ import Input from "../../components/ui/Input";
 import InputError from "../../components/ui/InputError";
 import useLoading from "../../hooks/useLoading";
 import { isEmail, isNotEmpty } from "../../validators";
-import { contactus, TContactUsData } from "../../api";
+import { GeneralController, TContactUsData } from "../../api";
 import { ligthInputClassName } from "../../helpers";
 
 const inputClassName: string = ligthInputClassName;
@@ -19,7 +19,7 @@ const ContactUs = () => {
   const [error, setError] = useState<string>("no error");
   const [contactUsRequest, requestLoading] = useLoading({
     callback: async (data: TContactUsData) => {
-      await contactus(data);
+      await GeneralController.contactus(data);
     },
     onError: (error: any) => {
       if (error instanceof AxiosError) {
