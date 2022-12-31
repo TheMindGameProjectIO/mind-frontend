@@ -37,14 +37,17 @@ const LobbyPage = () => {
 
 const LobbyPageContent = () => {
   const { data: lobby } = useContext<TQueryContext<Lobby>>(QueryContext);
-  const user = useAppSelector(selectUser);
-
-  // TODO: notify server to join lobby
-
-  const [players, setPlayers] = useState(serverPlayers);
-  const navigate = useNavigate();
   const { changeTitle } = useContext(LobbiesTitleContext);
-  const currentUserId = user.id;
+  const { id: currentUserId } = useAppSelector(selectUser);
+  const isAuthor = currentUserId === lobby.authorId;
+  const navigate = useNavigate();
+  const [players, setPlayers] = useState(serverPlayers);
+
+  useEffect(() => {
+    LobbiesController.join(lobby.id)
+      .then((gameToken) => {})
+      .catch((error) => console.log(error));
+  }, []);
 
   useEffect(() => {
     changeTitle("Lobby");
@@ -53,8 +56,6 @@ const LobbyPageContent = () => {
       changeTitle("Public lobbies");
     };
   }, []);
-
-  const isAuthor = currentUserId === lobby.authorId;
 
   return (
     <div className="center-content flex-col ">

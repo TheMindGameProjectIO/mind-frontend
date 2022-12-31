@@ -1,3 +1,4 @@
+import { Headers } from "../enums";
 import { userFactory } from "../types";
 import { publicApi, privateApi } from "./config";
 
@@ -24,13 +25,13 @@ export class AuthController {
     const url = "/auth/login";
     const response = await publicApi.post(url, data);
 
-    const jwtToken = response.headers.authorization;
+    const jwtToken = response.headers[Headers.AUTHORIZATION];
     return { user: userFactory(response.data), jwtToken };
   }
 
   static async me() {
     const url = "/auth/me";
     const response = await privateApi.get(url);
-    return response.data;
+    return userFactory(response.data);
   }
 }

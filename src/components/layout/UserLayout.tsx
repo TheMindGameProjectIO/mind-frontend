@@ -1,7 +1,6 @@
 import { useContext, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { AuthController } from "../../api";
-import { useAppDispatch } from "../../redux/hooks";
 import { clear, set } from "../../redux/slices/userSlice";
 import QueryWrapper, { QueryContext, TQueryContext } from "../QueryWrapper";
 import { User } from "../../types";

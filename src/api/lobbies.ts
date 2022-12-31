@@ -1,3 +1,4 @@
+import { Headers } from "../enums";
 import { lobbyFactory } from "../types";
 import { privateApi } from "./config";
 
@@ -19,5 +20,11 @@ export class LobbiesController {
 
     const { _id } = response.data.room;
     return _id;
+  }
+
+  static async join(id: string) {
+    const url = "/game/room/join/" + id;
+    const response = await privateApi.post(url);
+    return response.headers[Headers.SOCKET_GAME_AUTHORIZATION];
   }
 }

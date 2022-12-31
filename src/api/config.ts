@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosHeaders } from "axios";
+import { Headers } from "../enums";
 import { authRoutes } from "../routes";
 axios.defaults.headers.common["ngrok-skip-browser-warning"] = (import.meta as any).env.VITE_APP_DEV_CONNECTON_HEADER;
 
@@ -20,14 +21,14 @@ export const publicApi = axios.create({
   headers,
 });
 
-type AuthHeaders = AxiosHeaders & { Authorization: string };
+type AuthHeaders = AxiosHeaders & { authorization: string };
 
 privateApi.interceptors.request.use(
   (config) => {
     const jwtToken = localStorage.getItem(ACCESS_TOKEN_KEY);
     if (jwtToken) {
       if (config.headers) {
-        (config.headers as unknown as AuthHeaders).Authorization = jwtToken;
+        (config.headers as unknown as AuthHeaders)[Headers.AUTHORIZATION] = jwtToken;
       }
     }
 
@@ -47,5 +48,7 @@ privateApi.interceptors.response.use(
         window.location.href = authRoutes.login();
       }
     }
+
+    return Promise.reject(error);
   }
 );
