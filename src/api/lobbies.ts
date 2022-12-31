@@ -1,3 +1,4 @@
+import { lobbyFactory } from "../types";
 import { privateApi } from "./config";
 
 export type TCreateLobbyData = {
@@ -9,7 +10,7 @@ export class LobbiesController {
   static async getOne(id: string) {
     const url = "/game/room/" + id;
     const response = await privateApi.get(url);
-    return response.data;
+    return lobbyFactory(response.data);
   }
 
   static async create(data: TCreateLobbyData) {

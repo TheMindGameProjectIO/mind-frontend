@@ -21,10 +21,10 @@ export const privateRoutes = {
       return `${this.index}/create`;
     },
     lobby() {
-      return `${this.index}/lobby`;
+      return `${this.index}/:id`;
     },
   },
-  game: "/game/:gameId",
+  game: "/game/:id",
 };
 
 export const publicRoutes = {

@@ -1,15 +1,25 @@
-type TLobbyResponseData = { id: string; name: string; maxPlayers: number; currentPlayers: number };
-
-export class Lobby {
+type TLobbyResponseData = {
   id: string;
   name: string;
-  maxPlayers: number;
-  currentPlayers: number;
+  authorId: string;
+  maxUserCount: number;
+  invitationLink: string;
+};
 
-  constructor(data: TLobbyResponseData) {
-    this.id = data.id;
-    this.name = data.name;
-    this.maxPlayers = data.maxPlayers;
-    this.currentPlayers = data.currentPlayers;
-  }
-}
+export type Lobby = {
+  id: string;
+  name: string;
+  authorId: string;
+  maxPlayersCount: number;
+  invitationLink: string;
+};
+
+export const lobbyFactory = (data: TLobbyResponseData) => {
+  return {
+    id: data.id,
+    name: data.name,
+    authorId: data.authorId,
+    maxPlayersCount: data.maxUserCount,
+    invitationLink: data.invitationLink,
+  } as Lobby;
+};

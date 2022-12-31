@@ -3,10 +3,15 @@ import { lobbyPagesButton } from "../helpers";
 import Regular_Rabbit from "../assets/img/regular-rabbit.png";
 import { Rabbit } from "../assets/svg";
 import { FC, useState, memo, useEffect, useContext } from "react";
-import { useNavigate, useParams } from "react-router";
+import { Navigate, useNavigate, useParams } from "react-router";
 import { LobbiesTitleContext } from "../contexts/LobbiesTitleProvider";
-import { useQuery } from "react-query/types/react";
+import { useQuery } from "react-query";
 import { LobbiesController } from "../api";
+import { publicRoutes } from "../routes";
+
+type TLobbyPageParams = {
+  id: string;
+};
 
 const serverPlayers = [
   { id: 1, name: "MT" },
@@ -15,8 +20,18 @@ const serverPlayers = [
 ];
 
 const LobbyPage = () => {
-  // const { id } = useParams();
-  // const { data: lobby, isLoading, isError } = useQuery(["lobby", id], () => LobbiesController.getOne(id));
+  const { id } = useParams<TLobbyPageParams>();
+  if (!id || !isNaN(parseInt(id))) return <Navigate to={publicRoutes.error} />;
+
+  return <LobbyPageContent id={id} />;
+};
+
+interface ILobbyPageContentProps {
+  id: string;
+}
+
+const LobbyPageContent: FC<ILobbyPageContentProps> = ({ id }) => {
+  const { data: lobby, isLoading, isError } = useQuery(["lobby", id], () => LobbiesController.getOne(id));
   const currentUserId = 1;
 
   const [players, setPlayers] = useState(serverPlayers);
@@ -63,8 +78,8 @@ const LobbyPage = () => {
           </div>
 
           <div className="grid mx-4 text-center content-center">
-            <p className="font-bold"> Lobby name </p>
-            <p> 1 player </p>
+            <p className="font-bold"> {lobby?.name} </p>
+            <p> {players.length} player </p>
           </div>
         </div>
       </div>

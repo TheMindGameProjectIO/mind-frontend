@@ -6,7 +6,6 @@ import SignupPage from "./pages/SignupPage";
 import { authRoutes, privateRoutes, publicRoutes } from "./routes";
 import ValidateRoute from "./components/ValidateRoute";
 import NotFoundPage from "./pages/NotFoundPage";
-import LobbiesPage from "./pages/LobbiesPage";
 import AuthLayout from "./components/layout/AuthLayout";
 import LobbiesLayout from "./components/layout/LobbiesLayout";
 import { useAppSelector } from "./redux/hooks";
