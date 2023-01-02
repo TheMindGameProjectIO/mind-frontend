@@ -1,15 +1,15 @@
 import AuthOpportunity from "./AuthOpportunity";
 import AboutUs from "./AboutGame";
 import ContactUs from "./ContactUs";
-import Copyright from "../../components/ui/Copyright";
+import Layout from "../../components/layout/Layout";
 
 const HomePage = () => {
   return (
-    <div>
+    <Layout currentLink={1}>
       <AuthOpportunity />
       <AboutUs />
       <ContactUs />
-    </div>
+    </Layout>
   );
 };
 

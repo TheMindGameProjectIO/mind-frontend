@@ -1,30 +1,39 @@
-import Card from "./Card";
+import Card, { CardSize } from "./Card";
 import { FC, useContext } from "react";
 import { hideValue } from "../../helpers";
 import { GameContext } from "../../contexts/GameProvider";
 
 interface IPlayingCardProps {
-  value: number;
+  value?: number;
   toPlay?: boolean;
   onPlay?: (value: number) => void;
   hide?: boolean;
+  size?: CardSize;
+  className?: string;
 }
 
-const PlayingCard: FC<IPlayingCardProps> = ({ hide = false, value, onPlay = (value: number) => {}, toPlay = true }) => {
+const PlayingCard: FC<IPlayingCardProps> = ({
+  hide = false,
+  value = 0,
+  onPlay = (value: number) => {},
+  toPlay = true,
+  size = "medium",
+  className,
+}) => {
   const { playCard } = useContext(GameContext);
 
   const onClick = () => {
-    if (toPlay) {
+    if (toPlay && value) {
       playCard(value);
       onPlay(value);
     }
   };
 
   return (
-    <Card onClick={onClick}>
+    <Card size={size} onClick={onClick} className={`${toPlay ? "cursor-pointer" : ""} ${className}`}>
       <div
         className={`${
-          !hide ? "text-[3rem]" : "text-[1.3rem]"
+          !hide ? "text-[3rem]" : size === "small" ? "text-[0.4rem]" : "text-[1.3rem]"
         } font-bold text-main-blue center-content px-6 py-3 rounded-full`}
       >
         {!hide ? value : "The Mind"}

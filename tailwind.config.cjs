@@ -11,7 +11,7 @@ module.exports = {
         play: "Play",
       },
       maxWidth: {
-        main: "1400px",
+        main: "1600px",
       },
       colors: {
         "main-blue": "#071122",
@@ -29,6 +29,8 @@ module.exports = {
         "u-list-gray": "#c9cacc",
 
         "dark-blue": {
+          100: "rgba(138, 142, 150, 0.3)",
+          200: "rgba(160, 167, 177, 0.8)",
           300: "rgba(8, 17, 34, 0.5)",
           400: "rgba(8, 17, 32, 0.8)",
           500: "rgba(8, 17, 32, 0.9)",
@@ -40,12 +42,14 @@ module.exports = {
         },
       },
       backgroundImage: {
-        "mind-game-background":
-          "url('/src/assets/img/mind-game-background.png')",
+        "mind-game-background": "url('/src/assets/img/mind-game-background.png')",
         "about-game-background": "url('/src/assets/img/aboutgamebg.svg')",
         "contact-us-background": "url('/src/assets/img/contactusbg.svg')",
       },
       screens: {
+        xs: "480px",
+        // => @media (min-width: 480px) { ... }
+
         sm: "640px",
         // => @media (min-width: 640px) { ... }
 

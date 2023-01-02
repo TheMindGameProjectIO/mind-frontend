@@ -17,7 +17,7 @@ type TLobbyPageParams = {
   id: string;
 };
 
-const serverPlayers = [
+export const serverPlayers = [
   { id: 1, name: "MT" },
   { id: 2, name: "12" },
   { id: 3, name: "TM" },
