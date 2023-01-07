@@ -46,7 +46,7 @@ privateApi.interceptors.response.use(
     if (error instanceof AxiosError) {
       if (error.response?.status === 401) {
         localStorage.clear();
-        window.location.href = authRoutes.login();
+        window.location.href = authRoutes.login;
       }
     }
 

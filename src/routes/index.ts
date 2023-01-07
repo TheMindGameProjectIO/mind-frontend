@@ -1,12 +1,12 @@
 export const authRoutes = {
   index: "/auth",
-  forgotPassword() {
+  get forgotPassword() {
     return `${this.index}/forgot-password`;
   },
-  login() {
+  get login() {
     return `${this.index}/login`;
   },
-  signup() {
+  get signup() {
     return `${this.index}/signup`;
   },
 };
@@ -14,13 +14,13 @@ export const authRoutes = {
 export const privateRoutes = {
   lobbiesRoutes: {
     index: "/lobbies",
-    list() {
+    get list() {
       return `${this.index}/list`;
     },
-    create() {
+    get create() {
       return `${this.index}/create`;
     },
-    lobby() {
+    get lobby() {
       return `${this.index}/`;
     },
   },

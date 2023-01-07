@@ -11,7 +11,7 @@ const Navbar = () => {
       <NavbarItem current={currentLink === 1} to={publicRoutes.index}>
         Home
       </NavbarItem>
-      <NavbarItem current={currentLink === 2} to={privateRoutes.lobbiesRoutes.list()}>
+      <NavbarItem current={currentLink === 2} to={privateRoutes.lobbiesRoutes.list}>
         Lobby
       </NavbarItem>
     </div>

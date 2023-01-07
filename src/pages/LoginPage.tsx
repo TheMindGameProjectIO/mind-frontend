@@ -89,7 +89,7 @@ const LoginPage = () => {
             <h2 className="font-bold text-[3rem]"> Log in </h2>
             <h3 className="text-white">
               New user?
-              <PageLink to={authRoutes.signup()} className="text-main-light font-bold">
+              <PageLink to={authRoutes.signup} className="text-main-light font-bold">
                 Create an account
               </PageLink>
             </h3>
@@ -122,7 +122,7 @@ const LoginPage = () => {
               {requestLoading ? <Loader scale="0.5" className="relative top-2" /> : null}
             </div>
           </div>
-          <PageLink className="text-white text-center p-2" to={authRoutes.forgotPassword()}>
+          <PageLink className="text-white text-center p-2" to={authRoutes.forgotPassword}>
             Forgot password?
           </PageLink>
         </form>

@@ -37,9 +37,9 @@ const App = () => {
           {/* Auth routes: only the users that are not authorized can get to these routes */}
           <Route element={<ValidateRoute condition={!isAuth} navigate={publicRoutes.error} />}>
             <Route path={authRoutes.index} element={<AuthLayout />}>
-              <Route index path={authRoutes.login()} element={<LoginPage />} />
-              <Route path={authRoutes.signup()} element={<SignupPage />} />
-              <Route path={authRoutes.forgotPassword()} element={<ForgotPasswordPage />} />
+              <Route index path={authRoutes.login} element={<LoginPage />} />
+              <Route path={authRoutes.signup} element={<SignupPage />} />
+              <Route path={authRoutes.forgotPassword} element={<ForgotPasswordPage />} />
             </Route>
             {/* Private routes: only the users that are authorized can get to these routes */}
           </Route>
@@ -53,8 +53,8 @@ const App = () => {
                   </LobbiesTitleProvider>
                 }
               >
-                <Route path={privateRoutes.lobbiesRoutes.create()} element={<CreateLobbyPage />} />
-                <Route path={privateRoutes.lobbiesRoutes.lobby() + ":id"} element={<LobbyPage />} />
+                <Route path={privateRoutes.lobbiesRoutes.create} element={<CreateLobbyPage />} />
+                <Route path={privateRoutes.lobbiesRoutes.lobby + ":id"} element={<LobbyPage />} />
               </Route>
             </Route>
           </Route>

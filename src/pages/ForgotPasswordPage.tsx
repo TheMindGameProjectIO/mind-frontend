@@ -61,7 +61,7 @@ const ForgotPasswordPage = () => {
 
               <p className="text-little-white text-center mt-4">
                 Go back to
-                <PageLink className="text-main-light font-bold underline mt-4" to={authRoutes.login()}>
+                <PageLink className="text-main-light font-bold underline mt-4" to={authRoutes.login}>
                   login
                 </PageLink>
               </p>

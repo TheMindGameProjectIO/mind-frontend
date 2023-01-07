@@ -115,7 +115,7 @@ const SignupPage = () => {
               <h2 className="font-bold text-[3rem]"> Sign Up </h2>
               <h3 className="text-white">
                 Already did?
-                <PageLink to={authRoutes.login()} className="text-main-light font-bold">
+                <PageLink to={authRoutes.login} className="text-main-light font-bold">
                   Log in
                 </PageLink>
               </h3>

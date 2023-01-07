@@ -51,7 +51,7 @@ const CreateLobbyPage = () => {
       const lobbyId = await LobbiesController.create(data);
       setError("no error");
 
-      navigate(privateRoutes.lobbiesRoutes.lobby() + lobbyId);
+      navigate(privateRoutes.lobbiesRoutes.lobby + lobbyId);
     },
     onError: (error) => {
       setError("server error");
