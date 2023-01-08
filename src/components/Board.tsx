@@ -1,8 +1,6 @@
 import { FC, useContext } from "react";
 import { GameContext } from "../contexts/GameProvider";
-import LiveCard from "./card/LiveCard";
 import PlayingCard from "./card/PlayingCard";
-import ShootingStar from "./card/ShootingStar";
 import Box from "./ui/Box";
 
 interface IBoardProps {}
@@ -12,7 +10,11 @@ const Board: FC<IBoardProps> = () => {
 
   return (
     <Box className="w-full max-w-[600px]">
-      <PlayingCard size="large" value={cards[cards.length - 1]} toPlay={false} />
+      {cards.length !== 0 ? (
+        <PlayingCard size="large" value={cards[cards.length - 1]} toPlay={false} />
+      ) : (
+        <p className="text-2xl front-bold p-20"> No cards here... </p>
+      )}
     </Box>
   );
 };

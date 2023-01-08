@@ -2,9 +2,10 @@ import Card, { CardSize } from "./Card";
 import { FC, useContext } from "react";
 import { hideValue } from "../../helpers";
 import { GameContext } from "../../contexts/GameProvider";
+import { TCard } from "../../types/card";
 
 interface IPlayingCardProps {
-  value?: number;
+  value?: TCard;
   toPlay?: boolean;
   onPlay?: (value: number) => void;
   hide?: boolean;

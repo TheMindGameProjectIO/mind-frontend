@@ -18,12 +18,6 @@ type TLobbyPageParams = {
   id: string;
 };
 
-export const serverPlayers = [
-  { id: "1", nickname: "MT" },
-  { id: "2", nickname: "12" },
-  { id: "3", nickname: "TM" },
-];
-
 const LobbyPage = () => {
   const { id } = useParams<TLobbyPageParams>();
   if (!id || !isNaN(Number(id))) return <Navigate to={publicRoutes.error} />;
@@ -68,9 +62,9 @@ const LobbyPageContent: FC<ILobbyPageContentProps> = ({ id }) => {
   useEffect(() => {
     joinLobby();
 
-    return () => {
-      socket.token = "";
-    };
+    // return () => {
+    //   socket.token = "";
+    // };
   }, []);
 
   const [getLobby, lobbyLoading] = useLoading({

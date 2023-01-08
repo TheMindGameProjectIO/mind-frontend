@@ -3,58 +3,74 @@ import Layout from "../components/layout/Layout";
 import Board from "../components/Board";
 import GameProvider from "../contexts/GameProvider";
 import ClientsCard from "../components/ClientCards";
-import { FC, ReactNode, useContext, useState } from "react";
-import { serverPlayers } from "./LobbyPage";
+import { FC, ReactNode, useContext, useEffect, useState } from "react";
 import { Rabbit } from "../assets/svg";
 import PlayingCard from "../components/card/PlayingCard";
 import { FiSlash, FiPlay } from "react-icons/fi";
 import ShootingStar from "../components/card/ShootingStar";
 import Box from "../components/ui/Box";
-import QueryWrapper from "../components/QueryWrapper";
+import QueryWrapper, { TQueryContext } from "../components/QueryWrapper";
 import { QueryContext } from "../components/QueryWrapper";
-import { GameController } from "../api";
+import { GameController, GAME_TOKEN_KEY } from "../api";
 import { publicRoutes } from "../routes";
+import { TGame } from "../types";
+import socket from "../utils/socket/socket";
+import { useAppSelector } from "../redux/hooks";
+import { selectUser } from "../redux/slices/userSlice";
 
 interface ILobbiesLayoutProps {
   children: ReactNode;
 }
 
 type TGamePageParams = {
-  gameId: string;
+  id: string;
 };
 
 const GamePage = () => {
-  const { gameId } = useParams<TGamePageParams>();
-  if (!gameId || !isNaN(Number(gameId))) return <Navigate to={publicRoutes.error} />;
+  const { id } = useParams<TGamePageParams>();
+  if (!id || !isNaN(Number(id))) return <Navigate to={publicRoutes.error} />;
 
   return (
-    <QueryWrapper queryFn={() => GameController.getBoard(gameId)} queryKey={["boardCards", gameId]}>
+    <QueryWrapper queryFn={() => GameController.getOne(id)} queryKey={["boardCards", id]}>
       <GamePageContent />
     </QueryWrapper>
   );
 };
 
 const GamePageContent = () => {
-  const { data } = useContext(QueryContext);
-  const [players, setPlayers] = useState(serverPlayers);
-  const [hasShootingStar, setHasShootingStar] = useState(true);
-  const [currentLevel, setCurrentLevel] = useState(1);
+  const { data: game } = useContext<TQueryContext<TGame>>(QueryContext);
+  const { id: currentUserId } = useAppSelector(selectUser);
+
+  console.log(game);
+
+  useEffect(() => {
+    const gameToken = localStorage.getItem(GAME_TOKEN_KEY);
+    if (gameToken) {
+      socket.token = gameToken;
+    }
+
+    return () => {
+      socket.token = "";
+    };
+  }, []);
 
   return (
-    <GameProvider serverCards={[1, 2, 3, 4, 5, 6]}>
+    <GameProvider serverCards={game.cardsOnBoard}>
       <Layout currentLink={2}>
         <div className="center-content bg-about-game-background bg-cover bg-no-repeat bg-center">
           <div className="mt-24 w-full max-w-[1200px]">
             <GameLayout>
               <div className="flex justify-between md:justify-around">
-                {players.map((player) => (
-                  <PlayerInGame key={player.id} name={player.nickname} />
-                ))}
+                {game.players
+                  .filter((player) => player.id !== currentUserId)
+                  .map((player) => (
+                    <PlayerInGame key={player.id} name={player.nickname} cardsAmount={player.cardsAmount} />
+                  ))}
               </div>
               <div className="center-content my-8 relative">
                 <Box light={true} className="absolute text-main-blue -bottom-20 left-0 xs:bottom-16 font-bold">
                   Level <br />
-                  {currentLevel} : 12
+                  {game.currentLevel} : 12
                 </Box>
                 <Board />
                 <div className="absolute text-main-blue font-bold right-0 center-content -bottom-24 xs:bottom-14 flex-col gap-y-2">
@@ -69,10 +85,10 @@ const GamePageContent = () => {
 
               <div className="center-content relative">
                 <div className="flex flex-col sm:flex-row items-center">
-                  {hasShootingStar ? (
+                  {game.hasShootingStar ? (
                     <ShootingStar toPlay={true} className="absolute mb-3 sm:right-8 sm:mb-0" size="small" />
                   ) : null}
-                  <ClientsCard />
+                  <ClientsCard serverCards={game.clientCards} />
                 </div>
               </div>
             </GameLayout>

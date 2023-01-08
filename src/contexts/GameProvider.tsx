@@ -1,5 +1,6 @@
 import { createContext, ReactNode, FC, useState } from "react";
 import { SHOOTING_STAR } from "../components/card/ShootingStar";
+import { TCard } from "../types";
 
 interface IGameProviderProps {
   children: ReactNode;
@@ -17,9 +18,9 @@ export const GameContext = createContext<TGameContext>({
 });
 
 const GameProvider: FC<IGameProviderProps> = ({ children, serverCards }) => {
-  const [cards, setCards] = useState<number[]>(serverCards);
+  const [cards, setCards] = useState<TCard[]>(serverCards);
 
-  const playCard = (card: number) => {
+  const playCard = (card: TCard) => {
     if (card !== SHOOTING_STAR) {
       setCards([...cards, card]);
     }
