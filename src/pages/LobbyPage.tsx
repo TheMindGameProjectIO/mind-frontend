@@ -5,51 +5,103 @@ import { Rabbit } from "../assets/svg";
 import { FC, useState, memo, useEffect, useContext } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { LobbiesTitleContext } from "../contexts/LobbiesTitleProvider";
-import { LobbiesController } from "../api";
-import { publicRoutes } from "../routes";
-import QueryWrapper, { QueryContext, TQueryContext } from "../components/QueryWrapper";
-import { Lobby } from "../types";
+import { LobbiesController, GameController, GAME_TOKEN_KEY } from "../api";
+import { privateRoutes, publicRoutes } from "../routes";
+import { emptyLobbyFactory, TLobby, TPlayer } from "../types";
 import { useAppSelector } from "../redux/hooks";
 import { selectUser } from "../redux/slices/userSlice";
 import socket from "../utils/socket/socket";
+import useLoading from "../hooks/useLoading";
+import LoadingWrapper from "../components/LoadingWrapper";
 
 type TLobbyPageParams = {
   id: string;
 };
 
 export const serverPlayers = [
-  { id: 1, name: "MT" },
-  { id: 2, name: "12" },
-  { id: 3, name: "TM" },
+  { id: "1", nickname: "MT" },
+  { id: "2", nickname: "12" },
+  { id: "3", nickname: "TM" },
 ];
 
 const LobbyPage = () => {
   const { id } = useParams<TLobbyPageParams>();
   if (!id || !isNaN(Number(id))) return <Navigate to={publicRoutes.error} />;
 
-  return (
-    <QueryWrapper queryFn={() => LobbiesController.getOne(id)} queryKey={["lobby", id]}>
-      <LobbyPageContent />
-    </QueryWrapper>
-  );
+  return <LobbyPageContent id={id} />;
 };
 
-const LobbyPageContent = () => {
-  const { data: lobby } = useContext<TQueryContext<Lobby>>(QueryContext);
+interface ILobbyPageContentProps {
+  id: string;
+}
+
+const LobbyPageContent: FC<ILobbyPageContentProps> = ({ id }) => {
+  const [lobby, setLobby] = useState<TLobby>(emptyLobbyFactory());
   const { changeTitle } = useContext(LobbiesTitleContext);
   const { id: currentUserId } = useAppSelector(selectUser);
   const isAuthor = currentUserId === lobby.authorId;
   const navigate = useNavigate();
-  const [players, setPlayers] = useState(serverPlayers);
+  const [players, setPlayers] = useState<TPlayer[]>([]);
+
+  const [joinLobby, joinLoading] = useLoading({
+    callback: async () => {
+      const gameToken = await LobbiesController.join(id);
+      if (gameToken) {
+        socket.token = gameToken;
+        localStorage.setItem(GAME_TOKEN_KEY, gameToken);
+      }
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const [startGame, startingLoading] = useLoading({
+    callback: async () => {
+      await GameController.start(id);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   useEffect(() => {
-    LobbiesController.join(lobby.id)
-      .then((gameToken) => {
-        if (gameToken) {
-          socket.token = gameToken;
-        }
-      })
-      .catch((error) => console.log(error));
+    joinLobby();
+
+    return () => {
+      socket.token = "";
+    };
+  }, []);
+
+  const [getLobby, lobbyLoading] = useLoading({
+    callback: async () => {
+      const lobby = await LobbiesController.getOne(id);
+
+      setLobby(lobby);
+      setPlayers(lobby.players);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  useEffect(() => {
+    socket.connection.on("game:self:joined", () => {
+      getLobby();
+    });
+
+    socket.connection.on("game:player:joined", () => {
+      getLobby();
+    });
+
+    socket.connection.on("game:started", () => {
+      navigate(privateRoutes.game(id));
+    });
+
+    return () => {
+      socket.connection.removeAllListeners("game:self:joined");
+      socket.connection.removeAllListeners("game:player:joined");
+    };
   }, []);
 
   useEffect(() => {
@@ -60,29 +112,32 @@ const LobbyPageContent = () => {
     };
   }, []);
 
+  const isLoading = joinLoading || lobbyLoading || players.length === 0;
+
   return (
     <div className="center-content flex-col ">
       <div className="flex flex-col md:flex-row font-play gap-6">
         <div>
           <h2 className="text-center text-main-light mb-4 font-normal"> Players </h2>
-          <div className="bg-lighter-blue rounded-2xl p-3 flex items-center flex-col gap-y-3 h-[200px] overflow-scroll overflow-x-hidden">
-            {players.map((player) => (
-              <PlayerInLobby
-                isAuthor={isAuthor}
-                onKick={(id: number) => {
-                  setPlayers(players.filter((player) => player.id !== id));
-                  // TODO: Notify server to kick player
-                }}
-                key={player.id}
-                player={player}
-              />
-            ))}
-          </div>
+          <LoadingWrapper isLoading={isLoading}>
+            <div className="bg-lighter-blue rounded-2xl p-3 flex items-center flex-col gap-y-3 h-[200px] overflow-scroll overflow-x-hidden">
+              {players.map((player) => (
+                <PlayerInLobby
+                  canBeKicked={isAuthor && player.id !== lobby.authorId}
+                  onKick={(id: string) => {
+                    setPlayers(players.filter((player) => player.id !== id));
+                    // TODO: Notify server to kick player
+                  }}
+                  key={player.id}
+                  player={player}
+                />
+              ))}
+            </div>
+          </LoadingWrapper>
         </div>
 
         <div className="flex flex-row md:relative md:top-5 border-2 rounded-2xl border-cr-gray place-self-center text-main-light p-2 max-h-36">
           <div className="mx-2">
-            {/* FIXME: Later replace this image with normal icon */}
             <img
               src={Rabbit}
               alt="Light rabbit icon"
@@ -91,28 +146,32 @@ const LobbyPageContent = () => {
           </div>
 
           <div className="grid mx-4 text-center content-center">
-            <p className="font-bold"> {lobby.name} </p>
-            <p>
-              {players.length} / {lobby.maxPlayersCount}
-            </p>
+            <LoadingWrapper isLoading={isLoading}>
+              <p className="font-bold"> {lobby.name} </p>
+              <p>
+                {players.length} / {lobby.maxPlayersCount}
+              </p>
+            </LoadingWrapper>
           </div>
         </div>
       </div>
-      <div className="flex flex-row w-full justify-between px-6 gap-6">
-        {/* TODO: Button should go back */}
+      <div className="flex flex-row w-full justify-between px-6 gap-6 mt-3">
         <Button
           onClick={() => {
             navigate(-1);
-            // TODO: Notify server to leave lobby
           }}
           className={lobbyPagesButton}
         >
           Back
         </Button>
 
-        {/* TODO: The button should create a lobby*/}
         {isAuthor ? (
-          <Button className={lobbyPagesButton} type="submit">
+          <Button
+            disabled={startingLoading}
+            className={lobbyPagesButton}
+            type="submit"
+            onClick={async () => await startGame()}
+          >
             Start
           </Button>
         ) : null}
@@ -122,12 +181,12 @@ const LobbyPageContent = () => {
 };
 
 interface IPlayerInLobbyProps {
-  player: { name: string; id: number };
-  onKick: (id: number) => void;
-  isAuthor?: boolean;
+  player: { nickname: string; id: string };
+  onKick: (id: string) => void;
+  canBeKicked?: boolean;
 }
 
-const PlayerInLobby: FC<IPlayerInLobbyProps> = memo(({ player, onKick, isAuthor = false }) => {
+const PlayerInLobby: FC<IPlayerInLobbyProps> = memo(({ player, onKick, canBeKicked = false }) => {
   return (
     <div className="flex flex-row w-screen max-w-[250px] bg-u-list-gray rounded-2xl p-2">
       <img
@@ -135,8 +194,8 @@ const PlayerInLobby: FC<IPlayerInLobbyProps> = memo(({ player, onKick, isAuthor 
         alt="Regular rabbit icon"
         className="order-last md:order-first self-center w-full max-w-max"
       />
-      <p className="text-main-blue place-self-center mx-4"> {player.name} </p>
-      {isAuthor ? (
+      <p className="text-main-blue place-self-center mx-4"> {player.nickname} </p>
+      {canBeKicked ? (
         <button
           onClick={() => onKick(player.id)}
           className="bg-main-blue text-cr-gray rounded-xl text-sm px-2 w-screen max-w-[60px] py-0 ml-auto"

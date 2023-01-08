@@ -24,7 +24,9 @@ export const privateRoutes = {
       return `${this.index}/`;
     },
   },
-  game: "/game/:id",
+  game(id: string = ":id") {
+    return "/game/" + id;
+  },
 };
 
 export const publicRoutes = {

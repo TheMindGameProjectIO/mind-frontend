@@ -43,12 +43,12 @@ const ClientCards: FC<IClientCardsProps> = ({ className }) => {
                     style={{
                       right: count++ !== 0 ? `${count * 24}px` : undefined,
                     }}
+                    key={card}
                   >
                     <PlayingCard
                       onPlay={(value) => setCards(cards.filter((card) => card != value))}
                       toPlay={true}
                       value={card}
-                      key={card}
                     />
                   </div>
                 );

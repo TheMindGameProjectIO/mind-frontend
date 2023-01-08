@@ -1,15 +1,19 @@
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import Layout from "../components/layout/Layout";
 import Board from "../components/Board";
 import GameProvider from "../contexts/GameProvider";
 import ClientsCard from "../components/ClientCards";
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode, useContext, useState } from "react";
 import { serverPlayers } from "./LobbyPage";
 import { Rabbit } from "../assets/svg";
 import PlayingCard from "../components/card/PlayingCard";
 import { FiSlash, FiPlay } from "react-icons/fi";
 import ShootingStar from "../components/card/ShootingStar";
 import Box from "../components/ui/Box";
+import QueryWrapper from "../components/QueryWrapper";
+import { QueryContext } from "../components/QueryWrapper";
+import { GameController } from "../api";
+import { publicRoutes } from "../routes";
 
 interface ILobbiesLayoutProps {
   children: ReactNode;
@@ -21,19 +25,30 @@ type TGamePageParams = {
 
 const GamePage = () => {
   const { gameId } = useParams<TGamePageParams>();
+  if (!gameId || !isNaN(Number(gameId))) return <Navigate to={publicRoutes.error} />;
+
+  return (
+    <QueryWrapper queryFn={() => GameController.getBoard(gameId)} queryKey={["boardCards", gameId]}>
+      <GamePageContent />
+    </QueryWrapper>
+  );
+};
+
+const GamePageContent = () => {
+  const { data } = useContext(QueryContext);
   const [players, setPlayers] = useState(serverPlayers);
   const [hasShootingStar, setHasShootingStar] = useState(true);
   const [currentLevel, setCurrentLevel] = useState(1);
 
   return (
-    <GameProvider>
+    <GameProvider serverCards={[1, 2, 3, 4, 5, 6]}>
       <Layout currentLink={2}>
         <div className="center-content bg-about-game-background bg-cover bg-no-repeat bg-center">
           <div className="mt-24 w-full max-w-[1200px]">
             <GameLayout>
               <div className="flex justify-between md:justify-around">
                 {players.map((player) => (
-                  <PlayerInGame key={player.id} name={player.name} />
+                  <PlayerInGame key={player.id} name={player.nickname} />
                 ))}
               </div>
               <div className="center-content my-8 relative">

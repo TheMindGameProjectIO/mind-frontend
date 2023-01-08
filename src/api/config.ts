@@ -2,10 +2,11 @@ import axios, { AxiosError, AxiosHeaders } from "axios";
 import { Headers } from "../enums";
 import { authRoutes } from "../routes";
 axios.defaults.headers.common["ngrok-skip-browser-warning"] = (import.meta as any).env.VITE_APP_DEV_CONNECTON_HEADER;
-axios.defaults.headers.common["Bypass-Tunnel-Reminder"] = (import.meta as any).env.VITE_APP_DEV_CONNECTON_HEADER;
+// axios.defaults.headers.common["Bypass-Tunnel-Reminder"] = (import.meta as any).env.VITE_APP_DEV_CONNECTON_HEADER;
 
 const API_BASE_URL = (import.meta as any).env.VITE_APP_API_BASE_URL;
 export const ACCESS_TOKEN_KEY = "RJWPOASXZ";
+export const GAME_TOKEN_KEY = "ASLKUJQIO";
 
 const headers = {
   "Content-Type": "application/json",

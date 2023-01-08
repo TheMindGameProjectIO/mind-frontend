@@ -56,9 +56,9 @@ const App = () => {
                 <Route path={privateRoutes.lobbiesRoutes.create} element={<CreateLobbyPage />} />
                 <Route path={privateRoutes.lobbiesRoutes.lobby + ":id"} element={<LobbyPage />} />
               </Route>
+              <Route path={privateRoutes.game()} element={<GamePage />} />
             </Route>
           </Route>
-          <Route path={privateRoutes.game} element={<GamePage />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
