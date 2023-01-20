@@ -1,7 +1,5 @@
-import { useState, FC, useMemo, useEffect } from "react";
+import { FC, useMemo } from "react";
 import { TCard } from "../types/card";
-import socket from "../utils/socket/socket";
-import { IGameSocketData } from "../utils/socket/types";
 import PlayingCard from "./card/PlayingCard";
 import Box from "./ui/Box";
 
@@ -44,12 +42,14 @@ const ClientCards: FC<IClientCardsProps> = ({ className, cards }) => {
                     return (
                       <div
                         className={`relative`}
-                        style={{
-                          right: count++ !== 0 ? `${count * 24}px` : undefined,
-                        }}
+                        style={{ right: count++ !== 0 ? `${count * 24}px` : undefined }}
                         key={card}
                       >
-                        <PlayingCard onPlay={(value) => console.log(value)} toPlay={true} value={card} />
+                        <PlayingCard
+                          onPlay={(value) => console.log(`card:played:${value}`)}
+                          toPlay={true}
+                          value={card}
+                        />
                       </div>
                     );
                   })}

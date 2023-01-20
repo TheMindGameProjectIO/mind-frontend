@@ -8,6 +8,7 @@ import { IGameSocketData } from "../utils/socket/types";
 const useGame = () => {
   const { data } = useContext<TQueryContext<TGame>>(QueryContext);
   const [game, setGame] = useState<TGame>(data);
+  const [mistake, setMistake] = useState<boolean>(false);
 
   useEffect(() => {
     const gameToken = localStorage.getItem(GAME_TOKEN_KEY);
@@ -22,6 +23,7 @@ const useGame = () => {
 
   useEffect(() => {
     const listener = (game: IGameSocketData) => {
+      console.log("game:changed");
       const data = gameFactory(game);
       setGame(data);
     };
@@ -33,7 +35,7 @@ const useGame = () => {
     };
   }, []);
 
-  return { game };
+  return { game, mistake, setMistake };
 };
 
 export default useGame;

@@ -6,7 +6,7 @@ import ClientsCard from "../components/ClientCards";
 import { FC, ReactNode } from "react";
 import { Rabbit } from "../assets/svg";
 import PlayingCard from "../components/card/PlayingCard";
-import { FiSlash, FiPlay } from "react-icons/fi";
+import { FiSlash, FiPlay, FiAlertCircle } from "react-icons/fi";
 import ShootingStar from "../components/card/ShootingStar";
 import Box from "../components/ui/Box";
 import QueryWrapper from "../components/QueryWrapper";
@@ -15,6 +15,9 @@ import { publicRoutes } from "../routes";
 import { useAppSelector } from "../redux/hooks";
 import { selectUser } from "../redux/slices/userSlice";
 import useGame from "../hooks/useGame";
+import Modal from "../components/Modal";
+import Button from "../components/ui/Button";
+import WarningModal from "../components/ui/WarningModal";
 
 interface ILobbiesLayoutProps {
   children: ReactNode;
@@ -37,49 +40,56 @@ const GamePage = () => {
 
 const GamePageContent = () => {
   const { id: currentUserId } = useAppSelector(selectUser);
-  const { game } = useGame();
+  const { game, mistake, setMistake } = useGame();
 
   return (
     <GameProvider>
-      <Layout currentLink={2}>
-        <div className="center-content bg-about-game-background bg-cover bg-no-repeat bg-center">
-          <div className="mt-24 w-full max-w-[1200px]">
-            <GameLayout>
-              <div className="flex justify-between md:justify-around">
-                {game.players
-                  .filter((player) => player.id !== currentUserId)
-                  .map((player) => (
-                    <PlayerInGame key={player.id} name={player.nickname} cardsAmount={player.cardsAmount} />
-                  ))}
-              </div>
-              <div className="center-content my-8 relative">
-                <Box light={true} className="absolute text-main-blue -bottom-20 left-0 xs:bottom-16 font-bold">
-                  Level <br />
-                  {game.currentLevel} : 12
-                </Box>
-                <Board cards={game.cardsOnBoard} />
-                <div className="absolute text-main-blue font-bold right-0 center-content -bottom-24 xs:bottom-14 flex-col gap-y-2">
-                  <Box light={true} className="px-5 cursor-pointer">
-                    ?
-                  </Box>
-                  <Box light={true} className="px-5 cursor-pointer">
-                    X
-                  </Box>
+      <>
+        <Layout currentLink={2}>
+          <div className="center-content bg-about-game-background bg-cover bg-no-repeat bg-center">
+            <div className="mt-24 w-full max-w-[1200px]">
+              <GameLayout>
+                <div className="flex justify-between md:justify-around">
+                  {game.players
+                    .filter((player) => player.id !== currentUserId)
+                    .map((player) => (
+                      <PlayerInGame key={player.id} name={player.nickname} cardsAmount={player.cardsAmount} />
+                    ))}
                 </div>
-              </div>
+                <div className="center-content my-8 relative">
+                  <Box light={true} className="absolute text-main-blue -bottom-20 left-0 xs:bottom-16 font-bold">
+                    Level <br />
+                    {game.currentLevel} : 12
+                  </Box>
+                  <Board cards={game.cardsOnBoard} />
+                  <div className="absolute text-main-blue font-bold right-0 center-content -bottom-24 xs:bottom-14 flex-col gap-y-2">
+                    <Box light={true} className="px-5 cursor-pointer">
+                      ?
+                    </Box>
+                    <Box light={true} className="px-5 cursor-pointer">
+                      X
+                    </Box>
+                  </div>
+                </div>
 
-              <div className="center-content relative">
-                <div className="flex flex-col sm:flex-row items-center">
-                  {game.hasShootingStar ? (
-                    <ShootingStar toPlay={true} className="absolute mb-3 sm:right-8 sm:mb-0" size="small" />
-                  ) : null}
-                  <ClientsCard cards={game.clientCards} />
+                <div className="center-content relative">
+                  <div className="flex flex-col sm:flex-row items-center">
+                    {game.hasShootingStar ? (
+                      <ShootingStar toPlay={true} className="absolute mb-3 sm:right-8 sm:mb-0" size="small" />
+                    ) : null}
+                    <ClientsCard cards={game.clientCards} />
+                  </div>
                 </div>
-              </div>
-            </GameLayout>
+              </GameLayout>
+            </div>
           </div>
-        </div>
-      </Layout>
+        </Layout>
+        <WarningModal
+          visible={true}
+          onClose={() => setMistake(false)}
+          title="Someone made a mistake! Be carefull you are left only with 3 mistakes!"
+        />
+      </>
     </GameProvider>
   );
 };

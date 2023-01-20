@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
 
-interface IModalProps {
+export interface IModalProps {
   children: ReactNode;
   visible?: boolean;
   onClose: () => void;

@@ -6,6 +6,7 @@ import { selectIsAuth, unauthorize } from "../../redux/slices/authSlice";
 import { useState } from "react";
 import Modal from "../Modal";
 import Button from "../ui/Button";
+import WarningModal from "../ui/WarningModal";
 
 const Header = () => {
   const isAuth = useAppSelector(selectIsAuth);
@@ -30,20 +31,10 @@ const Header = () => {
           {isAuth ? <FiLogOut onClick={() => setModal(true)} className="cursor-pointer" /> : null}
         </div>
       </header>
-      <Modal visible={modal} onClose={() => setModal(false)}>
-        <div className="bg-main-blue p-6 rounded-xl">
-          <div className="center-content">
-            <FiAlertCircle className="h-16 w-16" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold my-3">Are you sure you want to log out?</h1>
-            <div className="flex items-center gap-3">
-              <Button onClick={() => logout()}> Yes </Button>
-              <Button onClick={() => setModal(false)}> No </Button>
-            </div>
-          </div>
-        </div>
-      </Modal>
+      <WarningModal title="Are you sure you want to log out?" visible={modal} onClose={() => setModal(false)}>
+        <Button onClick={() => logout()}> Yes </Button>
+        <Button onClick={() => setModal(false)}> No </Button>
+      </WarningModal>
     </>
   );
 };
