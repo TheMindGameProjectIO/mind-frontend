@@ -10,8 +10,8 @@ import { publicRoutes } from "../routes";
 import { useAppSelector } from "../redux/hooks";
 import { selectUser } from "../redux/slices/userSlice";
 import useLoading from "../hooks/useLoading";
-import LoadingWrapper from "../components/LoadingWrapper";
 import useLobby from "../hooks/useLobby";
+import PageLoader from "../components/PageLoader";
 
 type TLobbyPageParams = {
   id: string;
@@ -52,25 +52,25 @@ const LobbyPageContent: FC<ILobbyPageContentProps> = ({ id }) => {
     };
   }, []);
 
+  if (isLoading) return <PageLoader />;
+
   return (
     <div className="center-content flex-col ">
       <div className="flex flex-col md:flex-row font-play gap-6">
         <div>
           <h2 className="text-center text-main-light mb-4 font-normal"> Players </h2>
-          <LoadingWrapper isLoading={isLoading}>
-            <div className="bg-lighter-blue rounded-2xl p-3 flex items-center flex-col gap-y-3 h-[200px] overflow-scroll overflow-x-hidden">
-              {players.map((player) => (
-                <PlayerInLobby
-                  canBeKicked={isAuthor && player.id !== lobby.authorId}
-                  onKick={(id: string) => {
-                    kickPlayer(id);
-                  }}
-                  key={player.id}
-                  player={player}
-                />
-              ))}
-            </div>
-          </LoadingWrapper>
+          <div className="bg-lighter-blue rounded-2xl p-3 flex items-center flex-col gap-y-3 h-[200px] overflow-scroll overflow-x-hidden">
+            {players.map((player) => (
+              <PlayerInLobby
+                canBeKicked={isAuthor && player.id !== lobby.authorId}
+                onKick={(id: string) => {
+                  kickPlayer(id);
+                }}
+                key={player.id}
+                player={player}
+              />
+            ))}
+          </div>
         </div>
 
         <div className="flex flex-row md:relative md:top-5 border-2 rounded-2xl border-cr-gray place-self-center text-main-light p-2 max-h-36">
@@ -83,12 +83,10 @@ const LobbyPageContent: FC<ILobbyPageContentProps> = ({ id }) => {
           </div>
 
           <div className="grid mx-4 text-center content-center">
-            <LoadingWrapper isLoading={isLoading}>
-              <p className="font-bold"> {lobby.name} </p>
-              <p>
-                {players.length} / {lobby.maxPlayersCount}
-              </p>
-            </LoadingWrapper>
+            <p className="font-bold"> {lobby.name} </p>
+            <p>
+              {players.length} / {lobby.maxPlayersCount}
+            </p>
           </div>
         </div>
       </div>

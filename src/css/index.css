@@ -1,5 +1,6 @@
 @import url(./loader.css);
 @import url(./scroll-bar.css);
+@import url(./animations.css);
 
 @tailwind base;
 @tailwind components;

@@ -31,7 +31,11 @@ const PlayingCard: FC<IPlayingCardProps> = ({
   };
 
   return (
-    <Card size={size} onClick={onClick} className={`${toPlay ? "cursor-pointer" : ""} ${className}`}>
+    <Card
+      size={size}
+      onClick={onClick}
+      className={`${toPlay ? "cursor-pointer hover:-translate-y-3 transition-all" : ""} ${className}`}
+    >
       <div
         className={`${
           !hide ? "text-[3rem]" : size === "small" ? "text-[0.4rem]" : "text-[1.3rem]"

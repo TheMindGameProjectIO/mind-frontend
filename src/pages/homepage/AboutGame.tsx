@@ -4,13 +4,13 @@ const ruleClass: string = "mb-5 text-center font-bold text-main-blue text-[0.7re
 
 const AboutGame = () => {
   return (
-    <div className="bg-cover bg-center bg-about-game-background flex flex-col md:flex-row font-play">
+    <div className="bg-cover bg-center bg-about-game-background flex flex-col md:flex-row font-play center-content">
       {/* //! FIXME: Background image is terrible when decreasing in size! */}
       {/* //! FIXME: Because of rabbits in the background image, some part of the text is not seen! */}
 
       <img src={BgImage} alt="An image of a book" className="order-last md:order-first self-center w-full max-w-max" />
 
-      <div className="flex flex-col pr-4">
+      <div className="flex flex-col pr-4 max-w-[600px]">
         <h1 className="text-main-blue mb-7 text-[3rem] md:text-[4rem] text-center font-bold md:ml-14 mt-10">
           About the game
         </h1>

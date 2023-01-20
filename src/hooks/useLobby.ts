@@ -6,7 +6,6 @@ import { GAME_TOKEN_KEY } from "../api";
 import { emptyLobbyFactory, lobbyFactory, TLobby, TPlayer } from "../types";
 import { useNavigate } from "react-router-dom";
 import { privateRoutes } from "../routes";
-import { IGameLobbySocketData } from "../utils/socket/types";
 
 const useLobby = (id: string) => {
   const [lobby, setLobby] = useState<TLobby>(emptyLobbyFactory());
@@ -34,20 +33,12 @@ const useLobby = (id: string) => {
     };
   }, []);
 
-  const updateLobby = (lobbyData: IGameLobbySocketData) => {
-    const lobby = lobbyFactory(lobbyData);
-
-    setLobby(lobby);
-    setPlayers(lobby.players);
-  };
-
   useEffect(() => {
-    socket.connection.on("game:self:joined", (lobby) => {
-      updateLobby(lobby);
-    });
+    socket.connection.on("game:lobby:changed", (lobbyData) => {
+      const lobby = lobbyFactory(lobbyData);
 
-    socket.connection.on("game:player:joined", (lobby) => {
-      updateLobby(lobby);
+      setLobby(lobby);
+      setPlayers(lobby.players);
     });
 
     socket.connection.on("game:started", () => {
@@ -55,12 +46,9 @@ const useLobby = (id: string) => {
     });
 
     return () => {
-      socket.connection.removeAllListeners("game:self:joined");
-      socket.connection.removeAllListeners("game:player:joined");
+      socket.connection.removeAllListeners("game:lobby:changed");
     };
   }, []);
-
-  useEffect(() => {}, []);
 
   const isLoading = joinLoading || players.length === 0;
 

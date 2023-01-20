@@ -2,17 +2,42 @@ import { Socket } from "socket.io-client";
 import { TPlayerResponseData } from "../../types";
 
 export interface IGameSocketData {
-  playedCard: string;
-  isShootingStar: boolean;
-  isSmallest: boolean;
+  player: {
+    _id: string;
+    nickname: string;
+    cards: string[];
+  };
+  shootingStar: {
+    voted: number;
+    total: number;
+    isVoted: boolean;
+    isVoting: boolean;
+  };
+  played?: {
+    card: string;
+    isShootingStar: boolean;
+    isSmallest: boolean;
+    player: {
+      _id: string;
+      nickname: string;
+    };
+  };
   game: {
     _id: string;
     cards: string[];
+    hasWon: boolean;
+    hasLost: boolean;
     hasShootingStar: boolean;
     currentLevel: number;
-    players: TPlayerResponseData[];
+    totalMistakes: number;
+    mistakesLeft: number;
+    players: {
+      _id: string;
+      nickname: string;
+      cards: number;
+      isOnline: boolean;
+    }[];
   };
-  cards: string[];
 }
 
 export interface IGameLobbySocketData {
@@ -21,22 +46,26 @@ export interface IGameLobbySocketData {
   maxUserCount: number;
   authorId: string;
   invitationLink: string;
-  users: TPlayerResponseData[];
+  users: {
+    _id: string;
+    nickname: string;
+  }[];
 }
 
 export interface ServerToClientEvents {
+  "game:lost": () => void;
+  "game:won": () => void;
   "auth:verified:email": () => void;
   "auth:verified:password:reset": ({ token }: { token: string }) => void;
   ping: () => void;
   pong: () => void;
-  "game:self:joined": (gameLobby: IGameLobbySocketData) => void;
   "game:created": () => void;
   message: (message: string) => void;
   response: (event: keyof ClientToServerEvents, response: { message: string; status: "success" | "fail" }) => void;
-  "game:player:joined": (gameLobby: IGameLobbySocketData) => void;
+  "game:lobby:changed": (gameLobby: IGameLobbySocketData) => void;
   "game:player:left": () => void;
   "game:self:left": () => void;
-  "game:started": () => void;
+  "game:started": (game: IGameSocketData) => void;
   "game:player:played": (game: IGameSocketData) => void;
   "game:self:played": (game: IGameSocketData) => void;
   "game:changed": (game: IGameSocketData) => void;

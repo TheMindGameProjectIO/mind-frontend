@@ -9,7 +9,7 @@ const AuthOpportunity = () => {
 
   return (
     <div className="bg-center bg-cover bg-mind-game-background flex flex-col items-center justify-center text-center font-play">
-      <GameTitle className="font-audiowide text-main-light text-[2.5rem] md:text-[3.7rem] md:max-w-[495px] mb-5 mt-9" />
+      <GameTitle className="font-audiowide text-main-light text-[2.5rem] md:text-[3.7rem] md:max-w-[495px] mb-5 mt-24" />
       <h2 className="text-main-gray text-[0.9rem] md:text-[1.35rem] font-play">
         The Mind is more than just a game. It's an <br /> experiment, a journey, a team <br /> experience
       </h2>
