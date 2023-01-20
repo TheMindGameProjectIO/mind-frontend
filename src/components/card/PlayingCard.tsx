@@ -7,7 +7,7 @@ import { TCard } from "../../types/card";
 interface IPlayingCardProps {
   value?: TCard;
   toPlay?: boolean;
-  onPlay?: (value: number) => void;
+  onPlay?: (card: TCard) => void;
   hide?: boolean;
   size?: CardSize;
   className?: string;
@@ -15,8 +15,8 @@ interface IPlayingCardProps {
 
 const PlayingCard: FC<IPlayingCardProps> = ({
   hide = false,
-  value = 0,
-  onPlay = (value: number) => {},
+  value = "0",
+  onPlay = (card: TCard) => {},
   toPlay = true,
   size = "medium",
   className,

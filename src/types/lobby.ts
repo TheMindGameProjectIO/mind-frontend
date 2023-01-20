@@ -1,7 +1,7 @@
 import { playerFactory, TPlayer, TPlayerResponseData } from "./player";
 
 type TLobbyResponseData = {
-  id: string;
+  roomId: string;
   name: string;
   authorId: string;
   maxUserCount: number;
@@ -20,7 +20,7 @@ export type TLobby = {
 
 export const lobbyFactory = (data: TLobbyResponseData) => {
   return {
-    id: data.id,
+    id: data.roomId,
     name: data.name,
     authorId: data.authorId,
     maxPlayersCount: data.maxUserCount,

@@ -1,13 +1,14 @@
 import { FC, useContext } from "react";
 import { GameContext } from "../contexts/GameProvider";
+import { TCard } from "../types";
 import PlayingCard from "./card/PlayingCard";
 import Box from "./ui/Box";
 
-interface IBoardProps {}
+interface IBoardProps {
+  cards: TCard[];
+}
 
-const Board: FC<IBoardProps> = () => {
-  const { cards } = useContext(GameContext);
-
+const Board: FC<IBoardProps> = ({ cards }) => {
   return (
     <Box className="w-full max-w-[600px]">
       {cards.length !== 0 ? (

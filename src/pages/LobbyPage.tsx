@@ -2,17 +2,16 @@ import Button from "../components/ui/Button";
 import { lobbyPagesButton } from "../helpers";
 import Regular_Rabbit from "../assets/img/regular-rabbit.png";
 import { Rabbit } from "../assets/svg";
-import { FC, useState, memo, useEffect, useContext } from "react";
+import { FC, memo, useEffect, useContext } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { LobbiesTitleContext } from "../contexts/LobbiesTitleProvider";
-import { LobbiesController, GameController, GAME_TOKEN_KEY } from "../api";
-import { privateRoutes, publicRoutes } from "../routes";
-import { emptyLobbyFactory, TLobby, TPlayer } from "../types";
+import { GameController } from "../api";
+import { publicRoutes } from "../routes";
 import { useAppSelector } from "../redux/hooks";
 import { selectUser } from "../redux/slices/userSlice";
-import socket from "../utils/socket/socket";
 import useLoading from "../hooks/useLoading";
 import LoadingWrapper from "../components/LoadingWrapper";
+import useLobby from "../hooks/useLobby";
 
 type TLobbyPageParams = {
   id: string;
@@ -30,25 +29,11 @@ interface ILobbyPageContentProps {
 }
 
 const LobbyPageContent: FC<ILobbyPageContentProps> = ({ id }) => {
-  const [lobby, setLobby] = useState<TLobby>(emptyLobbyFactory());
+  const { lobby, players, isLoading, kickPlayer } = useLobby(id);
   const { changeTitle } = useContext(LobbiesTitleContext);
   const { id: currentUserId } = useAppSelector(selectUser);
   const isAuthor = currentUserId === lobby.authorId;
   const navigate = useNavigate();
-  const [players, setPlayers] = useState<TPlayer[]>([]);
-
-  const [joinLobby, joinLoading] = useLoading({
-    callback: async () => {
-      const gameToken = await LobbiesController.join(id);
-      if (gameToken) {
-        socket.token = gameToken;
-        localStorage.setItem(GAME_TOKEN_KEY, gameToken);
-      }
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
 
   const [startGame, startingLoading] = useLoading({
     callback: async () => {
@@ -60,53 +45,12 @@ const LobbyPageContent: FC<ILobbyPageContentProps> = ({ id }) => {
   });
 
   useEffect(() => {
-    joinLobby();
-
-    // return () => {
-    //   socket.token = "";
-    // };
-  }, []);
-
-  const [getLobby, lobbyLoading] = useLoading({
-    callback: async () => {
-      const lobby = await LobbiesController.getOne(id);
-
-      setLobby(lobby);
-      setPlayers(lobby.players);
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
-
-  useEffect(() => {
-    socket.connection.on("game:self:joined", () => {
-      getLobby();
-    });
-
-    socket.connection.on("game:player:joined", () => {
-      getLobby();
-    });
-
-    socket.connection.on("game:started", () => {
-      navigate(privateRoutes.game(id));
-    });
-
-    return () => {
-      socket.connection.removeAllListeners("game:self:joined");
-      socket.connection.removeAllListeners("game:player:joined");
-    };
-  }, []);
-
-  useEffect(() => {
     changeTitle("Lobby");
 
     return () => {
       changeTitle("Public lobbies");
     };
   }, []);
-
-  const isLoading = joinLoading || lobbyLoading || players.length === 0;
 
   return (
     <div className="center-content flex-col ">
@@ -119,8 +63,7 @@ const LobbyPageContent: FC<ILobbyPageContentProps> = ({ id }) => {
                 <PlayerInLobby
                   canBeKicked={isAuthor && player.id !== lobby.authorId}
                   onKick={(id: string) => {
-                    setPlayers(players.filter((player) => player.id !== id));
-                    // TODO: Notify server to kick player
+                    kickPlayer(id);
                   }}
                   key={player.id}
                   player={player}

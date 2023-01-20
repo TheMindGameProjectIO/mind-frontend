@@ -1,5 +1,5 @@
-export type TCard = number;
+export type TCard = string;
 
 export const cardFactory = (card: string) => {
-  return parseInt(card);
+  return card;
 };

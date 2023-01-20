@@ -1,9 +1,7 @@
 import { FC, useContext } from "react";
-import { GameContext } from "../../contexts/GameProvider";
+import { GameContext, SHOOTING_STAR } from "../../contexts/GameProvider";
 import Card, { CardSize } from "./Card";
 import { Star } from "../../assets/svg";
-
-export const SHOOTING_STAR = 0;
 
 interface IShootingStarProps {
   size?: CardSize;

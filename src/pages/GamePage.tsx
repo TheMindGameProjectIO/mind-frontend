@@ -3,20 +3,18 @@ import Layout from "../components/layout/Layout";
 import Board from "../components/Board";
 import GameProvider from "../contexts/GameProvider";
 import ClientsCard from "../components/ClientCards";
-import { FC, ReactNode, useContext, useEffect, useState } from "react";
+import { FC, ReactNode } from "react";
 import { Rabbit } from "../assets/svg";
 import PlayingCard from "../components/card/PlayingCard";
 import { FiSlash, FiPlay } from "react-icons/fi";
 import ShootingStar from "../components/card/ShootingStar";
 import Box from "../components/ui/Box";
-import QueryWrapper, { TQueryContext } from "../components/QueryWrapper";
-import { QueryContext } from "../components/QueryWrapper";
-import { GameController, GAME_TOKEN_KEY } from "../api";
+import QueryWrapper from "../components/QueryWrapper";
+import { GameController } from "../api";
 import { publicRoutes } from "../routes";
-import { TGame } from "../types";
-import socket from "../utils/socket/socket";
 import { useAppSelector } from "../redux/hooks";
 import { selectUser } from "../redux/slices/userSlice";
+import useGame from "../hooks/useGame";
 
 interface ILobbiesLayoutProps {
   children: ReactNode;
@@ -38,24 +36,11 @@ const GamePage = () => {
 };
 
 const GamePageContent = () => {
-  const { data: game } = useContext<TQueryContext<TGame>>(QueryContext);
   const { id: currentUserId } = useAppSelector(selectUser);
-
-  console.log(game);
-
-  useEffect(() => {
-    const gameToken = localStorage.getItem(GAME_TOKEN_KEY);
-    if (gameToken) {
-      socket.token = gameToken;
-    }
-
-    return () => {
-      socket.token = "";
-    };
-  }, []);
+  const { game } = useGame();
 
   return (
-    <GameProvider serverCards={game.cardsOnBoard}>
+    <GameProvider>
       <Layout currentLink={2}>
         <div className="center-content bg-about-game-background bg-cover bg-no-repeat bg-center">
           <div className="mt-24 w-full max-w-[1200px]">
@@ -72,7 +57,7 @@ const GamePageContent = () => {
                   Level <br />
                   {game.currentLevel} : 12
                 </Box>
-                <Board />
+                <Board cards={game.cardsOnBoard} />
                 <div className="absolute text-main-blue font-bold right-0 center-content -bottom-24 xs:bottom-14 flex-col gap-y-2">
                   <Box light={true} className="px-5 cursor-pointer">
                     ?
@@ -88,7 +73,7 @@ const GamePageContent = () => {
                   {game.hasShootingStar ? (
                     <ShootingStar toPlay={true} className="absolute mb-3 sm:right-8 sm:mb-0" size="small" />
                   ) : null}
-                  <ClientsCard serverCards={game.clientCards} />
+                  <ClientsCard cards={game.clientCards} />
                 </div>
               </div>
             </GameLayout>
