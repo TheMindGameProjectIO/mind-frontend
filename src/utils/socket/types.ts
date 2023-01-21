@@ -77,7 +77,7 @@ export interface ClientToServerEvents {
   "game:player:join": () => void;
   "game:player:play": (card: string) => void;
   "game:lobby:player:kick": (userId: string) => void;
-  "game:player:shootingstart": () => void;
+  "game:player:shootingstar": (status?: boolean) => void;
 }
 
 export type ISocket = Socket<ServerToClientEvents, ClientToServerEvents>;

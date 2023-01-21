@@ -33,8 +33,9 @@ const useGame = () => {
 
   useEffect(() => {
     const listener = (game: IGameSocketData) => {
-      console.log("game:changed");
+      console.log({ game });
       const data = gameFactory(game as unknown as TGameResponseData);
+      console.log({ data });
 
       if (data.hasWon) {
         setHasWon(true);
@@ -46,11 +47,8 @@ const useGame = () => {
 
     socket.connection.on("game:changed", listener);
 
-    socket.connection.on("game:started", listener);
-
     return () => {
       socket.connection.off("game:changed", listener);
-      socket.connection.off("game:started", listener);
     };
   }, []);
 

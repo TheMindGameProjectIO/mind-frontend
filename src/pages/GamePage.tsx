@@ -19,6 +19,7 @@ import Rules from "../components/Rules";
 import Button from "../components/ui/Button";
 import { Drop, Mistake, Success } from "../assets/mp3";
 import SoundEffectPlayer from "../components/SoundEffectPlayer";
+import Voting from "../components/Votings";
 
 interface ILobbiesLayoutProps {
   children: ReactNode;
@@ -133,6 +134,12 @@ const GamePageContent = () => {
         <SoundEffectPlayer src={Drop} innerRef={dropRef} />
         <SoundEffectPlayer src={Mistake} innerRef={mistakeRef} />
         <SoundEffectPlayer src={Success} innerRef={successRef} />
+        <Voting
+          visible={game.shootingStar.isVoting}
+          author={game.shootingStar.nickname}
+          agreed={game.shootingStar.voted}
+          total={game.shootingStar.total}
+        />
       </>
     </GameProvider>
   );

@@ -19,8 +19,9 @@ export const GameContext = createContext<TGameContext>({
 const GameProvider: FC<IGameProviderProps> = ({ children }) => {
   const playCard = (card: TCard) => {
     if (card !== SHOOTING_STAR) {
-      console.log(`card:played:${card}`);
       socket.connection.emit("game:player:play", card);
+    } else {
+      socket.connection.emit("game:player:shootingstar", true);
     }
   };
 

@@ -1,12 +1,12 @@
 import Logo from "../Logo";
 import Navbar from "./Navbar";
-import { FiLogOut, FiAlertCircle } from "react-icons/fi";
+import { FiLogOut } from "react-icons/fi";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectIsAuth, unauthorize } from "../../redux/slices/authSlice";
 import { useState } from "react";
-import Modal from "../Modal";
 import Button from "../ui/Button";
 import WarningModal from "../ui/WarningModal";
+import { FiBox, FiAperture } from "react-icons/fi";
 
 const Header = () => {
   const isAuth = useAppSelector(selectIsAuth);

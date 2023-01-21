@@ -10,11 +10,11 @@ interface IShootingStarProps {
   onPlay?: () => void;
 }
 
-const ShootingStar: FC<IShootingStarProps> = ({ size = "medium", className, toPlay = false, onPlay }) => {
+const ShootingStar: FC<IShootingStarProps> = ({ size = "medium", className, toPlay = false, onPlay = () => {} }) => {
   const { playCard } = useContext(GameContext);
 
   const onClick = () => {
-    if (toPlay && onPlay) {
+    if (toPlay) {
       playCard(SHOOTING_STAR);
       onPlay();
     }

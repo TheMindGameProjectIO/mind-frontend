@@ -1,14 +1,15 @@
 import { FC } from "react";
 import Modal, { IModalProps } from "./Modal";
 import { FiXCircle, FiSend } from "react-icons/fi";
+import socket from "../utils/socket/socket";
 
 interface IVotingProps extends Partial<IModalProps> {
   author: string;
   agreed: number;
-  disagreed: number;
+  total: number;
 }
 
-const Voting: FC<IVotingProps> = ({ visible, author, agreed, disagreed }) => {
+const Voting: FC<IVotingProps> = ({ visible, author, agreed, total }) => {
   return (
     <Modal visible={visible} onClose={() => {}}>
       <div
@@ -25,15 +26,24 @@ const Voting: FC<IVotingProps> = ({ visible, author, agreed, disagreed }) => {
           <hr className="my-6" />
         </div>
 
-        <div className="flex items-center justify-evenly gap-3">
+        <div className="flex justify-evenly gap-3">
           <div className="center-content flex-col gap-y-2">
-            <span>{agreed}</span>
-            <FiSend className="h-12 w-12 cursor-pointer" />
+            <span>
+              {agreed} / {total}
+            </span>
+            <FiSend
+              onClick={() => {
+                socket.connection.emit("game:player:shootingstar", true);
+              }}
+              className="h-12 w-12 cursor-pointer"
+            />
           </div>
-          <div className="center-content flex-col gap-y-2">
-            <span>{disagreed}</span>
-            <FiXCircle className="h-12 w-12 cursor-pointer" />
-          </div>
+          <FiXCircle
+            onClick={() => {
+              socket.connection.emit("game:player:shootingstar", false);
+            }}
+            className="h-12 w-12 cursor-pointer"
+          />
         </div>
       </div>
     </Modal>

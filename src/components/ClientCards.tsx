@@ -30,7 +30,7 @@ const ClientCards: FC<IClientCardsProps> = ({ className, cards }) => {
   let count = 0;
   return (
     <Box className={`w-full max-w-[400px] ${className}`}>
-      <div className="overflow-scroll h-[200px] flex flex-col gap-y-4 items-center">
+      <div className="overflow-scroll py-2 h-[200px] flex flex-col gap-y-4 items-center">
         {cards.length !== 0 ? (
           <>
             {chunks.map((chunk: TCard[]) => {

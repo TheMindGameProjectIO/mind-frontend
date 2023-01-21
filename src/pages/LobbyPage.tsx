@@ -12,6 +12,7 @@ import { selectUser } from "../redux/slices/userSlice";
 import useLoading from "../hooks/useLoading";
 import useLobby from "../hooks/useLobby";
 import PageLoader from "../components/PageLoader";
+import socket from "../utils/socket/socket";
 
 type TLobbyPageParams = {
   id: string;
@@ -37,7 +38,7 @@ const LobbyPageContent: FC<ILobbyPageContentProps> = ({ id }) => {
 
   const [startGame, startingLoading] = useLoading({
     callback: async () => {
-      await GameController.start(id);
+      socket.connection.emit("game:start");
     },
     onError: (error) => {
       console.log(error);

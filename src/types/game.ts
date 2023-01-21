@@ -20,6 +20,7 @@ type TShootingStarData = {
   total: number;
   hasVoted: boolean;
   isVoting: boolean;
+  nickname: string;
 };
 
 type TPlayedData = {
@@ -47,6 +48,7 @@ export type TGameResponseData = {
     total: number;
     hasVoted: boolean;
     isVoting: boolean;
+    nickname: string;
   };
 
   player: {
@@ -104,6 +106,7 @@ const shootingStarDataFactory = (data: TGameResponseData): TShootingStarData => 
     total: data.shootingStar.total,
     hasVoted: data.shootingStar.hasVoted,
     isVoting: data.shootingStar.isVoting,
+    nickname: data.shootingStar.nickname,
   };
 };
 
@@ -113,6 +116,7 @@ const emptyShootingStarDataFactory = (): TShootingStarData => {
     total: 0,
     hasVoted: false,
     isVoting: false,
+    nickname: "",
   };
 };
 
