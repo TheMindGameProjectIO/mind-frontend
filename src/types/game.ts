@@ -11,16 +11,23 @@ export type TGame = {
   totalMistakes: number;
   hasWon: boolean;
   hasLost: boolean;
-
-  // shootingStar: TShootingStarData;
+  played: TPlayedData;
+  shootingStar: TShootingStarData;
 };
 
 type TShootingStarData = {
   voted: number;
   total: number;
-  isVoted: boolean;
+  hasVoted: boolean;
   isVoting: boolean;
 };
+
+type TPlayedData = {
+  card: TCard;
+  isShootingStar: boolean;
+  isSmallest: boolean;
+  player: TPlayer;
+} | null;
 
 export type TGameResponseData = {
   game: {
@@ -38,7 +45,7 @@ export type TGameResponseData = {
   shootingStar: {
     voted: number;
     total: number;
-    isVoted: boolean;
+    hasVoted: boolean;
     isVoting: boolean;
   };
 
@@ -70,7 +77,8 @@ export const gameFactory = (data: TGameResponseData): TGame => {
     totalMistakes: data.game.totalMistakes,
     hasWon: data.game.hasWon,
     hasLost: data.game.hasLost,
-    // shootingStar: shootingStarDataFactory(data),
+    played: playedDataFactory(data),
+    shootingStar: shootingStarDataFactory(data),
   };
 };
 
@@ -85,7 +93,8 @@ export const emptyGameFactory = (): TGame => {
     totalMistakes: 0,
     hasWon: false,
     hasLost: false,
-    // shootingStar: emptyShootingStarDataFactory(),
+    played: emptyPlayedDataFactory(),
+    shootingStar: emptyShootingStarDataFactory(),
   };
 };
 
@@ -93,7 +102,7 @@ const shootingStarDataFactory = (data: TGameResponseData): TShootingStarData => 
   return {
     voted: data.shootingStar.voted,
     total: data.shootingStar.total,
-    isVoted: data.shootingStar.isVoted,
+    hasVoted: data.shootingStar.hasVoted,
     isVoting: data.shootingStar.isVoting,
   };
 };
@@ -102,7 +111,22 @@ const emptyShootingStarDataFactory = (): TShootingStarData => {
   return {
     voted: 0,
     total: 0,
-    isVoted: false,
+    hasVoted: false,
     isVoting: false,
   };
+};
+
+const playedDataFactory = (data: TGameResponseData): TPlayedData => {
+  if (!data.played) return emptyPlayedDataFactory();
+
+  return {
+    card: cardFactory(data.played.card),
+    isShootingStar: data.played.isShootingStar,
+    isSmallest: data.played.isSmallest,
+    player: playerFactory(data.played.player),
+  };
+};
+
+const emptyPlayedDataFactory = (): TPlayedData => {
+  return null;
 };

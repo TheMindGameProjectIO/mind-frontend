@@ -17,6 +17,8 @@ import WarningModal from "../components/ui/WarningModal";
 import Modal from "../components/Modal";
 import Rules from "../components/Rules";
 import Button from "../components/ui/Button";
+import { Drop, Mistake, Success } from "../assets/mp3";
+import SoundEffectPlayer from "../components/SoundEffectPlayer";
 
 interface ILobbiesLayoutProps {
   children: ReactNode;
@@ -38,7 +40,7 @@ const GamePageContent = () => {
   const navigate = useNavigate();
   const [rulesModal, setRulesModal] = useState<boolean>(false);
   const [leaveModal, setLeaveModal] = useState<boolean>(false);
-  const { game, mistake, setMistake, hasWon, setHasWon } = useGame();
+  const { game, mistake, setMistake, hasWon, setHasWon, mistakeRef, dropRef, successRef } = useGame();
 
   return (
     <GameProvider>
@@ -128,6 +130,9 @@ const GamePageContent = () => {
           </Button>
           <Button onClick={() => setLeaveModal(false)}> No </Button>
         </WarningModal>
+        <SoundEffectPlayer src={Drop} innerRef={dropRef} />
+        <SoundEffectPlayer src={Mistake} innerRef={mistakeRef} />
+        <SoundEffectPlayer src={Success} innerRef={successRef} />
       </>
     </GameProvider>
   );

@@ -45,11 +45,7 @@ const ClientCards: FC<IClientCardsProps> = ({ className, cards }) => {
                         style={{ right: count++ !== 0 ? `${count * 24}px` : undefined }}
                         key={card}
                       >
-                        <PlayingCard
-                          onPlay={(value) => console.log(`card:played:${value}`)}
-                          toPlay={true}
-                          value={card}
-                        />
+                        <PlayingCard toPlay={true} value={card} />
                       </div>
                     );
                   })}

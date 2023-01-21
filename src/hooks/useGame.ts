@@ -1,13 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { GAME_TOKEN_KEY } from "../api";
-import { emptyGameFactory, gameFactory, TGame } from "../types";
+import { emptyGameFactory, gameFactory, TGame, TGameResponseData } from "../types";
 import socket from "../utils/socket/socket";
 import { IGameSocketData } from "../utils/socket/types";
 
 const useGame = () => {
+  const mistakeRef = useRef(null);
+  const dropRef = useRef(null);
+  const successRef = useRef(null);
   const [game, setGame] = useState<TGame>(emptyGameFactory());
   const [mistake, setMistake] = useState<boolean>(false);
   const [hasWon, setHasWon] = useState<boolean>(false);
+
+  const playSoundEffect = (ref: any) => {
+    const player = ref.current as unknown as HTMLAudioElement;
+
+    if (player) {
+      player.play();
+    }
+  };
 
   useEffect(() => {
     const gameToken = localStorage.getItem(GAME_TOKEN_KEY);
@@ -22,10 +33,12 @@ const useGame = () => {
 
   useEffect(() => {
     const listener = (game: IGameSocketData) => {
-      const data = gameFactory(game);
+      console.log("game:changed");
+      const data = gameFactory(game as unknown as TGameResponseData);
 
       if (data.hasWon) {
         setHasWon(true);
+        playSoundEffect(successRef);
       }
 
       setGame(data);
@@ -44,10 +57,17 @@ const useGame = () => {
   useEffect(() => {
     if (game.totalMistakes !== 0) {
       setMistake(true);
+      playSoundEffect(mistakeRef);
     }
   }, [game.mistakesLeft]);
 
-  return { game, mistake, setMistake, hasWon, setHasWon };
+  useEffect(() => {
+    if (game.played) {
+      playSoundEffect(dropRef);
+    }
+  }, [game.played]);
+
+  return { game, mistake, setMistake, hasWon, setHasWon, mistakeRef, dropRef, successRef };
 };
 
 export default useGame;

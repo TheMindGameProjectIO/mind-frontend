@@ -10,13 +10,11 @@ export interface IGameSocketData {
   shootingStar: {
     voted: number;
     total: number;
-    isVoted: boolean;
+    hasVoted: boolean;
     isVoting: boolean;
   };
   played?: {
     card: string;
-    isShootingStar: boolean;
-    isSmallest: boolean;
     player: {
       _id: string;
       nickname: string;
@@ -79,6 +77,7 @@ export interface ClientToServerEvents {
   "game:player:join": () => void;
   "game:player:play": (card: string) => void;
   "game:lobby:player:kick": (userId: string) => void;
+  "game:player:shootingstart": () => void;
 }
 
 export type ISocket = Socket<ServerToClientEvents, ClientToServerEvents>;
