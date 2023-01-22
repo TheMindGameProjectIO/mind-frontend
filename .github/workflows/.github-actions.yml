@@ -1,6 +1,10 @@
 name: GitHub Actions
 run-name: ${{ github.actor }} is pushing
-on: [push]
+on: 
+  push: 
+    branches: [main, development],
+  pull_request:
+    branches: [main, development],
 jobs:
   init:
     runs-on: ubuntu-latest
