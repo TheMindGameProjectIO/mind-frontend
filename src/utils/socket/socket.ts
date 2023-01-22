@@ -8,6 +8,7 @@ export const connection: ISocket = io(SOCKET_URL, {
     "ngrok-skip-browser-warning": (import.meta as any).env.VITE_APP_DEV_CONNECTON_HEADER,
   },
   autoConnect: false,
+  path: "/socket",
 });
 
 /**
