@@ -1,30 +1,31 @@
-import { createContext, ReactNode, FC, useState } from "react";
-import { SHOOTING_STAR } from "../components/card/ShootingStar";
+import { createContext, ReactNode, FC } from "react";
+import { TCard } from "../types";
+import socket from "../utils/socket/socket";
+
+export const SHOOTING_STAR = "0";
 
 interface IGameProviderProps {
   children: ReactNode;
 }
 
 type TGameContext = {
-  playCard: (card: number) => void;
-  cards: number[];
+  playCard: (card: TCard) => void;
 };
 
 export const GameContext = createContext<TGameContext>({
-  playCard: () => {},
-  cards: [],
+  playCard: () => null,
 });
 
 const GameProvider: FC<IGameProviderProps> = ({ children }) => {
-  const [cards, setCards] = useState<number[]>([1, 2, 3, 4, 5]);
-
-  const playCard = (card: number) => {
+  const playCard = (card: TCard) => {
     if (card !== SHOOTING_STAR) {
-      setCards([...cards, card]);
+      socket.connection.emit("game:player:play", card);
+    } else {
+      socket.connection.emit("game:player:shootingstar", true);
     }
   };
 
-  return <GameContext.Provider value={{ playCard, cards }}>{children}</GameContext.Provider>;
+  return <GameContext.Provider value={{ playCard }}>{children}</GameContext.Provider>;
 };
 
 export default GameProvider;

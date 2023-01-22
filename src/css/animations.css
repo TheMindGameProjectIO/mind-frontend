@@ -1,0 +1,29 @@
+.modal {
+  animation: popupY 0.3s ease-in-out forwards;
+}
+
+.board-card {
+  animation: popupS 0.5s ease-in-out forwards;
+}
+
+@keyframes popupY {
+  from {
+    transform: translateY(1em);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes popupS {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}

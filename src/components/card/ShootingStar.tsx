@@ -1,24 +1,33 @@
-import { useContext } from "react";
-import { GameContext } from "../../contexts/GameProvider";
-import Card from "./Card";
+import { FC, useContext } from "react";
+import { GameContext, SHOOTING_STAR } from "../../contexts/GameProvider";
+import Card, { CardSize } from "./Card";
 import { Star } from "../../assets/svg";
 
-export const SHOOTING_STAR = 0;
+interface IShootingStarProps {
+  size?: CardSize;
+  className?: string;
+  toPlay?: boolean;
+  onPlay?: () => void;
+}
 
-const ShootingStar = () => {
+const ShootingStar: FC<IShootingStarProps> = ({ size = "medium", className, toPlay = false, onPlay = () => null }) => {
   const { playCard } = useContext(GameContext);
 
   const onClick = () => {
-    // TODO: add voting
-    playCard(SHOOTING_STAR);
+    if (toPlay) {
+      playCard(SHOOTING_STAR);
+      onPlay();
+    }
   };
 
   return (
-    <Card onClick={onClick}>
+    <Card className={className} onClick={onClick} size={size}>
       <div
-        className="w-[120px] h-[120px] bg-cover bg-center"
+        className={`bg-cover bg-center ${toPlay ? "cursor-pointer" : ""}`}
         style={{
           backgroundImage: `url(${Star})`,
+          width: size === "small" ? "80px" : "120px",
+          height: size === "small" ? "80px" : "120px",
         }}
       />
     </Card>

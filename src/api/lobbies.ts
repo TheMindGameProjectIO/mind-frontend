@@ -9,13 +9,13 @@ export type TCreateLobbyData = {
 
 export class LobbiesController {
   static async getOne(id: string) {
-    const url = "/game/room/" + id;
+    const url = "/room/" + id;
     const response = await privateApi.get(url);
     return lobbyFactory(response.data);
   }
 
   static async create(data: TCreateLobbyData) {
-    const url = "/game/room/create";
+    const url = "/room/create";
     const response = await privateApi.post(url, data);
 
     const { _id } = response.data.room;
@@ -23,7 +23,7 @@ export class LobbiesController {
   }
 
   static async join(id: string) {
-    const url = "/game/room/join/" + id;
+    const url = "/room/join/" + id;
     const response = await privateApi.post(url);
     return response.headers[Headers.SOCKET_GAME_AUTHORIZATION];
   }

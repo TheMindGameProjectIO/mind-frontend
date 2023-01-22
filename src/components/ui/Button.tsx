@@ -10,7 +10,7 @@ interface IButtonProps {
   className?: string;
 }
 
-const Button: FC<IButtonProps> = ({ children, disabled = false, type = "button", className }) => {
+const Button: FC<IButtonProps> = ({ children, disabled = false, type = "button", className, onClick }) => {
   return (
     <button
       disabled={disabled}
@@ -18,6 +18,7 @@ const Button: FC<IButtonProps> = ({ children, disabled = false, type = "button",
         disabled ? "opacity-50 cursor-not-allowed" : ""
       } ${className}`}
       type={type}
+      onClick={onClick}
     >
       {children}
     </button>

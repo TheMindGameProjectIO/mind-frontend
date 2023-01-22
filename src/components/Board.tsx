@@ -1,15 +1,22 @@
-import { FC, useContext } from "react";
-import { GameContext } from "../contexts/GameProvider";
-import LiveCard from "./card/LiveCard";
+import { FC } from "react";
+import { TCard } from "../types";
 import PlayingCard from "./card/PlayingCard";
-import ShootingStar from "./card/ShootingStar";
+import Box from "./ui/Box";
 
-interface IBoardProps {}
+interface IBoardProps {
+  cards: TCard[];
+}
 
-const Board: FC<IBoardProps> = () => {
-  const { cards } = useContext(GameContext);
-
-  return <div className="bg-red-100">{<ShootingStar />}</div>;
+const Board: FC<IBoardProps> = ({ cards }) => {
+  return (
+    <Box className="w-full max-w-[600px]">
+      {cards.length !== 0 ? (
+        <PlayingCard className="board-card" size="large" value={cards[cards.length - 1]} toPlay={false} />
+      ) : (
+        <p className="text-2xl front-bold p-20"> No cards here... </p>
+      )}
+    </Box>
+  );
 };
 
 export default Board;

@@ -29,7 +29,7 @@ const defaultContext: ISocketContext = {
 /**
  * Socket State
  */
-export interface IState extends Pick<ISocketContext, "isConnected"> {}
+export type IState = Pick<ISocketContext, "isConnected">;
 
 const defaultState: IState = {
   isConnected: false,

@@ -1,5 +1,4 @@
 import Field from "./Field";
-import { FC } from "react";
 import Input from "../Input";
 import { ligthInputClassName } from "../../../helpers";
 

@@ -1,16 +1,16 @@
 import BgImage from "../../assets/img/mind-game-book.png";
 
-const ruleClass: string = "mb-5 text-center font-bold text-main-blue text-[0.7rem] md:text-[1rem]";
+const ruleClass = "mb-5 text-center font-bold text-main-blue text-[0.7rem] md:text-[1rem]";
 
 const AboutGame = () => {
   return (
-    <div className="bg-cover bg-center bg-about-game-background flex flex-col md:flex-row font-play">
+    <div className="bg-cover bg-center bg-about-game-background flex flex-col md:flex-row font-play center-content">
       {/* //! FIXME: Background image is terrible when decreasing in size! */}
       {/* //! FIXME: Because of rabbits in the background image, some part of the text is not seen! */}
 
       <img src={BgImage} alt="An image of a book" className="order-last md:order-first self-center w-full max-w-max" />
 
-      <div className="flex flex-col pr-4">
+      <div className="flex flex-col pr-4 max-w-[600px]">
         <h1 className="text-main-blue mb-7 text-[3rem] md:text-[4rem] text-center font-bold md:ml-14 mt-10">
           About the game
         </h1>
@@ -24,9 +24,9 @@ const AboutGame = () => {
         <p className={ruleClass}>
           Collectively you must play these cards into the center of the table on a single discard pile in ascending
           order, but you cannot communicate with one another in any way as to which cards you hold. You simply stare
-          into one another's eyes, and when you feel the time is right, you play your lowest card. If no one holds a
-          card lower than what you played, great, the game continues! If someone did, all players discard face up all
-          cards lower than what you played, and you lose one life.
+          into one another eyes, and when you feel the time is right, you play your lowest card. If no one holds a card
+          lower than what you played, great, the game continues! If someone did, all players discard face up all cards
+          lower than what you played, and you lose one life.
         </p>
 
         <p className={ruleClass}>
