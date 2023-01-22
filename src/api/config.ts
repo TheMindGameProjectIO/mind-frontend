@@ -13,11 +13,21 @@ const headers = {
   Accept: "application/json",
 };
 
+/**
+ * @description
+ * This is the base API instance that will be used for all private requests.
+ * requests that require authentication.
+ */
 export const privateApi = axios.create({
   baseURL: API_BASE_URL,
   headers,
 });
 
+/**
+ * @description
+ * This is the base API instance that will be used for all public requests.
+ * requests that do not require authentication.
+ */
 export const publicApi = axios.create({
   baseURL: API_BASE_URL,
   headers,
