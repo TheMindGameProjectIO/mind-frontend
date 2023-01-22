@@ -17,9 +17,12 @@ import WarningModal from "../components/ui/WarningModal";
 import Modal from "../components/Modal";
 import Rules from "../components/Rules";
 import Button from "../components/ui/Button";
-import { Drop, Mistake, Success } from "../assets/mp3";
+import { Drop, Mistake, Success, Backgound } from "../assets/mp3";
 import SoundEffectPlayer from "../components/SoundEffectPlayer";
 import Voting from "../components/Votings";
+import useBackgroundMusic from "../hooks/useBackGroundMusic";
+import SoundHandler from "../components/SoundHandler";
+import { playSoundEffect, stopSoundEffect } from "../helpers";
 
 interface ILobbiesLayoutProps {
   children: ReactNode;
@@ -41,7 +44,20 @@ const GamePageContent = () => {
   const navigate = useNavigate();
   const [rulesModal, setRulesModal] = useState<boolean>(false);
   const [leaveModal, setLeaveModal] = useState<boolean>(false);
-  const { game, mistake, setMistake, hasWon, setHasWon, mistakeRef, dropRef, successRef } = useGame();
+  const [muted, setMuted] = useState<boolean>(false);
+  const { game, mistake, setMistake, hasWon, setHasWon, mistakeRef, dropRef, successRef, bgRef } = useGame();
+
+  const mute = () => {
+    setMuted(true);
+    stopSoundEffect(bgRef);
+  };
+
+  const unmute = () => {
+    setMuted(false);
+    playSoundEffect(bgRef);
+  };
+
+  useBackgroundMusic(bgRef);
 
   return (
     <GameProvider>
@@ -134,6 +150,9 @@ const GamePageContent = () => {
         <SoundEffectPlayer src={Drop} innerRef={dropRef} />
         <SoundEffectPlayer src={Mistake} innerRef={mistakeRef} />
         <SoundEffectPlayer src={Success} innerRef={successRef} />
+        <SoundEffectPlayer src={Success} innerRef={successRef} />
+        <SoundEffectPlayer src={Backgound} innerRef={bgRef} />
+        <SoundHandler mute={mute} unmute={unmute} muted={muted} />
         <Voting
           visible={game.shootingStar.isVoting}
           author={game.shootingStar.nickname}

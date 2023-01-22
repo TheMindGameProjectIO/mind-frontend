@@ -7,3 +7,5 @@ export const hideValue = (hide: boolean, value: TCard) => {
   return !hide ? value : "";
 };
 export const lobbyPagesButton = "w-full max-w-[200px] text-dark-blue-600 font-bold font-play py-3";
+
+export * from "./soundPlayer";
