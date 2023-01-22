@@ -15,6 +15,7 @@ import Button from "../components/ui/Button";
 import { useAppDispatch } from "../redux/hooks";
 import { authorize } from "../redux/slices/authSlice";
 import { set } from "../redux/slices/userSlice";
+import Layout from "../components/layout/Layout";
 
 const LoginPage = () => {
   const emailRef = useRef<any>();
@@ -75,59 +76,61 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center bg-center bg-cover bg-mind-game-background font-play">
-      <div className="md:flex gap-12">
-        <div className="p-6 md:mb-0">
-          <GameTitle />
-          <div className="text-main-gray text-[1.5rem] md:text-[2rem] md:max-w-[200px]">
-            <h2 className="my-6"> Welcome back</h2>
-            <h2> Good to see you again</h2>
-          </div>
-        </div>
-        <form className="auth" onSubmit={onSubmit}>
-          <div className="text-main-light mb-12">
-            <h2 className="font-bold text-[3rem]"> Log in </h2>
-            <h3 className="text-white">
-              New user?
-              <PageLink to={authRoutes.signup} className="text-main-light font-bold">
-                Create an account
-              </PageLink>
-            </h3>
-          </div>
-
-          {/* //? Authentication via Google */}
-          {/* //? Authentication via Facebook */}
-
-          {/* Input boxes */}
-
-          {error == "invalid credentials" ? <InputError> Email or password is wrong </InputError> : null}
-          {error == "server error" ? <InputError> Something went wrong </InputError> : null}
-          <Input<string> ref={emailRef} placeholder="Email" />
-          {error == "empty email" ? <InputError> Please provide email </InputError> : null}
-          {error == "invalid email" ? <InputError> Entered email is invalid </InputError> : null}
-
-          <PasswordInput passwordRef={passwordRef} />
-          {error == "empty password" ? <InputError> Please provide password </InputError> : null}
-          {error == "password's length" ? (
-            <InputError>
-              Length of the password must contain at least {Validations.MINIMAL_PASSWORD_LENGTH} characters
-            </InputError>
-          ) : null}
-
-          <div className="w-full flex flex-col justify-center">
-            <div className="flex items-center">
-              <Button disabled={requestLoading} type="submit">
-                Log in
-              </Button>
-              {requestLoading ? <Loader scale="0.5" className="relative top-2" /> : null}
+    <Layout currentLink={3}>
+      <div className="h-screen flex items-center justify-center bg-center bg-cover bg-mind-game-background font-play">
+        <div className="md:flex gap-12">
+          <div className="p-6 md:mb-0">
+            <GameTitle />
+            <div className="text-main-gray text-[1.5rem] md:text-[2rem] md:max-w-[200px]">
+              <h2 className="my-6"> Welcome back</h2>
+              <h2> Good to see you again</h2>
             </div>
           </div>
-          <PageLink className="text-white text-center p-2" to={authRoutes.forgotPassword}>
-            Forgot password?
-          </PageLink>
-        </form>
+          <form className="auth" onSubmit={onSubmit}>
+            <div className="text-main-light mb-12">
+              <h2 className="font-bold text-[3rem]"> Log in </h2>
+              <h3 className="text-white">
+                New user?
+                <PageLink to={authRoutes.signup} className="text-main-light font-bold">
+                  Create an account
+                </PageLink>
+              </h3>
+            </div>
+
+            {/* //? Authentication via Google */}
+            {/* //? Authentication via Facebook */}
+
+            {/* Input boxes */}
+
+            {error == "invalid credentials" ? <InputError> Email or password is wrong </InputError> : null}
+            {error == "server error" ? <InputError> Something went wrong </InputError> : null}
+            <Input<string> ref={emailRef} placeholder="Email" />
+            {error == "empty email" ? <InputError> Please provide email </InputError> : null}
+            {error == "invalid email" ? <InputError> Entered email is invalid </InputError> : null}
+
+            <PasswordInput passwordRef={passwordRef} />
+            {error == "empty password" ? <InputError> Please provide password </InputError> : null}
+            {error == "password's length" ? (
+              <InputError>
+                Length of the password must contain at least {Validations.MINIMAL_PASSWORD_LENGTH} characters
+              </InputError>
+            ) : null}
+
+            <div className="w-full flex flex-col justify-center">
+              <div className="flex items-center">
+                <Button disabled={requestLoading} type="submit">
+                  Log in
+                </Button>
+                {requestLoading ? <Loader scale="0.5" className="relative top-2" /> : null}
+              </div>
+            </div>
+            <PageLink className="text-white text-center p-2" to={authRoutes.forgotPassword}>
+              Forgot password?
+            </PageLink>
+          </form>
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 
