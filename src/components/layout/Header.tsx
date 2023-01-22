@@ -1,14 +1,12 @@
 import Logo from "../Logo";
 import Navbar from "./Navbar";
-import { FiLogOut } from "react-icons/fi";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { selectIsAuth, unauthorize } from "../../redux/slices/authSlice";
+import { useAppDispatch } from "../../redux/hooks";
+import { unauthorize } from "../../redux/slices/authSlice";
 import { useState } from "react";
 import Button from "../ui/Button";
 import WarningModal from "../ui/WarningModal";
 
 const Header = () => {
-  const isAuth = useAppSelector(selectIsAuth);
   const dispatch = useAppDispatch();
   const [modal, setModal] = useState(false);
 
@@ -26,8 +24,7 @@ const Header = () => {
           style={{ textShadow: "0px 5px 20px rgba(189, 170, 147, 0.5)" }}
         >
           <Logo />
-          <Navbar />
-          {isAuth ? <FiLogOut onClick={() => setModal(true)} className="cursor-pointer" /> : null}
+          <Navbar setModal={setModal} />
         </div>
       </header>
       <WarningModal title="Are you sure you want to log out?" visible={modal} onClose={() => setModal(false)}>

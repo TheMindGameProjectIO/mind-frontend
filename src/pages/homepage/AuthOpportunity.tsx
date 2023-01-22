@@ -19,12 +19,12 @@ const AuthOpportunity = () => {
           <LinkButton
             path={authRoutes.login}
             text="Log in"
-            classname="bg-main-light rounded-[30px] w-24 py-2 m-4 mt-10 drop-shadow-3xl"
+            classname="bg-main-light text-main-blue font-bold rounded-[30px] w-24 py-2 m-4 mt-10 drop-shadow-3xl"
           />
           <LinkButton
             path={authRoutes.signup}
             text="Sign up"
-            classname="bg-main-light rounded-[30px] w-24 py-2 mb-16 drop-shadow-3xl"
+            classname="bg-main-light text-main-blue font-bold rounded-[30px] w-24 py-2 mb-16 drop-shadow-3xl"
           />
         </>
       ) : (
