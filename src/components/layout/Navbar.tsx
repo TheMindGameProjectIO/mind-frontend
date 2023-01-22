@@ -1,11 +1,16 @@
 import { ReactNode, FC, useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { privateRoutes, publicRoutes } from "../../routes";
+import { authRoutes, privateRoutes, publicRoutes } from "../../routes";
 import { LayoutContext } from "./Layout";
 import { useAppSelector } from "../../redux/hooks";
 import { selectIsAuth } from "../../redux/slices/authSlice";
+import { FiLogOut } from "react-icons/fi";
 
-const Navbar = () => {
+interface INavbarProps {
+  setModal: (value: boolean) => void;
+}
+
+const Navbar: FC<INavbarProps> = ({ setModal }) => {
   const { currentLink } = useContext(LayoutContext);
   const isAuth = useAppSelector(selectIsAuth);
   return (
@@ -18,6 +23,18 @@ const Navbar = () => {
           Lobby
         </NavbarItem>
       ) : null}
+      {isAuth ? (
+        <FiLogOut onClick={() => setModal(true)} className="cursor-pointer" />
+      ) : (
+        <div className="flex items-center gap-6">
+          <NavbarItem current={currentLink === 3} to={authRoutes.login}>
+            Login
+          </NavbarItem>
+          <NavbarItem current={currentLink === 4} to={authRoutes.signup}>
+            Signup
+          </NavbarItem>
+        </div>
+      )}
     </div>
   );
 };
