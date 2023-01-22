@@ -2,9 +2,9 @@ name: GitHub Actions
 run-name: ${{ github.actor }} is pushing
 on: 
   push: 
-    branches: [main, development],
+    branches: [development],
   pull_request:
-    branches: [main, development],
+    branches: [development],
 jobs:
   init:
     runs-on: ubuntu-latest
