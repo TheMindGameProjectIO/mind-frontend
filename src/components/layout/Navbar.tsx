@@ -35,6 +35,11 @@ const Navbar: FC<INavbarProps> = ({ setModal }) => {
           </NavbarItem>
         </div>
       )}
+      {!isAuth ? (
+        <NavbarItem current={currentLink == 5} to={authRoutes.forgotPassword}>
+          Forgot password
+        </NavbarItem>
+      ) : null}
     </div>
   );
 };
