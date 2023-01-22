@@ -13,7 +13,7 @@ const Voting: FC<IVotingProps> = ({ visible, author, agreed, total }) => {
   return (
     <Modal visible={visible} onClose={() => null}>
       <div
-        className="max-w-[600px] text-center text-[20px] px-24 py-12"
+        className="max-w-[600px] text-center text-[20px] px-12 sm:px-24 py-12"
         style={{
           background: "rgba(7, 17, 34, 0.9)",
           boxShadow: "0px 0px 20px 10px rgba(0, 0, 0, 0.25)",
@@ -22,7 +22,7 @@ const Voting: FC<IVotingProps> = ({ visible, author, agreed, total }) => {
         }}
       >
         <div>
-          <h1 className="text-[50px] leading-10"> Looks like {author} started the voting! </h1>
+          <h1 className="text-[40px] sm:text-[50px] leading-10"> Looks like {author} started the voting! </h1>
           <hr className="my-6" />
         </div>
 
@@ -38,12 +38,14 @@ const Voting: FC<IVotingProps> = ({ visible, author, agreed, total }) => {
               className="h-12 w-12 cursor-pointer"
             />
           </div>
-          <FiXCircle
-            onClick={() => {
-              socket.connection.emit("game:player:shootingstar", false);
-            }}
-            className="h-12 w-12 cursor-pointer"
-          />
+          <div className="center-content flex-col gap-y-2">
+            <FiXCircle
+              onClick={() => {
+                socket.connection.emit("game:player:shootingstar", false);
+              }}
+              className="h-12 w-12 cursor-pointer"
+            />
+          </div>
         </div>
       </div>
     </Modal>
