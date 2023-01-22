@@ -1,12 +1,12 @@
 import Modal, { IModalProps } from "../Modal";
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 import { FiAlertCircle } from "react-icons/fi";
 
 interface IWarningModalProps extends Partial<IModalProps> {
   title: string;
 }
 
-const WarningModal: FC<IWarningModalProps> = ({ children, visible, onClose = () => {}, title }) => {
+const WarningModal: FC<IWarningModalProps> = ({ children, visible, onClose = () => null, title }) => {
   return (
     <Modal visible={visible} onClose={onClose}>
       <div className="bg-main-blue p-6 rounded-xl">

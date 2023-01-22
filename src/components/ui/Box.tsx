@@ -7,7 +7,7 @@ interface IBoxProps {
   onClick?: () => void;
 }
 
-const Box: FC<IBoxProps> = ({ children, className, light = false, onClick = () => {} }) => {
+const Box: FC<IBoxProps> = ({ children, className, light = false, onClick = () => null }) => {
   return (
     <div
       onClick={onClick}

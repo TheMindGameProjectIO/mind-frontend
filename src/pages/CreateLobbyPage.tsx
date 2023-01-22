@@ -53,7 +53,7 @@ const CreateLobbyPage = () => {
 
       navigate(privateRoutes.lobbiesRoutes.lobby + lobbyId);
     },
-    onError: (error) => {
+    onError: () => {
       setError("server error");
     },
   });

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 interface IUseLoadingParams {
     callback: (data?: any) => Promise<void>;
@@ -17,9 +17,9 @@ const useLoading = ({ callback, onError }: IUseLoadingParams) => {
         } finally {
             setIsLoading(false);
         }
-    }
+    };
 
     return [applyLoading, isLoading] as [(data?: any) => Promise<void>, boolean];
-}
+};
 
 export default useLoading;

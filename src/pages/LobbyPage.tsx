@@ -2,10 +2,9 @@ import Button from "../components/ui/Button";
 import { lobbyPagesButton } from "../helpers";
 import Regular_Rabbit from "../assets/img/regular-rabbit.png";
 import { Rabbit } from "../assets/svg";
-import { FC, memo, useEffect, useContext } from "react";
+import { FC, useEffect, useContext } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { LobbiesTitleContext } from "../contexts/LobbiesTitleProvider";
-import { GameController } from "../api";
 import { publicRoutes } from "../routes";
 import { useAppSelector } from "../redux/hooks";
 import { selectUser } from "../redux/slices/userSlice";
@@ -122,7 +121,7 @@ interface IPlayerInLobbyProps {
   canBeKicked?: boolean;
 }
 
-const PlayerInLobby: FC<IPlayerInLobbyProps> = memo(({ player, onKick, canBeKicked = false }) => {
+const PlayerInLobby: FC<IPlayerInLobbyProps> = ({ player, onKick, canBeKicked = false }) => {
   return (
     <div className="flex flex-row w-screen max-w-[250px] bg-u-list-gray rounded-2xl p-2">
       <img
@@ -141,6 +140,6 @@ const PlayerInLobby: FC<IPlayerInLobbyProps> = memo(({ player, onKick, canBeKick
       ) : null}
     </div>
   );
-});
+};
 
 export default LobbyPage;

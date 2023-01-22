@@ -33,15 +33,15 @@ const ClientCards: FC<IClientCardsProps> = ({ className, cards }) => {
       <div className="overflow-scroll py-2 h-[200px] flex flex-col gap-y-4 items-center">
         {cards.length !== 0 ? (
           <>
-            {chunks.map((chunk: TCard[]) => {
+            {chunks.map((chunk: TCard[], index: number) => {
               return (
-                <div className="grid grid-cols-3 relative left-2 xs:left-6 md:left-7">
+                <div key={index} className="grid grid-cols-3 relative left-2 xs:left-6 md:left-7">
                   {chunk.map((card) => {
                     if (count === CHUNK_SIZE) count = 0;
 
                     return (
                       <div
-                        className={`relative`}
+                        className={"relative"}
                         style={{ right: count++ !== 0 ? `${count * 24}px` : undefined }}
                         key={card}
                       >

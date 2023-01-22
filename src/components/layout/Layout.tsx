@@ -16,7 +16,7 @@ const Layout: FC<ILayoutProps> = ({ children, header = true, currentLink }) => {
       <div>
         {header ? <Header /> : null}
         <div className="flex justify-center">
-          <main className={`w-full`}>{children}</main>
+          <main className={"w-full"}>{children}</main>
         </div>
         {/* <Copyright /> */}
       </div>

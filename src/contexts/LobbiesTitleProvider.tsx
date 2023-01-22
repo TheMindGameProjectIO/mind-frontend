@@ -8,7 +8,7 @@ type TLobbiesTitleContext = {
   title: string;
   changeTitle: (title: string) => void;
 };
-export const LobbiesTitleContext = createContext<TLobbiesTitleContext>({ title: "", changeTitle: () => {} });
+export const LobbiesTitleContext = createContext<TLobbiesTitleContext>({ title: "", changeTitle: () => null });
 
 const LobbiesTitleProvider: FC<ILobbiesTitleProviderProps> = ({ children }) => {
   const [title, setTitle] = useState<string>("Public lobbies");

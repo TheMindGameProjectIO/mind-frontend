@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 interface ILinkButton
 {
@@ -10,9 +10,9 @@ interface ILinkButton
 const LinkButton = ({ path, text, classname }: ILinkButton) => 
 {
     return (
-        <Link to = {path} className = {classname === undefined ? '' : classname}> {text} </Link>
-    )
-}
+        <Link to = {path} className = {classname === undefined ? "" : classname}> {text} </Link>
+    );
+};
 
 
-export default LinkButton
+export default LinkButton;

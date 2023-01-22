@@ -1,9 +1,9 @@
 import { FC } from "react";
 import Modal, { IModalProps } from "./Modal";
 
-interface IRulesProps extends Partial<IModalProps> {}
+type IRulesProps = Partial<IModalProps>;
 
-const Rules: FC<IRulesProps> = ({ visible, onClose = () => {} }) => {
+const Rules: FC<IRulesProps> = ({ visible, onClose = () => null }) => {
   return (
     <Modal visible={visible} onClose={onClose}>
       <div

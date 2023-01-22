@@ -6,7 +6,6 @@ import { selectIsAuth, unauthorize } from "../../redux/slices/authSlice";
 import { useState } from "react";
 import Button from "../ui/Button";
 import WarningModal from "../ui/WarningModal";
-import { FiBox, FiAperture } from "react-icons/fi";
 
 const Header = () => {
   const isAuth = useAppSelector(selectIsAuth);

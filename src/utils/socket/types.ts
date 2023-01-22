@@ -1,5 +1,4 @@
 import { Socket } from "socket.io-client";
-import { TPlayerResponseData } from "../../types";
 
 export interface IGameSocketData {
   player: {

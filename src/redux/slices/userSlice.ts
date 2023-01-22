@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "..";
 import { User } from "../../types";
 
-interface UserState extends User {}
+type UserState = User
 
 const initialState: UserState = {
   id: "",

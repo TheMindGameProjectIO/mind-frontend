@@ -16,7 +16,7 @@ interface IPlayingCardProps {
 const PlayingCard: FC<IPlayingCardProps> = ({
   hide = false,
   value = "0",
-  onPlay = (card: TCard) => {},
+  onPlay = () => null,
   toPlay = true,
   size = "medium",
   className,

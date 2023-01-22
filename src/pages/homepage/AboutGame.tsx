@@ -1,6 +1,6 @@
 import BgImage from "../../assets/img/mind-game-book.png";
 
-const ruleClass: string = "mb-5 text-center font-bold text-main-blue text-[0.7rem] md:text-[1rem]";
+const ruleClass = "mb-5 text-center font-bold text-main-blue text-[0.7rem] md:text-[1rem]";
 
 const AboutGame = () => {
   return (
@@ -24,9 +24,9 @@ const AboutGame = () => {
         <p className={ruleClass}>
           Collectively you must play these cards into the center of the table on a single discard pile in ascending
           order, but you cannot communicate with one another in any way as to which cards you hold. You simply stare
-          into one another's eyes, and when you feel the time is right, you play your lowest card. If no one holds a
-          card lower than what you played, great, the game continues! If someone did, all players discard face up all
-          cards lower than what you played, and you lose one life.
+          into one another eyes, and when you feel the time is right, you play your lowest card. If no one holds a card
+          lower than what you played, great, the game continues! If someone did, all players discard face up all cards
+          lower than what you played, and you lose one life.
         </p>
 
         <p className={ruleClass}>

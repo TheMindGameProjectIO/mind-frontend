@@ -11,7 +11,7 @@ interface IVotingProps extends Partial<IModalProps> {
 
 const Voting: FC<IVotingProps> = ({ visible, author, agreed, total }) => {
   return (
-    <Modal visible={visible} onClose={() => {}}>
+    <Modal visible={visible} onClose={() => null}>
       <div
         className="max-w-[600px] text-center text-[20px] px-24 py-12"
         style={{

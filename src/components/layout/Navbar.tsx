@@ -14,7 +14,7 @@ const Navbar = () => {
         Home
       </NavbarItem>
       {isAuth ? (
-        <NavbarItem current={currentLink === 2} to={privateRoutes.lobbiesRoutes.list}>
+        <NavbarItem current={currentLink === 2} to={privateRoutes.lobbiesRoutes.create}>
           Lobby
         </NavbarItem>
       ) : null}
@@ -36,7 +36,7 @@ const NavbarItem: FC<INavbarItemProps> = ({ to, children, current }) => {
   return (
     <NavLink
       className={`text-cr-gray ${current ? "py-1 px-6 rounded-full" : ""}`}
-      style={{ backgroundColor: current ? `rgba(242, 216, 186, 0.25)` : "" }}
+      style={{ backgroundColor: current ? "rgba(242, 216, 186, 0.25)" : "" }}
       onClick={onClick}
       to={to}
     >

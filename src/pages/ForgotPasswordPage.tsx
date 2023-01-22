@@ -1,5 +1,4 @@
 import { useRef, useState, MouseEvent } from "react";
-import Loader from "../components/Loader";
 import PageLink from "../components/PageLink";
 import GameTitle from "../components/ui/GameTitle";
 import Input from "../components/ui/Input";
@@ -42,7 +41,7 @@ const ForgotPasswordPage = () => {
         <form className="forgotPassword" onSubmit={onSubmit}>
           <h2 className="text-main-light text-center font-bold text-[2.7rem]"> Forgot password? </h2>
           <h3 className="text-little-white text-center md:text-left px-12 mt-4 mb-12">
-            We'll send you an email with a link that
+            We will send you an email with a link that
             <br className="hidden md:block" /> allows you to set a new password
           </h3>
 

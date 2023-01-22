@@ -13,7 +13,7 @@ type TGameContext = {
 };
 
 export const GameContext = createContext<TGameContext>({
-  playCard: () => {},
+  playCard: () => null,
 });
 
 const GameProvider: FC<IGameProviderProps> = ({ children }) => {

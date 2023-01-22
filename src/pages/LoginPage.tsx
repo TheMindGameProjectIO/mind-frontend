@@ -110,7 +110,7 @@ const LoginPage = () => {
           {error == "empty password" ? <InputError> Please provide password </InputError> : null}
           {error == "password's length" ? (
             <InputError>
-              Password's length must contain at least {Validations.MINIMAL_PASSWORD_LENGTH} characters
+              Length of the password must contain at least {Validations.MINIMAL_PASSWORD_LENGTH} characters
             </InputError>
           ) : null}
 

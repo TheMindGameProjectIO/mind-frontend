@@ -7,7 +7,7 @@ interface ILogoProps {
   className?: string;
 }
 
-const Logo: FC<ILogoProps> = ({ clickable = true, className }) => {
+const Logo: FC<ILogoProps> = ({ clickable = true }) => {
   const navigate = useNavigate();
 
   const onClick = () => {
