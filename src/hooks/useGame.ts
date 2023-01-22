@@ -27,9 +27,7 @@ const useGame = () => {
 
   useEffect(() => {
     const listener = (game: IGameSocketData) => {
-      console.log({ game });
       const data = gameFactory(game as unknown as TGameResponseData);
-      console.log({ data });
 
       if (data.hasWon) {
         setHasWon(true);
