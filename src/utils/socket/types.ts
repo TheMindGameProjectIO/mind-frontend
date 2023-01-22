@@ -11,6 +11,7 @@ export interface IGameSocketData {
     total: number;
     hasVoted: boolean;
     isVoting: boolean;
+    nickname: string;
   };
   played?: {
     card: string;
@@ -33,6 +34,7 @@ export interface IGameSocketData {
       nickname: string;
       cards: number;
       isOnline: boolean;
+      reaction: string;
     }[];
   };
 }
@@ -62,13 +64,13 @@ export interface ServerToClientEvents {
   "game:lobby:changed": (gameLobby: IGameLobbySocketData) => void;
   "game:player:left": () => void;
   "game:self:left": () => void;
-  "game:started": (game: IGameSocketData) => void;
-  "game:player:played": (game: IGameSocketData) => void;
-  "game:self:played": (game: IGameSocketData) => void;
+  "game:started": () => void;
   "game:changed": (game: IGameSocketData) => void;
+  "game:lobby:kicked": () => void;
 }
 
 export interface ClientToServerEvents {
+  "game:lobby:kick": (userId: string) => void;
   ping: () => void;
   pong: () => void;
   "game:start": () => void;
@@ -76,7 +78,8 @@ export interface ClientToServerEvents {
   "game:player:join": () => void;
   "game:player:play": (card: string) => void;
   "game:lobby:player:kick": (userId: string) => void;
-  "game:player:shootingstar": (status?: boolean) => void;
+  "game:player:shootingstar": (accept: boolean) => void;
+  "game:player:react": (reaction: string) => void;
 }
 
 export type ISocket = Socket<ServerToClientEvents, ClientToServerEvents>;

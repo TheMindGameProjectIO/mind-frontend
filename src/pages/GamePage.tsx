@@ -23,6 +23,9 @@ import Voting from "../components/Votings";
 import useBackgroundMusic from "../hooks/useBackGroundMusic";
 import SoundHandler from "../components/SoundHandler";
 import { playSoundEffect, stopSoundEffect } from "../helpers";
+import EmojiPicker from "emoji-picker-react";
+import { FiX } from "react-icons/fi";
+import socket from "../utils/socket/socket";
 
 interface ILobbiesLayoutProps {
   children: ReactNode;
@@ -44,6 +47,7 @@ const GamePageContent = () => {
   const navigate = useNavigate();
   const [rulesModal, setRulesModal] = useState<boolean>(false);
   const [leaveModal, setLeaveModal] = useState<boolean>(false);
+  const [reactionsVisible, setReactionsVisible] = useState<boolean>(false);
   const [muted, setMuted] = useState<boolean>(false);
   const { game, mistake, setMistake, hasWon, setHasWon, mistakeRef, dropRef, successRef, bgRef } = useGame();
 
@@ -69,14 +73,17 @@ const GamePageContent = () => {
                 <div className="flex justify-between md:justify-around">
                   {game.players
                     .filter((player) => player.id !== currentUserId)
-                    .map((player) => (
-                      <PlayerInGame
-                        isOnline={player.isOnline}
-                        key={player.id}
-                        name={player.nickname}
-                        cardsAmount={player.cardsAmount}
-                      />
-                    ))}
+                    .map((player) => {
+                      return (
+                        <PlayerInGame
+                          reaction={player.reaction}
+                          isOnline={player.isOnline}
+                          key={player.id}
+                          name={player.nickname}
+                          cardsAmount={player.cardsAmount}
+                        />
+                      );
+                    })}
                 </div>
                 <div className="center-content my-8 relative">
                   <Box light={true} className="absolute text-main-blue -bottom-20 left-0 xs:bottom-16 font-bold">
@@ -159,6 +166,30 @@ const GamePageContent = () => {
           agreed={game.shootingStar.voted}
           total={game.shootingStar.total}
         />
+        {reactionsVisible ? (
+          <>
+            <div className="fixed left-3 bottom-3">
+              <EmojiPicker
+                onEmojiClick={(data) => {
+                  const reaction = data.emoji;
+                  socket.connection.emit("game:player:react", reaction);
+                  setReactionsVisible(false);
+                }}
+              />
+            </div>
+            <FiX
+              onClick={() => setReactionsVisible(false)}
+              className="fixed cursor-pointer text-white text-2xl left-96 bottom-[28rem]"
+            />
+          </>
+        ) : (
+          <div
+            onClick={() => setReactionsVisible(true)}
+            className="fixed left-3 bottom-3 cursor-pointer bg-main-light/80 text-xl text-white found-bold p-3 rounded-xl"
+          >
+            😅
+          </div>
+        )}
       </>
     </GameProvider>
   );
@@ -181,9 +212,10 @@ interface IPlayerInGameProps {
   name: string;
   cardsAmount?: number;
   isOnline?: boolean;
+  reaction?: string;
 }
 
-const PlayerInGame: FC<IPlayerInGameProps> = ({ name, cardsAmount = 0, isOnline = false }) => {
+const PlayerInGame: FC<IPlayerInGameProps> = ({ name, cardsAmount = 0, isOnline = false, reaction = "" }) => {
   return (
     <div className="relative flex items-center gap-3">
       <div className={`center-content flex-col ${!isOnline ? "opacity-30" : ""}`}>
@@ -197,6 +229,7 @@ const PlayerInGame: FC<IPlayerInGameProps> = ({ name, cardsAmount = 0, isOnline 
         <span className="text-lg font-bold text-white"> {cardsAmount} x </span>
         <PlayingCard size="small" toPlay={false} hide={true} />
       </div>
+      <div className="fixed right-0 top-24 bg-red-100"> {reaction} </div>
     </div>
   );
 };
