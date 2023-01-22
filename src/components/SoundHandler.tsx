@@ -9,7 +9,15 @@ interface ISoundHandlerProps {
 
 const SoundHandler: FC<ISoundHandlerProps> = ({ muted, mute, unmute }) => {
   return (
-    <div className="fixed top-6 left-6">{muted ? <FiVolume2 onClick={mute} /> : <FiVolumeX onClick={unmute} />}</div>
+    <div
+      onClick={() => {
+        if (muted) unmute();
+        else mute();
+      }}
+      className="fixed top-16 left-3 cursor-pointer bg-main-blue/80 text-xl text-white found-bold p-3 rounded-xl"
+    >
+      {!muted ? <FiVolume2 /> : <FiVolumeX />}
+    </div>
   );
 };
 
