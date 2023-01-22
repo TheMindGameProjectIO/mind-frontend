@@ -231,7 +231,9 @@ const PlayerInGame: FC<IPlayerInGameProps> = ({ name, cardsAmount = 0, isOnline 
         <span className="text-lg font-bold text-white"> {cardsAmount} x </span>
         <PlayingCard size="small" toPlay={false} hide={true} />
       </div>
-      {isNotEmpty(reaction) ? <Reaction className="absolute top-3 right-14 bg-red-100" emoji={reaction} /> : null}
+      {isNotEmpty(reaction) ? (
+        <Reaction className="absolute -top-[3.2em] right-14 z-50" emojiOfAuthor={false} emoji={reaction} />
+      ) : null}
     </div>
   );
 };

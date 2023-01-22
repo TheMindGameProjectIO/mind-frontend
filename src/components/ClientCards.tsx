@@ -64,7 +64,9 @@ const ClientCards: FC<IClientCardsProps> = ({ className, cards, clientReaction }
           )}
         </div>
       </Box>
-      {isNotEmpty(clientReaction) ? <Reaction className="absolute -right-24 top-0" emoji={clientReaction} /> : null}
+      {isNotEmpty(clientReaction) ? (
+        <Reaction emojiOfAuthor={true} className="absolute -right-32 top-0" emoji={clientReaction} />
+      ) : null}
     </div>
   );
 };
