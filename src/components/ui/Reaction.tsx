@@ -10,7 +10,7 @@ const Reaction: FC<IReactionProps> = ({ emoji, className }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       socket.connection.emit("game:player:react", null as unknown as string);
-    }, 3000);
+    }, 5000);
 
     return () => {
       clearTimeout(timer);

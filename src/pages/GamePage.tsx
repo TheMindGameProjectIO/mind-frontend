@@ -26,6 +26,8 @@ import { playSoundEffect, stopSoundEffect } from "../helpers";
 import EmojiPicker from "emoji-picker-react";
 import { FiX } from "react-icons/fi";
 import socket from "../utils/socket/socket";
+import Reaction from "../components/ui/Reaction";
+import { isNotEmpty } from "../validators";
 
 interface ILobbiesLayoutProps {
   children: ReactNode;
@@ -229,7 +231,7 @@ const PlayerInGame: FC<IPlayerInGameProps> = ({ name, cardsAmount = 0, isOnline 
         <span className="text-lg font-bold text-white"> {cardsAmount} x </span>
         <PlayingCard size="small" toPlay={false} hide={true} />
       </div>
-      <div className="fixed right-0 top-24 bg-red-100"> {reaction} </div>
+      {isNotEmpty(reaction) ? <Reaction className="absolute top-3 right-14 bg-red-100" emoji={reaction} /> : null}
     </div>
   );
 };
