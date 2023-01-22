@@ -13,6 +13,7 @@ export type TGame = {
   hasLost: boolean;
   played: TPlayedData;
   shootingStar: TShootingStarData;
+  clientReaction: string;
 };
 
 type TShootingStarData = {
@@ -55,6 +56,7 @@ export type TGameResponseData = {
     cards: string[];
     _id: string;
     nickname: string;
+    reaction: string;
   };
 
   played?: {
@@ -81,6 +83,7 @@ export const gameFactory = (data: TGameResponseData): TGame => {
     hasLost: data.game.hasLost,
     played: playedDataFactory(data),
     shootingStar: shootingStarDataFactory(data),
+    clientReaction: data.player.reaction,
   };
 };
 
@@ -97,6 +100,7 @@ export const emptyGameFactory = (): TGame => {
     hasLost: false,
     played: emptyPlayedDataFactory(),
     shootingStar: emptyShootingStarDataFactory(),
+    clientReaction: "",
   };
 };
 

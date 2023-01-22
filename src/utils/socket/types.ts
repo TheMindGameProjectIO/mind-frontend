@@ -5,6 +5,7 @@ export interface IGameSocketData {
     _id: string;
     nickname: string;
     cards: string[];
+    reaction: string;
   };
   shootingStar: {
     voted: number;
@@ -66,7 +67,7 @@ export interface ServerToClientEvents {
   "game:self:left": () => void;
   "game:started": () => void;
   "game:changed": (game: IGameSocketData) => void;
-  "game:lobby:kicked": () => void;
+  "game:lobby:player:kicked": () => void;
 }
 
 export interface ClientToServerEvents {

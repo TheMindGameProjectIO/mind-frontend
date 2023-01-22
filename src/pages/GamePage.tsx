@@ -105,7 +105,7 @@ const GamePageContent = () => {
                     {game.hasShootingStar ? (
                       <ShootingStar toPlay={true} className="absolute mb-3 sm:right-8 sm:mb-0" size="small" />
                     ) : null}
-                    <ClientsCard cards={game.clientCards} />
+                    <ClientsCard clientReaction={game.clientReaction} cards={game.clientCards} />
                   </div>
                 </div>
               </GameLayout>
