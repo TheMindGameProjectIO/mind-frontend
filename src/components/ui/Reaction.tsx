@@ -14,16 +14,14 @@ const hideEmoji = () => {
 
 const Reaction: FC<IReactionProps> = ({ emoji, className, emojiOfAuthor }) => {
   useEffect(() => {
-    const timer = setTimeout(
-      () => {
+    if (emojiOfAuthor) {
+      const timer = setTimeout(() => {
         hideEmoji();
-      },
-      emojiOfAuthor ? 30000 : 5000
-    );
-
-    return () => {
-      clearTimeout(timer);
-    };
+      }, 30000);
+      return () => {
+        clearTimeout(timer);
+      };
+    }
   }, [emoji]);
 
   return (
