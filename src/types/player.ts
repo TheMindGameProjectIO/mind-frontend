@@ -3,6 +3,7 @@ export type TPlayerResponseData = {
   nickname: string;
   cards?: number;
   isOnline?: boolean;
+  reaction?: string;
 };
 
 export type TPlayer = {
@@ -10,6 +11,7 @@ export type TPlayer = {
   nickname: string;
   cardsAmount?: number;
   isOnline?: boolean;
+  reaction?: string;
 };
 
 export const playerFactory = (data: TPlayerResponseData): TPlayer => {
@@ -18,5 +20,6 @@ export const playerFactory = (data: TPlayerResponseData): TPlayer => {
     nickname: data.nickname,
     cardsAmount: data.cards,
     isOnline: data.isOnline,
+    reaction: data.reaction,
   };
 };
