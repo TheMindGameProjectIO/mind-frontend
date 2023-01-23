@@ -21,6 +21,10 @@ import UserLayout from "./components/layout/UserLayout";
 const queryClient = new QueryClient();
 
 const App = () => {
+  /**
+   * @description
+   * isAuth is a boolean that indicates if the user is logged in or not
+   */
   const isAuth = useAppSelector(selectIsAuth);
 
   return (
