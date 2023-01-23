@@ -43,7 +43,7 @@ const App = () => {
             </Route>
             {/* Private routes: only the users that are authorized can get to these routes */}
           </Route>
-          <Route element={<ValidateRoute condition={isAuth} navigate={publicRoutes.error} />}>
+          <Route element={<ValidateRoute condition={isAuth} navigate={authRoutes.login} />}>
             <Route element={<UserLayout />}>
               <Route
                 path={privateRoutes.lobbiesRoutes.index}
