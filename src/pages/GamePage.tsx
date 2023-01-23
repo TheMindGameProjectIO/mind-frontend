@@ -90,7 +90,7 @@ const GamePageContent = () => {
                 <div className="center-content my-8 relative">
                   <Box light={true} className="absolute text-main-blue -bottom-20 left-0 xs:bottom-16 font-bold">
                     Level <br />
-                    {game.currentLevel} : 12
+                    {game.currentLevel} : {game.lastLevelNumber}
                   </Box>
                   <Board cards={game.cardsOnBoard} />
                   <div className="absolute text-main-blue font-bold right-0 center-content -bottom-24 xs:bottom-14 flex-col gap-y-2">
@@ -104,9 +104,8 @@ const GamePageContent = () => {
                 </div>
                 <div className="center-content relative">
                   <div className="flex flex-col sm:flex-row items-center">
-                    {game.hasShootingStar ? (
-                      <ShootingStar toPlay={true} className="absolute mb-3 sm:right-8 sm:mb-0" size="small" />
-                    ) : null}
+                    <p className="font-bold pr-3"> {game.shootingStars} x </p>
+                    {game.shootingStars ? <ShootingStar toPlay={!!game.shootingStars} size="small" /> : null}
                     <ClientsCard clientReaction={game.clientReaction} cards={game.clientCards} />
                   </div>
                 </div>

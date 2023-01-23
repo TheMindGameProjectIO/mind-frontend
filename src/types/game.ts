@@ -5,7 +5,7 @@ export type TGame = {
   players: TPlayer[];
   clientCards: TCard[];
   cardsOnBoard: TCard[];
-  hasShootingStar: boolean;
+  shootingStars: number;
   currentLevel: number;
   mistakesLeft: number;
   totalMistakes: number;
@@ -14,6 +14,7 @@ export type TGame = {
   played: TPlayedData;
   shootingStar: TShootingStarData;
   clientReaction: string;
+  lastLevelNumber: number;
 };
 
 type TShootingStarData = {
@@ -36,12 +37,13 @@ export type TGameResponseData = {
     cards: string[];
     _id: string;
     players: TPlayerResponseData[];
-    hasShootingStar: boolean;
+    shootingStars: number;
     currentLevel: number;
     mistakesLeft: number;
     totalMistakes: number;
     hasWon: boolean;
     hasLost: boolean;
+    lastLevelNumber: number;
   };
 
   shootingStar: {
@@ -75,7 +77,7 @@ export const gameFactory = (data: TGameResponseData): TGame => {
     clientCards: data.player.cards.map((card) => cardFactory(card)),
     cardsOnBoard: data.game.cards.map((card) => cardFactory(card)),
     players: data.game.players.map((player) => playerFactory(player)),
-    hasShootingStar: data.game.hasShootingStar,
+    shootingStars: data.game.shootingStars,
     currentLevel: data.game.currentLevel,
     mistakesLeft: data.game.mistakesLeft,
     totalMistakes: data.game.totalMistakes,
@@ -84,6 +86,7 @@ export const gameFactory = (data: TGameResponseData): TGame => {
     played: playedDataFactory(data),
     shootingStar: shootingStarDataFactory(data),
     clientReaction: data.player.reaction,
+    lastLevelNumber: data.game.lastLevelNumber,
   };
 };
 
@@ -92,7 +95,7 @@ export const emptyGameFactory = (): TGame => {
     clientCards: [],
     cardsOnBoard: [],
     players: [],
-    hasShootingStar: false,
+    shootingStars: 0,
     currentLevel: 0,
     mistakesLeft: 0,
     totalMistakes: 0,
@@ -101,6 +104,7 @@ export const emptyGameFactory = (): TGame => {
     played: emptyPlayedDataFactory(),
     shootingStar: emptyShootingStarDataFactory(),
     clientReaction: "",
+    lastLevelNumber: 0,
   };
 };
 

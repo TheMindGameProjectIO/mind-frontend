@@ -26,7 +26,8 @@ export interface IGameSocketData {
     cards: string[];
     hasWon: boolean;
     hasLost: boolean;
-    hasShootingStar: boolean;
+    shootingStars: number;
+    lastLevelNumber: number;
     currentLevel: number;
     totalMistakes: number;
     mistakesLeft: number;
@@ -71,7 +72,6 @@ export interface ServerToClientEvents {
 }
 
 export interface ClientToServerEvents {
-  "game:lobby:kick": (userId: string) => void;
   ping: () => void;
   pong: () => void;
   "game:start": () => void;
