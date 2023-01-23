@@ -39,7 +39,7 @@ const App = () => {
           </Route>
 
           {/* Auth routes: only the users that are not authorized can get to these routes */}
-          <Route element={<ValidateRoute condition={!isAuth} navigate={publicRoutes.error} />}>
+          <Route element={<ValidateRoute condition={!isAuth} navigate={authRoutes.login} />}>
             <Route path={authRoutes.index} element={<AuthLayout />}>
               <Route index path={authRoutes.login} element={<LoginPage />} />
               <Route path={authRoutes.signup} element={<SignupPage />} />
