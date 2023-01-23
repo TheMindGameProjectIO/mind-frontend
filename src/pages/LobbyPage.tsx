@@ -62,7 +62,7 @@ const LobbyPageContent: FC<ILobbyPageContentProps> = ({ id }) => {
           <div className="bg-lighter-blue rounded-2xl p-3 flex items-center flex-col gap-y-3 h-[200px] overflow-scroll overflow-x-hidden">
             {players.map((player) => (
               <PlayerInLobby
-                canBeKicked={isAuthor && player.id !== lobby.authorId}
+                canBeKicked={false}
                 onKick={(id: string) => {
                   kickPlayer(id);
                 }}
