@@ -19,13 +19,13 @@ const SignupPage = () => {
   const usernameRef = useRef<any>();
   const passwordRef = useRef<any>();
   const repeatPasswordRef = useRef<any>();
+  const [displayMessage, setDisplayMessage] = useState(false);
 
-  const navigate: NavigateFunction = useNavigate();
   const [error, setError] = useState<string>("no error");
   const [signupRequest, requestLoading] = useLoading({
     callback: async (data: TSignUpData) => {
       await AuthController.signup(data);
-      navigate(authRoutes.index);
+      setDisplayMessage(true);
     },
     onError: (error: any) => {
       if (error instanceof AxiosError) {
@@ -90,7 +90,6 @@ const SignupPage = () => {
     await signupRequest({
       email,
       password,
-      confirmPassword: repeatPassword,
       nickname: username,
     });
   };
@@ -138,7 +137,6 @@ const SignupPage = () => {
               {error === "empty username" ? <InputError> Please, create a username </InputError> : null}
               {error === "short username" ? (
                 <InputError>
-                  {" "}
                   Username must contain at least {Validations.MINIMAL_USERNAME_LENGTH} characters{" "}
                 </InputError>
               ) : null}
@@ -147,7 +145,6 @@ const SignupPage = () => {
               {error === "empty password" ? <InputError> Please, create a password </InputError> : null}
               {error === "short password" ? (
                 <InputError>
-                  {" "}
                   Password must contain at least {Validations.MINIMAL_PASSWORD_LENGTH} characters{" "}
                 </InputError>
               ) : null}
@@ -164,6 +161,11 @@ const SignupPage = () => {
                   {requestLoading ? <Loader scale="0.5" className="relative top-2" /> : null}
                 </div>
               </div>
+              {displayMessage ? (
+                <p className="text-sm p-1 text-center">
+                  We sent to your email accound a verification link, please proceed it.{" "}
+                </p>
+              ) : null}
             </form>
           </div>
         </div>
