@@ -4,7 +4,6 @@ import { isEmail, isNotEmpty, length } from "../validators";
 import { Validations } from "../enums";
 import { AxiosError } from "axios";
 import { AuthController, TSignUpData } from "../api";
-import { NavigateFunction, useNavigate } from "react-router";
 import useLoading from "../hooks/useLoading";
 import InputError from "../components/ui/InputError";
 import Loader from "../components/Loader";
