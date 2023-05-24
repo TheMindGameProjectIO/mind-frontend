@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --mode development --port 5000",
+    "dev": "vite --mode development --port 5173 --host",
     "prod": "vite --mode production",
     "start": "vite",
     "build": "tsc && vite build",
