@@ -122,7 +122,7 @@ const ContactUs = () => {
 
             <div className="flex items-center">
               <button
-                className={`block w-full bg-main-gray py-2 px-4 rounded-full mt-6 font-bold ${
+                className={`block w-full bg-main-gray py-2 hover:bg-slate-600 px-4 rounded-full mt-6 font-bold ${
                   requestLoading ? "opacity-50 cursor-not-allowed" : ""
                 }`}
                 type="submit"
